@@ -13,7 +13,6 @@ class WroApprovalSeeder extends Seeder
      */
     public function run()
     {
-        $coo = User::where('email', 'gil.austria@bfcgroup.org')->first();
         $vp_gen_serv = User::where('email', 'tettadizon@bfcgroup.org')->first();
         $treasury_manager = User::where('email', 'e.carreon@bfcgroup.org')->first();
         $gen_serv_div_head = User::where('email', 'a.roque@bfcgroup.org')->first();
@@ -24,7 +23,6 @@ class WroApprovalSeeder extends Seeder
         	'gen_serv_div_head' => $gen_serv_div_head->id,
         	'treasury_manager' => $treasury_manager->id,
         	'vp_gen_serv' => $vp_gen_serv->id,
-        	'coo' => $coo->id,
         ]);
     }
 }
