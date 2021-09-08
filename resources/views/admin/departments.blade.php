@@ -1,0 +1,59 @@
+@extends("layouts.app")
+
+@section("title") Departments @endsection
+
+@section("header")
+  @include("admin.includes.header")
+@endsection
+
+@section("page-title") Departments <a href="{{ route('admin.add.department') }}">+</a>@endsection
+
+@section("sidebar")
+  @include("admin.includes.sidebar")
+@endsection
+
+@section("page-content")
+  <div class="row">
+    <div class="col-md-12">
+      @include('includes.success')
+      @include('includes.error')
+      @include('includes.errors')
+      <table id="departments" class="table cell-border compact stripe hover" width="99%">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Short Code</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        </table>
+      </div>
+  </div>
+@endsection
+
+@section('styles')
+  <link rel="stylesheet" href="{{ asset('css/datatables.min.css') }}">
+@endsection
+
+@section('scripts')
+  <script src="{{ asset('js/datatables.js') }}"></script>
+  <script src="{{ asset('js/sweetalert.js') }}"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#departments').DataTable({
+        // serverSide: true,
+        ajax: { 
+          url: "{{ route('admin.all.departments') }}",
+          dataSrc: ""
+        },
+        columns: [
+          { data: 'name' },
+          { data: 'code' },
+          { data: 'action' },
+      ]
+      });
+
+    });
+  </script>
+@endsection
