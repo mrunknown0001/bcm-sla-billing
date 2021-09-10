@@ -181,11 +181,11 @@ class GeneralController extends Controller
                     ->first();
 
         if(empty($wro_no)) {
-            return $wro_no = 'WRO-' . $farm->code . '-' . date('m') . date('y') . '-' . str_pad(1, 3, '0', STR_PAD_LEFT);
+            return $wro_no = 'SLA-' . $farm->code . '-' . date('m') . date('y') . '-' . str_pad(1, 3, '0', STR_PAD_LEFT);
         }
         
         // generate jo number based on jo number on specific farm
-        return $wro_number = 'WRO-' . $farm->code . '-' . $wro_no->month . $wro_no->year . '-' . str_pad($wro_no->count, 3, '0', STR_PAD_LEFT);
+        return $wro_number = 'SLA-' . $farm->code . '-' . $wro_no->month . $wro_no->year . '-' . str_pad($wro_no->count, 3, '0', STR_PAD_LEFT);
     }
 
 
@@ -226,7 +226,7 @@ class GeneralController extends Controller
         }
         
         // generate wro number based on wro number on specific farm
-        $wro_number = 'WRO-' . $farm->code . '-' . $wro->month . $wro->year . '-' . str_pad($wro->count, 3, '0', STR_PAD_LEFT);
+        $wro_number = 'SLA-' . $farm->code . '-' . $wro->month . $wro->year . '-' . str_pad($wro->count, 3, '0', STR_PAD_LEFT);
 
         $wro->count += 1;
         $wro->save();
@@ -261,7 +261,7 @@ class GeneralController extends Controller
         }
         
         // generate wro number based on wro number on specific farm
-        $wro_number = 'WRO-' . $farm->code . '-' . $wro->month . $wro->year . '-' . str_pad($wro->count, 3, '0', STR_PAD_LEFT);
+        $wro_number = 'SLA-' . $farm->code . '-' . $wro->month . $wro->year . '-' . str_pad($wro->count, 3, '0', STR_PAD_LEFT);
 
         $wro->count += 1;
         $wro->save();
@@ -297,9 +297,9 @@ class GeneralController extends Controller
         }
         
         // generate wro number based on wro number on specific farm
-        $wro_number = 'WRO-' . $farm->code . '-' . $wro->month . $wro->year . '-' . str_pad($wro->count, 3, '0', STR_PAD_LEFT);
+        $wro_number = 'SLA-' . $farm->code . '-' . $wro->month . $wro->year . '-' . str_pad($wro->count, 3, '0', STR_PAD_LEFT);
 
-        return $wro_number . ' (Possible Next Work Request Order # Series)';
+        return $wro_number . ' (Possible Next Service Level Agreement # Series)';
     }
 
 
@@ -432,68 +432,8 @@ class GeneralController extends Controller
 
 
 
-    public static function joManagerAction($status, $id, $jo)
-    {
-        if($status == 3 ||$status == 4 || $status == 7) {
-            return '<button id="view" data-id="' . $id . '" data-text="Do you want to view Job Order ' . $jo . '?" class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button> <button id="archive" data-id="' . $id . '" data-text="Do you want to archive Job Order ' . $jo . '?" class="btn btn-primary btn-xs"><i class="pe-7s-portfolio"></i> Archive</button>';
-        }
-                        
-        elseif($status == 2 || $status == 6) {
-            return '<button id="view" data-id="' . $id . '" data-text="Do you want to view Job Order ' . $jo . '?" class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button> <a href="' . route("manager.jo.pdf.download", ['id' => $id]) . '" class="btn btn-primary btn-xs"><i class="pe-7s-download"></i> Download</a> <button id="archive" data-id="' . $id . '" data-text="Do you want to archive Job Order ' . $jo . '?" class="btn btn-primary btn-xs"><i class="pe-7s-portfolio"></i> Archive</button>';
-        }
-        else if($status == 1){                
-            return '<button id="view" data-id="' . $id . '" data-text="Do you want to view Job Order ' . $jo . '?" class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button> <button id="approve" data-id="' . $id . '" data-text="Do you want to approve Job Order ' . $jo . '?" class="btn btn-success btn-xs"><i class="pe-7s-check"></i> Approve</button> <button id="disapprove" data-id="' . $id . '" data-text="Do you want to disapprove Job Order ' . $jo . '?" class="btn btn-danger btn-xs"><i class="pe-7s-close-circle"></i> Disapprove</button>';
-        }
-        else if($status == 5) {
-            return '<button id="view" data-id="' . $id . '" data-text="Do you want to view Job Order ' . $jo . '?" class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button>';
-        }
-
-    }
 
 
-    public static function joRequestorAction($status, $id, $jo)
-    {
-        if($status == 3 || $status == 4 || $status == 5 || $status == 7) {
-            return '<button id="view" data-id="' . $id . '" data-text="Do you want to view Job Order ' . $jo . '?" class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button>';
-        }
-        
-        elseif($status == 2 || $status == 6) {
-            return '<button id="view" data-id="' . $id . '" data-text="Do you want to view Job Order ' . $jo . '?" class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button> <a href="' . route('user.jo.pdf.download', ['id' => $id]) . '" class="btn btn-primary btn-xs"><i class="pe-7s-download"></i> Download</a>';
-        }
-        else {
-            return '<button id="view" data-id="' . $id . '" data-text="Do you want to view Job Order ' . $jo . '?" class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button> <button id="cancel" data-id="' . $id . '" data-text="Do you want to cancel Job Order ' . $jo . '?" class="btn btn-danger btn-xs"><i class="pe-7s-close-circle"></i> Cancel</button>';
-        }
-        
-    }
-
-
-    public static function joVPAction($status, $id, $jo)
-    {
-        if($status == 5) {
-            return '<button id="view" data-id="' . $id . '" data-text="Do you want to view Job Order ' . $jo . '?" class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button> <button id="approve" data-id="' . $id . '" data-text="Do you want to approve Job Order ' . $jo . '?" class="btn btn-success btn-xs"><i class="pe-7s-check"></i> Approve</button> <button id="disapprove" data-id="' . $id . '" data-text="Do you want to disapprove Job Order ' . $jo . '?" class="btn btn-danger btn-xs"><i class="pe-7s-close-circle"></i> Disapprove</button>';
-        }
-        else {
-            return '<button id="view" data-id="' . $id . '" data-text="Do you want to view Job Order ' . $jo . '?" class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button>';
-        }
-    }
-
-
-    public function downloadJo($id)
-    {
-
-        $jo = Jo::findorfail($id);
-
-        if($jo->status == 2 || $jo->status == 6) {
-            view()->share('jo',$jo);
-            $pdf = PDF::loadView('jo_view', $jo);
-
-            $filename = $jo->jo_no . '.pdf';
-
-            return $pdf->download($filename);   
-        }
-
-        return 'Unable to download.';
-    }
 
 
     public function downloadWro($id)
@@ -566,28 +506,28 @@ class GeneralController extends Controller
         if($archived == 0) {
             if($cancelled == 0 && $disapproved == 0) {
                 if($status == 5) {
-                    return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>
-                    <button id='approve1' data-id='" . $id . "' data-text='Do you want to approve Work Request Order " . $wro . "?' class='btn btn-success btn-xs'><i class='pe-7s-check'></i> Approve</button>
-                    <button id='disapprove1' data-id='" . $id . "' data-text='Do you want to disapprove Work Request Order " . $wro . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
+                    return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>
+                    <button id='approve1' data-id='" . $id . "' data-text='Do you want to approve SLA " . $wro . "?' class='btn btn-success btn-xs'><i class='pe-7s-check'></i> Approve</button>
+                    <button id='disapprove1' data-id='" . $id . "' data-text='Do you want to disapprove SLA " . $wro . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
                 }
                 elseif($status == 9) {
-                    return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='" . route('manager.wro.pdf.download', ['id' => $id]) . "' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a> <button id='archive1' data-id='" . $id . "' data-text='Do you want to archive Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-portfolio'></i> Archive</button>";
+                    return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='" . route('manager.wro.pdf.download', ['id' => $id]) . "' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a> <button id='archive1' data-id='" . $id . "' data-text='Do you want to archive SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-portfolio'></i> Archive</button>";
                 }
                 else {
-                    return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+                    return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
                 }
             }
             else
              {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <button id='archive1' data-id='" . $id . "' data-text='Do you want to archive Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-portfolio'></i> Archive</button>";
+                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <button id='archive1' data-id='" . $id . "' data-text='Do you want to archive Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-portfolio'></i> Archive</button>";
             }
         }
         else {
             if($status == 9) {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='" . route('manager.wro.pdf.download', ['id' => $id]) . "' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a>";
+                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='" . route('manager.wro.pdf.download', ['id' => $id]) . "' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a>";
             }
             else {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
             }
         }
     }
@@ -596,13 +536,13 @@ class GeneralController extends Controller
     public static function wroRequestorAction($status, $id, $wro, $cancelled, $disapproved)
     {
         if($cancelled == 0 && $status == 1 && $disapproved == 0) {
-            return '<button id="view1" data-id="' . $id . '" data-text="Do you want to view Work Request Order ' . $wro . '?"class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button> <button id="cancel1" class="btn btn-danger btn-xs" data-id="' . $id . '" data-text="Do you want to cancel Work Request Order ' . $wro . '?"><i class="pe-7s-close-circle"></i> Cancel</button>';
+            return '<button id="view1" data-id="' . $id . '" data-text="Do you want to view SLA ' . $wro . '?"class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button> <button id="cancel1" class="btn btn-danger btn-xs" data-id="' . $id . '" data-text="Do you want to cancel SLA ' . $wro . '?"><i class="pe-7s-close-circle"></i> Cancel</button>';
         }
         elseif ($status == 9) {
-            return '<button id="view1" data-id="' . $id . '" data-text="Do you want to view Work Request Order ' . $wro . '?"class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button> <a href="' . route('user.wro.pdf.download', ['id' => $id]) . '" class="btn btn-primary btn-xs"><i class="pe-7s-download"></i> Download</a>';
+            return '<button id="view1" data-id="' . $id . '" data-text="Do you want to view SLA ' . $wro . '?"class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button> <a href="' . route('user.wro.pdf.download', ['id' => $id]) . '" class="btn btn-primary btn-xs"><i class="pe-7s-download"></i> Download</a>';
         }
         else {
-            return '<button id="view1" data-id="' . $id . '" data-text="Do you want to view Work Request Order ' . $wro . '?"class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button>';
+            return '<button id="view1" data-id="' . $id . '" data-text="Do you want to view SLA ' . $wro . '?"class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button>';
         }
     }
 
@@ -636,22 +576,22 @@ class GeneralController extends Controller
     {
         if($cancelled == 0 && $disapproved != 1) {
             if($status == 3) {
-                return "<button id='view_bcm_mgr' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>
-                <button id='approve_bcm_mgr' data-id='" . $id . "' data-text='Do you want to approve Work Request Order " . $wro . "?' class='btn btn-success btn-xs'><i class='pe-7s-check'></i> Approve</button>
-                <button id='disapprove_bcm_mgr' data-id='" . $id . "' data-text='Do you want to disapprove Work Request Order " . $wro . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
+                return "<button id='view_bcm_mgr' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>
+                <button id='approve_bcm_mgr' data-id='" . $id . "' data-text='Do you want to approve SLA " . $wro . "?' class='btn btn-success btn-xs'><i class='pe-7s-check'></i> Approve</button>
+                <button id='disapprove_bcm_mgr' data-id='" . $id . "' data-text='Do you want to disapprove SLA " . $wro . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
             }
             elseif($status == 9) {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <button id='archive1' data-id='" . $id . "' data-text='Do you want to archive Work Request Order " . $wro . "?' class='btn btn-primary btn-xs'><i class='pe-7s-portfolio'></i> Archive</button>";
+                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <button id='archive1' data-id='" . $id . "' data-text='Do you want to archive SLA " . $wro . "?' class='btn btn-primary btn-xs'><i class='pe-7s-portfolio'></i> Archive</button>";
             }
             else {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
             }
         }
         elseif($disapproved == 1) {
-            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <button id='archive1' data-id='" . $id . "' data-text='Do you want to archive Work Request Order " . $wro . "?' class='btn btn-primary btn-xs'><i class='pe-7s-portfolio'></i> Archive</button>";
+            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <button id='archive1' data-id='" . $id . "' data-text='Do you want to archive SLA " . $wro . "?' class='btn btn-primary btn-xs'><i class='pe-7s-portfolio'></i> Archive</button>";
         }
         else {
-            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
         }
     }
 

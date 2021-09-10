@@ -20,10 +20,10 @@ class CreateWorkOrdersTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->date('date_of_request')->nullable();
             $table->date('date_needed')->nullable();
-            $table->string('project_bldg_no')->nullable();
+            $table->string('project_name')->nullable();
             $table->text('description')->nullable();
             $table->text('justification')->nullable();
-            $table->string('attachment')->nullable();
+            $table->text('url')->nullable();
 
             $table->boolean('cancelled')->default(0);
             $table->timestamp('cancelled_on')->nullable();

@@ -39,31 +39,32 @@
                     Dashboard
                 </a>
               </li>
-              <li>
-                <a href="{{ route('user.job.order') }}" class="{{ route('user.job.order') == url()->current() ? 'mm-active' : '' }}">
-                  <i class="metismenu-icon pe-7s-note2"></i>
-                    Job Order
-                </a>
-              </li>
+
               @if(\App\Http\Controllers\GeneralController::getDeptCode(Auth::user()->dept_id) == 'BCM')
               <li>
                 <a href="{{ route('user.work.order') }}" class="{{ route('user.work.order') == url()->current() ? 'mm-active' : '' }}">
                   <i class="metismenu-icon pe-7s-note2"></i>
-                    Work Order
+                    SLA
+                </a>
+              </li>
+              <li>
+                <a href="">
+                  <i class="metismenu-icon pe-7s-note2"></i>
+                    Billing
                 </a>
               </li>
               @endif
-              <li>
-                <a href="{{ route('user.archived.jo') }}" class="{{ route('user.archived.jo') == url()->current() ? 'mm-active' : '' }}">
-                  <i class="metismenu-icon pe-7s-portfolio"></i>
-                    Archived JO
-                </a>
-              </li>
               @if(\App\Http\Controllers\GeneralController::getDeptCode(Auth::user()->dept_id) == 'BCM')
               <li>
                 <a href="{{ route('user.archived.wro') }}" class="{{ route('user.archived.wro') == url()->current() ? 'mm-active' : '' }}">
                   <i class="metismenu-icon pe-7s-portfolio"></i>
-                    Archived WRO
+                    Archived SLA
+                </a>
+              </li>
+              <li>
+                <a href="">
+                  <i class="metismenu-icon pe-7s-portfolio"></i>
+                    Archived Billing
                 </a>
               </li>
               @endif

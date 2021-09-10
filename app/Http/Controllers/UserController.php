@@ -41,60 +41,7 @@ class UserController extends Controller
     }
 
 
-    public function allJobOrder(Request $request)
-    {
-        /*
-        $data = [
-            'jo' => NULL,
-            'status' => NULL,
-            'date_of_request' => NULL,
-            'actual_date_filed' => NULL,
-            'action' => NULL,
-        ];
 
-        $jos = Jo::where('user_id', Auth::user()->id)
-                    ->where('archived', 0)
-                    ->get();
-
-        if(count($jos) > 0) {
-            $data = [];
-            foreach($jos as $j) {
-                $data[] = [
-                    'jo' => $j->jo_no,
-                    'status' => GC::viewJoStatus($j->status),
-                    'date_of_request' => date('F j, Y', strtotime($j->date_of_request)),
-                    'actual_date_filed' => date('F j, Y', strtotime($j->created_at)),
-                    'action' => GC::joRequestorAction($j->status, $j->id, $j->jo_no), 
-                ];
-            }
-        }
-
-        return $data;
-        */
-       
-        if($request->ajax()) {
-            $jo = Jo::where('user_id', Auth::user()->id)
-                    ->where('archived', 0)
-                    ->get();
-            $data = collect();
-            if(count($jo) > 0) {
-                foreach($jo as $j) {
-                    $data->push([
-                        'jo' => $j->jo_no,
-                        'status' => GC::viewJoStatus($j->status),
-                        'date_of_request' => date('F j, Y', strtotime($j->date_of_request)),
-                        'actual_date_filed' => date('F j, Y', strtotime($j->created_at)),
-                        'action' => GC::joRequestorAction($j->status, $j->id, $j->jo_no)
-                    ]);
-                }
-            }
-            return DataTables::of($data)
-                    ->rawColumns(['status', 'action'])
-                    ->make(true);
-
-        }
-       
-    }
 
 
     public function allworkOrder(Request $request)
@@ -188,155 +135,6 @@ class UserController extends Controller
 
 
 
-    public function viewJobOrder($id)
-    {
-        $jo = Jo::findorfail($id);
-
-        if($jo->user_id != Auth::user()->id) {
-            return abort(404);
-        }
-
-        return view('user.job-order-view', ['jo' => $jo]);
-    }
-
-
-
-    public function cancelJobOrder($id, $comment)
-    {
-        $jo = Jo::find($id);
-
-        if($jo->user_id != Auth::user()->id) {
-            return abort(404);
-        }
-
-        if($jo->status == 3 || $jo->status == 2 || $jo->archived == 1) {
-            return redirect()->route('user.dashboard')->with('error', 'Please check JO Status.');
-        }
-
-        $jo->reason = $comment;
-        $jo->cancelled_on = now();
-        $jo->status = 3;
-        $jo->save();
-
-    }
-
-
-
-    public function jobOrder()
-    {
-        $ra = Ra::where('user_id', Auth::user()->id)
-                ->where('active', 1)
-                ->first();
-
-        if(empty($ra)) {
-            return redirect()->back()->with('error', 'Please request to setup your Approvers!');
-        }
-
-
-        $next_jo_series = GC::nextJoSeries(Auth::user()->id);
-
-
-        $uom = Uom::where('active', 1)->get();
-
-
-    	return view('user.job-order', ['uom' => $uom, 'next_jo_series' => $next_jo_series]);
-    }
-
-
-    public function postJobOrder(Request $request)
-    {
-        $request->validate([
-            'date_of_request' => 'required',
-            'date_needed' => 'required',
-            'project' => 'required',
-            'description' => 'required',
-            'attachment' => 'nullable|mimes:pdf|max:10000',
-            'cost' => 'numeric|nullable'
-        ]);
-
-        // check if setup is ok
-        $ra = Ra::where('user_id', Auth::user()->id)
-                ->where('active', 1)
-                ->first();
-
-        if(empty($ra)) {
-            return redirect()->back()->with('error', 'Please request to setup your Approvers!');
-        }
-
-        // validate request data
-
-        // generate jo number per farm with checking
-
-        $number = GeneralController::generateJoNo(Auth::user()->id);
-
-        if($number == '0') {
-            return redirect()->back()->with('error', 'Requestor has no designated farm.');
-        }
-
-
-        $jo = new Jo();
-        $jo->jo_no = $number;
-        $jo->user_id = Auth::user()->id;
-        $jo->requestor = Auth::user()->first_name . ' ' . Auth::user()->last_name;
-        $jo->manager_id = $ra->manager;
-        $jo->date_of_request = date('Y-m-d', strtotime($request->date_of_request));
-        $jo->date_needed = date('Y-m-d', strtotime($request->date_needed));
-        $jo->project_bldg_no = $request->project;
-        $jo->description = $request->description;
-        $jo->remarks = $request->remarks;
-        if($request->cost != NULL) {
-            $jo->cost = $request->cost;
-        }
-
-        if($request->hasFile('attachment')) {
-            $attachment = $request->file('attachment');
-            $filename = $jo->jo_no . '.pdf';
-            $attachment->move(public_path('/uploads/jo/'), $filename);
-            $jo->attachment = $filename;
-        }
-
-        // once saved
-        // create list of items on the JO
-
-        if($jo->save()) {
-
-            $insert = [];
-
-            for($i = 0; $i < count($request->items); $i++) {
-
-                $insert[] = [
-                    'jo_id' => $jo->id,
-                    'item_name' => $request->items[$i],
-                    'uom' => $request->uom[$i],
-                    'quantity' => $request->qty[$i],
-                    'on_stock' => $request->stock[$i] == 'on_stock' ? 1 : 0,
-                    'to_purchase' => $request->stock[$i] == 'to_purchase' ? 1 : 0,
-                ];
-            }
-
-            DB::table('job_order_items')->insert($insert);
-
-        }
-
-
-        // Send mail Notification to Manager
-        $approver = GC::getName($jo->manager_id); # name of manager - important
-        $approver_email = GC::getEmail($jo->manager_id); # email of receiver - important
-        $requestor = $jo->user->first_name . ' ' . $jo->user->last_name; # name of requestor - important
-        $requestor_designation = 'Requestor';
-
-        $jo_view_route = "manager.view.job.order"; # manager route for jo details
-        $jo_id = $jo->id;
-        $jo_no = $jo->jo_no;
-        MC::joManagerApproval($approver, $approver_email, $requestor, $requestor_designation, $jo_view_route, $jo_id, $jo_no);
-
-        return redirect()->route('user.job.order')->with('success', 'Job Order ' . $jo->jo_no . ' Submitted Successfully!');
-        
-
-    }
-
-
-
 
 
 
@@ -364,16 +162,12 @@ class UserController extends Controller
         $request->validate([
             'date_of_request' => 'required',
             'date_needed' => 'required',
-            'project' => 'required',
+            'project_name' => 'required',
             'description' => 'required',
-            'justification' => 'required'
+            'justification' => 'required',
+            'url' => 'required|url'
         ]);
 
-        if($request->hasFile('attachment')) {
-            $request->validate([
-                'attachment' => 'max:50000'
-            ]);
-        }
 
         // check if setup is ok
         $ra = Ra::where('user_id', Auth::user()->id)
@@ -429,9 +223,10 @@ class UserController extends Controller
         $wro->user_id = Auth::user()->id;
         $wro->date_of_request = date('Y-m-d', strtotime($request->date_of_request));
         $wro->date_needed = date('Y-m-d', strtotime($request->date_needed));
-        $wro->project_bldg_no = $request->project;
+        $wro->project_name = $request->project_name;
         $wro->description = $request->description;
         $wro->justification = $request->justification;
+        $wro->url = $request->url;
 
         $wro->approval_sequence = 3;
 
@@ -441,12 +236,6 @@ class UserController extends Controller
         $wro->manager_id = $ra->manager;
         $wro->div_head_id = $ra->div_head;
 
-        if($request->hasFile('attachment')) {
-            $attachment = $request->file('attachment');
-            $filename = $wro->wr_no . '.pdf';
-            $attachment->move(public_path('/uploads/wro/'), $filename);
-            $wro->attachment = $filename;
-        }
 
         if($wro->save()) {
 
@@ -459,7 +248,7 @@ class UserController extends Controller
             $wro_no = $wro->wr_no;
             MC::wroManagerApproval($approver, $approver_email, $requestor, $requestor_designation, $wro_view_route, $wro_id, $wro_no);
 
-            return redirect()->back()->with('success', 'Work Request Order ' . $wro->wr_no . ' Submitted Successfully!');
+            return redirect()->back()->with('success', 'SLA ' . $wro->wr_no . ' Submitted Successfully!');
         }
 
         return redirect()->back()->with('error', 'Please Try Again Later.');
@@ -468,66 +257,6 @@ class UserController extends Controller
     }
 
 
-
-    public function archivedJO()
-    {
-        return view('user.archived-jo');
-    }
-
-
-    public function allArchivedJO(Request $request)
-    {
-        /*
-        $data = [
-            'jo' => NULL,
-            'status' => NULL,
-            'date_of_request' => NULL,
-            'actual_date_filed' => NULL,
-            'action' => NULL,
-        ];
-
-        $jos = Jo::where('user_id', Auth::user()->id)
-                    ->where('archived', 1)
-                    ->get();
-
-        if(count($jos) > 0) {
-            $data = [];
-            foreach($jos as $j) {
-                $data[] = [
-                    'jo' => $j->jo_no,
-                    'status' => GC::viewJoStatus($j->status),
-                    'date_of_request' => date('F j, Y', strtotime($j->date_of_request)),
-                    'actual_date_filed' => date('F j, Y', strtotime($j->created_at)),
-                    'action' => GC::joRequestorAction($j->status, $j->id, $j->jo_no), 
-                ];
-            }
-        }
-
-        return $data;
-        */
-
-        if($request->ajax()) {
-            $jo = Jo::where('user_id', Auth::user()->id)
-                    ->where('archived', 1)
-                    ->get();
-            $data = collect();
-            if(count($jo) > 0) {
-                foreach($jo as $j) {
-                    $data->push([
-                        'jo' => $j->jo_no,
-                        'status' => GC::viewJoStatus($j->status),
-                        'date_of_request' => date('F j, Y', strtotime($j->date_of_request)),
-                        'actual_date_filed' => date('F j, Y', strtotime($j->created_at)),
-                        'action' => GC::joRequestorAction($j->status, $j->id, $j->jo_no)
-                    ]);
-                }
-            }
-            return DataTables::of($data)
-                    ->rawColumns(['status', 'action'])
-                    ->make(true);
-
-        }
-    }
 
 
     public function archivedWRO()

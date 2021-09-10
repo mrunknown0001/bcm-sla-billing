@@ -40,12 +40,6 @@
                 </a>
               </li>
               <li>
-                <a href="{{ route('vp.archived.jo') }}" class="{{ route('vp.archived.jo') == url()->current() ? 'mm-active' : '' }}">
-                  <i class="metismenu-icon pe-7s-portfolio"></i>
-                    Archived JO
-                </a>
-              </li>
-              <li>
                 <a href="{{ route('vp.archived.wro') }}" class="{{ route('vp.archived.wro') == url()->current() ? 'mm-active' : '' }}">
                   <i class="metismenu-icon pe-7s-portfolio"></i>
                     Archived WRO

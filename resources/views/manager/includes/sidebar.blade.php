@@ -39,17 +39,18 @@
                     Dashboard
                 </a>
               </li>
-              <li>
-                <a href="{{ route('manager.archived.jo') }}" class="{{ route('manager.archived.jo') == url()->current() ? 'mm-active' : '' }}">
-                  <i class="metismenu-icon pe-7s-portfolio"></i>
-                    Archived JO
-                </a>
-              </li>
+
               {{-- @if(\App\Http\Controllers\GeneralController::getDeptCode(Auth::user()->dept_id) == 'BCM' || \App\Http\Controllers\GeneralController::trsryMgr(Auth::user()->id)) --}}
               <li>
                 <a href="{{ route('manager.archived.wro') }}" class="{{ route('manager.archived.wro') == url()->current() ? 'mm-active' : '' }}">
                   <i class="metismenu-icon pe-7s-portfolio"></i>
-                    Archived WRO
+                    Archived SLA
+                </a>
+              </li>
+              <li>
+                <a href="">
+                  <i class="metismenu-icon pe-7s-portfolio"></i>
+                    Archived Billing
                 </a>
               </li>
               {{-- @endif --}}

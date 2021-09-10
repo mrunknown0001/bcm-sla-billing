@@ -46,12 +46,6 @@
                 </a>
               </li>
 
-              <li>
-                <a href="{{ route('divhead.jo.archived') }}" class="{{ route('divhead.jo.archived') == url()->current() ? 'mm-active' : '' }}">
-                  <i class="metismenu-icon pe-7s-portfolio"></i>
-                    Archived JO
-                </a>
-              </li>
             </ul>
           </div>
         </div>

@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             WroApprovalSeeder::class,
             PasswordRetention::class,
+            ConfigurationSeeder::class,
         ]);
     }
 }

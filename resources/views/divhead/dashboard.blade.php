@@ -80,23 +80,6 @@
       ]
       });
 
-      $('#jo').DataTable({
-        // serverSide: true,
-        columnDefs: [
-           { className: "dt-center", targets: [ 0, 1, 2, 3, 4 ] }
-        ],
-        ajax: { 
-          url: "{{ route('divhead.all.job.order') }}",
-          dataSrc: ""
-        },
-        columns: [
-          { data: 'jo' },
-          { data: 'status'},
-          { data: 'date_of_request' },
-          { data: 'actual_date_filed' },
-          { data: 'action' },
-      ]
-      });
     });
 
     $(document).on('click', '#view', function (e) {

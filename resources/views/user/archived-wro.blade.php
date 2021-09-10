@@ -1,12 +1,12 @@
 @extends("layouts.app")
 
-@section("title") Archived Work Request Order @endsection
+@section("title") Archived SLA @endsection
 
 @section("header")
   @include("user.includes.header")
 @endsection
 
-@section("page-title") Archived Work Request Order @endsection
+@section("page-title") Archived SLA @endsection
 
 @section("sidebar")
   @include("user.includes.sidebar")
@@ -21,7 +21,7 @@
        <table id="wro" class="table cell-border compact stripe hover" width="99%">
           <thead>
             <tr>
-              <th scope="col">WRO #</th>
+              <th scope="col">SLA #</th>
               <th scope="col">Status</th>
               <th scope="col">Date of Request</th>
               <th scope="col">Actual Date Filed</th>
@@ -69,7 +69,7 @@
         var id = $(this).data('id');
         var text = $(this).data('text');
         Swal.fire({
-          title: 'View Work Request Order Details?',
+          title: 'View SLA Details?',
           text: text,
           type: 'question',
           showCancelButton: true,
@@ -79,7 +79,7 @@
         }).then((result) => {
           if (result.value) {
             // view here
-            window.location.replace("/u/work-order/view/" + id);
+            window.location.replace("/u/sla/view/" + id);
           }
           else {
             Swal.fire({

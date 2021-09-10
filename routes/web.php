@@ -39,28 +39,29 @@ Route::group(['middleware' => 'auth'], function() {
  * Common User URL 
  * User Type == 6
  */
+# All Work Request Order are SLA
 Route::group(['prefix' => 'u', 'middleware' => ['user', 'preventBackHistory']], function () {
 	// User Dashboard
 	Route::get('/dashboard', 'UserController@dashboard')->name('user.dashboard');
 
 	Route::get('/account', 'UserController@account')->name('user.account');
 	
-	Route::get('/all/work-order', 'UserController@allworkOrder')->name('user.all.wro');
+	Route::get('/all/sla', 'UserController@allworkOrder')->name('user.all.wro');
 
-	Route::get('/work-order', 'UserController@workOrder')->name('user.work.order');
+	Route::get('/sla', 'UserController@workOrder')->name('user.work.order');
 
-	Route::post('/work-order', 'UserController@postworkOrder')->name('user.post.work.order');
+	Route::post('/sla', 'UserController@postworkOrder')->name('user.post.work.order');
 
-	Route::get('/wro/number/preview/{farm_id}', 'GeneralController@previewWroNo')->name('user.preview.wrono');
+	Route::get('/sla/number/preview/{farm_id}', 'GeneralController@previewWroNo')->name('user.preview.wrono');
 
-	Route::get('/work-order/view/{id}', 'UserController@viewWorkOrder')->name('user.view.work.order');
+	Route::get('/sla/view/{id}', 'UserController@viewWorkOrder')->name('user.view.work.order');
 
-	Route::get('/work-order/cancel/{id}/{comment}', 'UserController@cancelWorkOrder')->name('user.cancel.work.order');
+	Route::get('/sla/cancel/{id}/{comment}', 'UserController@cancelWorkOrder')->name('user.cancel.work.order');
 
-	Route::get('/wro-download/{id}', 'GeneralController@downloadWro')->name('user.wro.pdf.download');
+	Route::get('/sla-download/{id}', 'GeneralController@downloadWro')->name('user.wro.pdf.download');
 
-	Route::get('/wro/archived', 'UserController@archivedWRO')->name('user.archived.wro');
-	Route::get('/wro/archived/all', 'UserController@allArchivedWRO')->name('user.all.archived.wro');
+	Route::get('/sla/archived', 'UserController@archivedWRO')->name('user.archived.wro');
+	Route::get('/sla/archived/all', 'UserController@allArchivedWRO')->name('user.all.archived.wro');
 });
 
 
@@ -72,31 +73,31 @@ Route::group(['prefix' => 'manager', 'middleware' => ['manager', 'preventBackHis
 
 	Route::get('/account', 'ManagerController@account')->name('manager.account');
 
-	Route::get('/all/work-order', 'ManagerController@allWorkOrder')->name('manager.all.wro');
+	Route::get('/all/sla', 'ManagerController@allWorkOrder')->name('manager.all.wro');
 
-	Route::get('/work-order/view/{id}', 'ManagerController@viewWorkOrder')->name('manager.view.work.order');
+	Route::get('/sla/view/{id}', 'ManagerController@viewWorkOrder')->name('manager.view.work.order');
 
-	Route::get('/wro/approval/{id}', 'ManagerController@wroApproval')->name('manager.wro.approval');
+	Route::get('/sla/approval/{id}', 'ManagerController@wroApproval')->name('manager.wro.approval');
 
-	Route::get('/wro/disapproval/{id}/{comment}', 'ManagerController@wroDisapproval')->name('manager.wro.disapproval');
+	Route::get('/sla/disapproval/{id}/{comment}', 'ManagerController@wroDisapproval')->name('manager.wro.disapproval');
 
-	Route::get('/wro/archive/{id}', 'ManagerController@wroArchive')->name('manager.wro.archive');
+	Route::get('/sla/archive/{id}', 'ManagerController@wroArchive')->name('manager.wro.archive');
 
-	Route::get('/wro/archived', 'ManagerController@archivedWRO')->name('manager.archived.wro');
-	Route::get('/wro/archived/all', 'ManagerController@allArchivedWRO')->name('manager.all.archived.wro');
+	Route::get('/sla/archived', 'ManagerController@archivedWRO')->name('manager.archived.wro');
+	Route::get('/sla/archived/all', 'ManagerController@allArchivedWRO')->name('manager.all.archived.wro');
 
-	Route::get('/wro-download/{id}', 'GeneralController@downloadWro')->name('manager.wro.pdf.download');
+	Route::get('/sla-download/{id}', 'GeneralController@downloadWro')->name('manager.wro.pdf.download');
 
 
 	// BCM Manager Approval and Disapproval
-	Route::get('/wro/bcm/manager/approval/{id}', 'ManagerController@wroBCMManagerApproval')->name('manager.bcm.approve.wro');
+	Route::get('/sla/bcm/manager/approval/{id}', 'ManagerController@wroBCMManagerApproval')->name('manager.bcm.approve.wro');
 
-	Route::get('/wro/bcm/manager/disapproval/{id}/{comment}', 'ManagerController@wroBCMManagerDisapproval')->name('manager.bcm.approve.wro');
+	Route::get('/sla/bcm/manager/disapproval/{id}/{comment}', 'ManagerController@wroBCMManagerDisapproval')->name('manager.bcm.approve.wro');
 
 	// Treasury Manager Approval and Disapproval
-	Route::get('/wro/trsry/manager/approval/{id}', 'ManagerController@wroTrsryManagerApproval')->name('manager.trsry.approve.wro');
+	Route::get('/sla/trsry/manager/approval/{id}', 'ManagerController@wroTrsryManagerApproval')->name('manager.trsry.approve.wro');
 
-	Route::get('/wro/trsry/manager/disapproval/{id}/{comment}', 'ManagerController@wroTrsryManagerDisapproval')->name('manager.trsry.approve.wro');
+	Route::get('/sla/trsry/manager/disapproval/{id}/{comment}', 'ManagerController@wroTrsryManagerDisapproval')->name('manager.trsry.approve.wro');
 
 });
 
@@ -181,7 +182,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin', 'preventBackHistory
 		return redirect()->route('admin.users');
 	});
 
-	Route::get('/work-request-order-setup', 'AdminController@wroSetup')->name('admin.wro.setup');
+	Route::get('/approval-setup', 'AdminController@wroSetup')->name('admin.wro.setup');
 	// Route::get('/work-request-order-setup', function () {
 	// 	return 'hey';
 	// });

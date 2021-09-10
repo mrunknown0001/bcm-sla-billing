@@ -1,12 +1,12 @@
 @extends("layouts.app")
 
-@section("title") Work Order Form @endsection
+@section("title") SLA Form @endsection
 
 @section("header")
   @include("user.includes.header")
 @endsection
 
-@section("page-title") Work Order Form @endsection
+@section("page-title") SLA Form @endsection
 
 @section("sidebar")
   @include("user.includes.sidebar")
@@ -33,8 +33,8 @@
         </div>
         @endif
       	<div class="form-group">
-      		<label for="work_order_number">Work Order #</label>
-      		<input type="text" name="work_order_number" id="work_order_number" placeholder="Work Request Order Number is Automatically Generated" value="{{ $next_wro_number }} (Possible Next Work Request Order # Series)" class="form-control" disabled="true">
+      		<label for="work_order_number">SLA #</label>
+      		<input type="text" name="work_order_number" id="work_order_number" placeholder="Service Level Agreement Number is Automatically Generated" value="{{ $next_wro_number }} (Possible Next Service Level Agreement # Series)" class="form-control" disabled="true">
       	</div>
       	<div class="form-group">
       		<label for="full_name">Name of Requestor</label>
@@ -49,8 +49,8 @@
       		<input type="date" name="date_needed" id="date_needed" placeholder="mm/dd/yyyy" value="" class="form-control" required="">
       	</div>
       	<div class="form-group">
-      		<label for="project">Project Bldg. # <span class="red">*</span></label>
-      		<input type="text" name="project" id="project" placeholder="Project Bldg. #" value="" class="form-control" required="">
+      		<label for="project">Project Name<span class="red">*</span></label>
+      		<input type="text" name="project_name" id="project_name" placeholder="Project Name" value="" class="form-control" required="">
       	</div>
       	<div class="form-group">
       		<label for="description">Project Description/Purpose <span class="red">*</span></label>
@@ -61,18 +61,12 @@
       		<label for="justification">Project Justification <span class="red">*</span></label>
       		<textarea type="text" name="justification" id="justification" placeholder="Project Justification" class="form-control" required="" rows="5"></textarea>
       	</div>
+
         <div class="form-group">
-          <label for="attachment">Attachment</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Upload</span>
-            </div>
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="attachment" name="attachment" accept="application/pdf">
-              <label class="custom-file-label" for="attachment">Choose PDF File</label>
-            </div>
-          </div>
+          <label for="url">URL <span class="red">*</span></label>
+          <input type="text" name="url" id="url" placeholder="URL" value="" class="form-control" required="">
         </div>
+
       	<div class="form-group">
       		<button type="submit" class="btn btn-primary btn-lg">Submit</button>
       	</div>
@@ -108,7 +102,7 @@
 
     $('#farm').on('change', function () {
       $.ajax({
-        url: "/u/wro/number/preview/" + $(this).val(),
+        url: "/u/sla/number/preview/" + $(this).val(),
         type: "GET",
         success: function(data) {
           $('#work_order_number').val(data);

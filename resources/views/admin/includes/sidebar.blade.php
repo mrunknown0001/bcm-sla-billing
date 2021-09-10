@@ -50,14 +50,7 @@
               <li>
                 <a href="{{ route('admin.wro.setup') }}" class="{{ route('admin.wro.setup') == url()->current() ? 'mm-active' : '' }}">
                   <i class="metismenu-icon pe-7s-users"></i>
-                    WRO Approval Setup
-                </a>
-              </li>
-
-              <li>
-                <a href="{{ route('admin.uom') }}" class="{{ route('admin.uom') == url()->current() ? 'mm-active' : '' }}">
-                  <i class="metismenu-icon pe-7s-gym"></i>
-                    UoM
+                    Approval Setup
                 </a>
               </li>
 

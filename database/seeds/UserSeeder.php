@@ -40,9 +40,9 @@ class UserSeeder extends Seeder
                 'farm_id' => 2,
             ],
             [
-                'first_name' => 'June',
-                'last_name' => 'Dela Cruz',
-                'email' => 'requestor2@bfcgroup.org',
+                'first_name' => 'Dang',
+                'last_name' => 'Baniaga',
+                'email' => 'd.baniaga@bfcgroup.org',
                 'password' => bcrypt('password'),
                 'user_type' => 6, // user / requestor
                 'active' => 1,
@@ -69,6 +69,22 @@ class UserSeeder extends Seeder
                 'active' => 1,
             ],
             [
+                'first_name' => 'Leo',
+                'last_name' => 'Derpo',
+                'email' => 'l.derpo@bfcgroup.org',
+                'password' => bcrypt('password'),
+                'user_type' => 4, // manager
+                'active' => 1,
+            ],
+            [
+                'first_name' => 'Tony',
+                'last_name' => 'Acibar',
+                'email' => 'a.acibar@bfcgroup.org',
+                'password' => bcrypt('password'),
+                'user_type' => 3, // manager
+                'active' => 1,
+            ],
+            [
                 'first_name' => 'Ancel',
                 'last_name' => 'Roque',
                 'email' => 'a.roque@bfcgroup.org',
@@ -82,14 +98,6 @@ class UserSeeder extends Seeder
                 'email' => 'tettadizon@bfcgroup.org',
                 'password' => bcrypt('password'),
                 'user_type' => 2, // vp
-                'active' => 1,
-            ],
-            [
-                'first_name' => 'Gil',
-                'last_name' => 'Austria',
-                'email' => 'gil.austria@bfcgroup.org',
-                'password' => bcrypt('password'),
-                'user_type' => 1, // coo
                 'active' => 1,
             ],
             [

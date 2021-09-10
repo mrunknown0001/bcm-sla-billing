@@ -1,6 +1,6 @@
 @extends("layouts.app")
 
-@section("title") Work Request Order View @endsection
+@section("title") SLA View @endsection
 
 @section("styles")
 
@@ -10,7 +10,7 @@
   @include("user.includes.header")
 @endsection
 
-@section("page-title") Work Request Order Details @endsection
+@section("page-title") SLA Details @endsection
 
 @section("sidebar")
   @include("user.includes.sidebar")
@@ -28,7 +28,7 @@
       <p>Status: {!! App\Http\Controllers\GeneralController::viewWroStatus($wro->approval_sequence, $wro->cancelled, $wro->disapproved) !!}</p>
       @include('includes.common.wro-approvals')
       @if($wro->cancelled != 1 && $wro->approval_sequence == 1 && $wro->disapproved != 1)
-        <button id="cancel" data-id="{{ $wro->id }}" data-text="Do you want to cancel Work Request Order {{ $wro->wr_no }}?" class="btn btn-danger btn-xl"><i class="pe-7s-close-circle"></i> Cancel</button>
+        <button id="cancel" data-id="{{ $wro->id }}" data-text="Do you want to cancel SLA {{ $wro->wr_no }}?" class="btn btn-danger btn-xl"><i class="pe-7s-close-circle"></i> Cancel</button>
       @else
         @if($wro->cancelled == 1)
           <p>Cancelled By: {{ App\Http\Controllers\GeneralController::getName($wro->user_id) }}</p>
@@ -50,7 +50,7 @@
       var id = $(this).data('id');
       var text = $(this).data('text');
       Swal.fire({
-        title: 'Cancel Work Request Order?',
+        title: 'Cancel SLA?',
         text: text,
         type: 'question',
         input: 'text',
@@ -66,7 +66,7 @@
         if (result.value) {
 
           $.ajax({
-            url: "/u/work-order/cancel/" + id + "/" + result.value,
+            url: "/u/sla/cancel/" + id + "/" + result.value,
             type: "GET",
             success: function() {
               window.location.reload(); 
