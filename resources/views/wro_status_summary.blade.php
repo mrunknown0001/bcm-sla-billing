@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Work Request Order Status Summary</title>
+    <title>SLA Status Summary</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
 
@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-md-12">
             <p class="text-center"><img src="https://jwo.bfcgroup.ph/assets/login/img/logo.png" alt="Brookside Group of Companies" height="60px"></p>
-            <p class="text-center"><strong>Work Request Order Summary Report</strong></p>
+            <p class="text-center"><strong>SLA Summary Report</strong></p>
             <br>
             <h4>{{ $month }} {{ $year }}</h4>
             <br>
@@ -55,10 +55,6 @@
                 <tr>
                   <td>Approved by Treasury Manager</td>
                   <td>{{ $treasury_manager_approved }}</td>
-                </tr>
-                <tr>
-                  <td>Approved by COO</td>
-                  <td>{{ $coo_approved }}</td>
                 </tr>
                 <tr>
                   <td>Approved by VP on General Services</td>

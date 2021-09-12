@@ -42,7 +42,7 @@
               <li>
                 <a href="{{ route('divhead.archived.wro') }}" class="{{ route('divhead.archived.wro') == url()->current() ? 'mm-active' : '' }}">
                   <i class="metismenu-icon pe-7s-portfolio"></i>
-                    Archived WRO
+                    Archived SLA
                 </a>
               </li>
 

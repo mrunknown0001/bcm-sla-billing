@@ -6,7 +6,7 @@
 
 	<p>Good day!</p>
 
-	<p style="text-align: justify-all;">Work Request Order <b><u>{{ $wro_no }}</u></b>  was approved. You may proceed on the next step.</p>
+	<p style="text-align: justify-all;">SLA <b><u>{{ $wro_no }}</u></b>  was approved. You may proceed on the next step.</p>
 
 	<p>Thank you and regards,</p>
 

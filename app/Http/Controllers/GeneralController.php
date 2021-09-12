@@ -519,7 +519,7 @@ class GeneralController extends Controller
             }
             else
              {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <button id='archive1' data-id='" . $id . "' data-text='Do you want to archive Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-portfolio'></i> Archive</button>";
+                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <button id='archive1' data-id='" . $id . "' data-text='Do you want to archive SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-portfolio'></i> Archive</button>";
             }
         }
         else {
@@ -552,22 +552,22 @@ class GeneralController extends Controller
     {
         if($cancelled == 0 && $disapproved != 1 && $archived == 0) {
             if($status == 6) {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>
-                <button id='approve1' data-id='" . $id . "' data-text='Do you want to approve Work Request Order " . $wro . "?' class='btn btn-success btn-xs'><i class='pe-7s-check'></i> Approve</button>
-                <button id='disapprove1' data-id='" . $id . "' data-text='Do you want to disapprove Work Request Order " . $wro . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
+                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>
+                <button id='approve1' data-id='" . $id . "' data-text='Do you want to approve SLA " . $wro . "?' class='btn btn-success btn-xs'><i class='pe-7s-check'></i> Approve</button>
+                <button id='disapprove1' data-id='" . $id . "' data-text='Do you want to disapprove SLA " . $wro . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
             }
             elseif($status == 9) {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='" . route('divhead.wro.pdf.download', ['id' => $id]) . "' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a>";
+                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='" . route('divhead.wro.pdf.download', ['id' => $id]) . "' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a>";
             }
             else {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
             }
         }
         elseif($disapproved == 1) {
-            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
         }
         else {
-            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
         }
     }
 
@@ -600,22 +600,22 @@ class GeneralController extends Controller
     {
         if($cancelled == 0 && $disapproved != 1) {
             if($status == 4) {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>
-                <button id='approve_gs_div_head' data-id='" . $id . "' data-text='Do you want to approve Work Request Order " . $wro . "?' class='btn btn-success btn-xs'><i class='pe-7s-check'></i> Approve</button>
-                <button id='disapprove_gs_div_head' data-id='" . $id . "' data-text='Do you want to disapprove Work Request Order " . $wro . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
+                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>
+                <button id='approve_gs_div_head' data-id='" . $id . "' data-text='Do you want to approve SLA " . $wro . "?' class='btn btn-success btn-xs'><i class='pe-7s-check'></i> Approve</button>
+                <button id='disapprove_gs_div_head' data-id='" . $id . "' data-text='Do you want to disapprove SLA " . $wro . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
             }
             elseif($status == 9) {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
             }
             else {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
             }
         }
         elseif($disapproved == 1) {
-            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
         }
         else {
-            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
         }
     }
 
@@ -624,22 +624,22 @@ class GeneralController extends Controller
     {
         if($cancelled == 0 && $disapproved != 1) {
             if($status == 7) {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>
-                <button id='approve_trsry_mgr' data-id='" . $id . "' data-text='Do you want to approve Work Request Order " . $wro . "?' class='btn btn-success btn-xs'><i class='pe-7s-check'></i> Approve</button>
-                <button id='disapprove_trsry_mgr' data-id='" . $id . "' data-text='Do you want to disapprove Work Request Order " . $wro . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
+                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>
+                <button id='approve_trsry_mgr' data-id='" . $id . "' data-text='Do you want to approve SLA " . $wro . "?' class='btn btn-success btn-xs'><i class='pe-7s-check'></i> Approve</button>
+                <button id='disapprove_trsry_mgr' data-id='" . $id . "' data-text='Do you want to disapprove SLA " . $wro . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
             }
             elseif($status == 9) {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
             }
             else {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
             }
         }
         elseif($disapproved == 1) {
-            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
         }
         else {
-            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
         }
     }
 
@@ -648,48 +648,25 @@ class GeneralController extends Controller
     {
         if($cancelled == 0 && $disapproved != 1) {
             if($status == 8) {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>
-                <button id='approve_gs_vp' data-id='" . $id . "' data-text='Do you want to approve Work Request Order " . $wro . "?' class='btn btn-success btn-xs'><i class='pe-7s-check'></i> Approve</button>
-                <button id='disapprove_gs_vp' data-id='" . $id . "' data-text='Do you want to disapprove Work Request Order " . $wro . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
+                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>
+                <button id='approve_gs_vp' data-id='" . $id . "' data-text='Do you want to approve SLA " . $wro . "?' class='btn btn-success btn-xs'><i class='pe-7s-check'></i> Approve</button>
+                <button id='disapprove_gs_vp' data-id='" . $id . "' data-text='Do you want to disapprove SLA " . $wro . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
             }
             elseif($status == 9) {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
             }
             else {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
             }
         }
         elseif($disapproved == 1) {
-            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
         }
         else {
-            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
         }
     }
 
-
-    public static function wroCooAction($status, $id, $wro, $cancelled, $disapproved, $archived)
-    {
-        if($cancelled == 0 && $disapproved != 1) {
-            if($status == 6) {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>
-                <button id='approve_coo' data-id='" . $id . "' data-text='Do you want to approve Work Request Order " . $wro . "?' class='btn btn-success btn-xs'><i class='pe-7s-check'></i> Approve</button>
-                <button id='disapprove_coo' data-id='" . $id . "' data-text='Do you want to disapprove Work Request Order " . $wro . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
-            }
-            elseif($status == 8) {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
-            }
-            else {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
-            }
-        }
-        elseif($disapproved == 1) {
-            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
-        }
-        else {
-            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Work Request Order " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
-        }
-    }
 
 
     public static function checkBcmManager($id)

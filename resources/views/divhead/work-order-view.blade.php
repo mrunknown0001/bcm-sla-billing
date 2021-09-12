@@ -1,12 +1,12 @@
 @extends("layouts.app")
 
-@section("title") Work Order View @endsection
+@section("title") SLA @endsection
 
 @section("header")
   @include("divhead.includes.header")
 @endsection
 
-@section("page-title") Work Order View @endsection
+@section("page-title") SLA @endsection
 
 @section("sidebar")
   @include("divhead.includes.sidebar")
@@ -24,13 +24,13 @@
       {{-- Status --}}
       <p>Status: {!! App\Http\Controllers\GeneralController::viewWroStatus($wro->approval_sequence, $wro->cancelled, $wro->disapproved) !!}</p>
       @include('includes.common.wro-approvals')
-      @if($wro->cancelled != 1 && $wro->approval_sequence == 2 && $wro->disapproved != 1)
-        <button id="approve" data-id="{{ $wro->id }}" data-text="Do you want to approve Work Request Order {{ $wro->wr_no }}?" class="btn btn-success btn-xl"><i class="pe-7s-close-circle"></i> Approve</button>
-        <button id="disapprove" data-id="{{ $wro->id }}" data-text="Do you want to disapprove Work Request Order {{ $wro->wr_no }}?" class="btn btn-danger btn-xl"><i class="pe-7s-close-circle"></i> Disapprove</button>
+      @if($wro->cancelled != 1 && $wro->approval_sequence == 6 && $wro->disapproved != 1)
+        <button id="approve" data-id="{{ $wro->id }}" data-text="Do you want to approve SLA {{ $wro->wr_no }}?" class="btn btn-success btn-xl"><i class="pe-7s-close-circle"></i> Approve</button>
+        <button id="disapprove" data-id="{{ $wro->id }}" data-text="Do you want to disapprove SLA {{ $wro->wr_no }}?" class="btn btn-danger btn-xl"><i class="pe-7s-close-circle"></i> Disapprove</button>
       @elseif($wro->cancelled != 1 && $wro->approval_sequence == 4 && $wro->disapproved != 1)
 	      @if(App\Http\Controllers\GeneralController::checkGsDivHead(Auth::user()->id))
-	        <button id="approve_gs_div_head" data-id="{{ $wro->id }}" data-text="Do you want to approve Work Request Order {{ $wro->wr_no }}?" class="btn btn-success btn-xl"><i class="pe-7s-close-circle"></i> Approve</button>
-	        <button id="disapprove_gs_div_head" data-id="{{ $wro->id }}" data-text="Do you want to disapprove Work Request Order {{ $wro->wr_no }}?" class="btn btn-danger btn-xl"><i class="pe-7s-close-circle"></i> Disapprove</button>
+	        <button id="approve_gs_div_head" data-id="{{ $wro->id }}" data-text="Do you want to approve SLA {{ $wro->wr_no }}?" class="btn btn-success btn-xl"><i class="pe-7s-close-circle"></i> Approve</button>
+	        <button id="disapprove_gs_div_head" data-id="{{ $wro->id }}" data-text="Do you want to disapprove SLA {{ $wro->wr_no }}?" class="btn btn-danger btn-xl"><i class="pe-7s-close-circle"></i> Disapprove</button>
 	      @endif
       @else
         @if($wro->cancelled == 1)
@@ -57,7 +57,7 @@
 	      var id = $(this).data('id');
 	      var text = $(this).data('text');
 	      Swal.fire({
-	        title: 'Approve Work Request Order?',
+	        title: 'Approve SLA?',
 	        text: text,
 	        type: 'question',
 	        showCancelButton: true,
@@ -104,7 +104,7 @@
 	      var id = $(this).data('id');
 	      var text = $(this).data('text');
 	      Swal.fire({
-	        title: 'Disapprove Work Request Order?',
+	        title: 'Disapprove SLA?',
 	        text: text,
 	        type: 'question',
 	        input: 'text',
@@ -156,7 +156,7 @@
 	      var id = $(this).data('id');
 	      var text = $(this).data('text');
 	      Swal.fire({
-	        title: 'Approve Work Request Order?',
+	        title: 'Approve SLA?',
 	        text: text,
 	        type: 'question',
 	        showCancelButton: true,
@@ -203,7 +203,7 @@
 	      var id = $(this).data('id');
 	      var text = $(this).data('text');
 	      Swal.fire({
-	        title: 'Disapprove Work Request Order?',
+	        title: 'Disapprove SLA?',
 	        text: text,
 	        type: 'question',
 	        input: 'text',

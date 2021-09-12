@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Work Request Order PDF Download</title>
+    <title>SLA PDF Download</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
 
@@ -12,10 +12,10 @@
     <div class="row">
         <div class="col-md-12">
             <p class="text-center"><img src="https://jwo.bfcgroup.ph/assets/login/img/logo.png" alt="Brookside Group of Companies" height="60px"></p>
-            <p class="text-center"><strong>Work Request Order Document</strong></p>
+            <p class="text-center"><strong>Server Level Agreement Document</strong></p>
             <br>
             <p>
-                Work Request Order #: <b>{{ $wro->wr_no }}</b>
+                SLAr #: <b>{{ $wro->wr_no }}</b>
                 <br>
                 Requestor: <b>{{ ucfirst($wro->user->first_name) . ' ' . ucfirst($wro->user->last_name) }}</b>
                 <br>
@@ -23,7 +23,7 @@
                 <br>
                 Date Needed: <b>{{ date('F j, Y', strtotime($wro->date_needed)) }}</b>
                 <br>
-                Project Bldg. #: <b>{{ $wro->project_bldg_no }}</b>
+                Project Name: <b>{{ $wro->project_name }}</b>
             </p>
 
             <p>Project Description/Purpose:</p>
@@ -32,6 +32,8 @@
 
             <p>Project Justification:</p>
             <p><i>{{ $wro->justification }}</i></p>
+
+            <p>URL: <b>{{ $wro->url }}</b></p>
 
             <br>
             <br>

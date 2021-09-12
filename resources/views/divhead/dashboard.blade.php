@@ -18,27 +18,13 @@
       @include('includes.notice')
       @include('includes.success')
       @include('includes.error')
-      <h4>Job Order Lists</h4>
 
-       <table id="jo" class="table cell-border compact stripe hover" width="99%">
-          <thead>
-            <tr>
-              <th scope="col">JO #</th>
-              <th scope="col">Status</th>
-              <th scope="col">Date of Request</th>
-              <th scope="col">Actual Date Filed</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-        </table>
-        <hr>
-
-	    <h4>Work Request Order Lists</h4>
+	    <h4>SLA</h4>
 
        <table id="wro" class="table cell-border compact stripe hover" width="99%">
           <thead>
             <tr>
-              <th scope="col">WRO #</th>
+              <th scope="col">SLA #</th>
               <th scope="col">Status</th>
               <th scope="col">Date of Request</th>
               <th scope="col">Actual Date Filed</th>
@@ -82,45 +68,13 @@
 
     });
 
-    $(document).on('click', '#view', function (e) {
-        e.preventDefault();
-        var id = $(this).data('id');
-        var text = $(this).data('text');
-        Swal.fire({
-          title: 'View Job Order Details?',
-          text: text,
-          type: 'question',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Continue'
-        }).then((result) => {
-          if (result.value) {
-            // view here
-            window.location.replace("/div-head/job-order/view/" + id);
-
-          }
-          else {
-            Swal.fire({
-              title: 'Action Cancelled',
-              text: "",
-              type: 'info',
-              showCancelButton: false,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Close'
-            });
-          }
-        });
-    });
-
 
     $(document).on('click', '#view1', function (e) {
         e.preventDefault();
         var id = $(this).data('id');
         var text = $(this).data('text');
         Swal.fire({
-          title: 'View Work Request Order Details?',
+          title: 'View SLA Details?',
           text: text,
           type: 'question',
           showCancelButton: true,
@@ -130,7 +84,7 @@
         }).then((result) => {
           if (result.value) {
             // view here
-            window.location.replace("/div-head/work-order/view/" + id);
+            window.location.replace("/div-head/sla/view/" + id);
 
           }
           else {
@@ -152,7 +106,7 @@
         var id = $(this).data('id');
         var text = $(this).data('text');
         Swal.fire({
-          title: 'Approve Work Request Order?',
+          title: 'Approve SLA?',
           text: text,
           type: 'question',
           showCancelButton: true,
@@ -162,7 +116,7 @@
         }).then((result) => {
           if (result.value) {
             $.ajax({
-              url: "/div-head/wro/approval/" + id,
+              url: "/div-head/sla/approval/" + id,
               type: "GET",
               success: function() {
                 Swal.fire({
@@ -212,7 +166,7 @@
         var id = $(this).data('id');
         var text = $(this).data('text');
         Swal.fire({
-          title: 'Disapprove Work Request Order?',
+          title: 'Disapprove SLA?',
           text: text,
           type: 'question',
           input: 'text',
@@ -227,7 +181,7 @@
         }).then((result) => {
           if (result.value) {
             $.ajax({
-              url: "/div-head/wro/disapproval/" + id + "/" + result.value,
+              url: "/div-head/sla/disapproval/" + id + "/" + result.value,
               type: "GET",
               success: function() {
                 Swal.fire({
@@ -277,7 +231,7 @@
         var id = $(this).data('id');
         var text = $(this).data('text');
         Swal.fire({
-          title: 'Approve Work Request Order?',
+          title: 'Approve SLA?',
           text: text,
           type: 'question',
           showCancelButton: true,
@@ -287,7 +241,7 @@
         }).then((result) => {
           if (result.value) {
             $.ajax({
-              url: "/div-head/gs/wro/approval/" + id,
+              url: "/div-head/gs/sla/approval/" + id,
               type: "GET",
               success: function() {
                 Swal.fire({
@@ -336,7 +290,7 @@
         var id = $(this).data('id');
         var text = $(this).data('text');
         Swal.fire({
-          title: 'Disapprove Work Request Order?',
+          title: 'Disapprove SLA?',
           text: text,
           type: 'question',
           input: 'text',
@@ -351,7 +305,7 @@
         }).then((result) => {
           if (result.value) {
             $.ajax({
-              url: "/div-head/gs/wro/disapproval/" + id + "/" + result.value,
+              url: "/div-head/gs/sla/disapproval/" + id + "/" + result.value,
               type: "GET",
               success: function() {
                 Swal.fire({

@@ -1,12 +1,12 @@
 @extends("layouts.app")
 
-@section("title") Archived Work Request Order @endsection
+@section("title") Archived SLA @endsection
 
 @section("header")
   @include("divhead.includes.header")
 @endsection
 
-@section("page-title") Archived Work Request Order @endsection
+@section("page-title") Archived SLA @endsection
 
 @section("sidebar")
   @include("divhead.includes.sidebar")
@@ -15,14 +15,14 @@
 @section("page-content")
   <div class="row">
     <div class="col-md-12">
-      {{-- <h4>Archived Work Request Order Lists</h4> --}}
+      {{-- <h4>Archived SLA Lists</h4> --}}
 
         @include('includes.error')
         @include('includes.success')
        <table id="wro" class="table cell-border compact stripe hover" width="99%">
           <thead>
             <tr>
-              <th scope="col">WRO #</th>
+              <th scope="col">SLA #</th>
               <th scope="col">Status</th>
               <th scope="col">Date of Request</th>
               <th scope="col">Actual Date Filed</th>
@@ -69,7 +69,7 @@
         var id = $(this).data('id');
         var text = $(this).data('text');
         Swal.fire({
-          title: 'View Work Request Order Details?',
+          title: 'View SLA Details?',
           text: text,
           type: 'question',
           showCancelButton: true,

@@ -16,26 +16,13 @@
   <div class="row">
     <div class="col-md-12">
       @include('includes.notice')
-	    <h4>Job Order Lists</h4>
 
-       <table id="jo" class="table cell-border compact stripe hover" width="99%">
-          <thead>
-            <tr>
-              <th scope="col">JO #</th>
-              <th scope="col">Status</th>
-              <th scope="col">Date of Request</th>
-              <th scope="col">Actual Date Filed</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-        </table>
-        <hr>
-      <h4>Work Request Order Lists</h4>
+      <h4>SLA List</h4>
 
        <table id="wro" class="table cell-border compact stripe hover" width="99%">
           <thead>
             <tr>
-              <th scope="col">WRO #</th>
+              <th scope="col">SLA #</th>
               <th scope="col">Status</th>
               <th scope="col">Date of Request</th>
               <th scope="col">Actual Date Filed</th>
@@ -245,7 +232,7 @@
         var id = $(this).data('id');
         var text = $(this).data('text');
         Swal.fire({
-          title: 'View Work Request Order Details?',
+          title: 'View SLA Details?',
           text: text,
           type: 'question',
           showCancelButton: true,
@@ -255,7 +242,7 @@
         }).then((result) => {
           if (result.value) {
             // view here
-            window.location.replace("/vp/work-order/view/" + id);
+            window.location.replace("/vp/sla/view/" + id);
 
           }
           else {
@@ -278,7 +265,7 @@
         var id = $(this).data('id');
         var text = $(this).data('text');
         Swal.fire({
-          title: 'Approve Work Request Order?',
+          title: 'Approve SLA?',
           text: text,
           type: 'question',
           showCancelButton: true,
@@ -288,7 +275,7 @@
         }).then((result) => {
           if (result.value) {
             $.ajax({
-              url: "/vp/wro/approval/" + id,
+              url: "/vp/sla/approval/" + id,
               type: "GET",
               success: function() {
                 Swal.fire({
@@ -337,7 +324,7 @@
         var id = $(this).data('id');
         var text = $(this).data('text');
         Swal.fire({
-          title: 'Disapprove Work Request Order?',
+          title: 'Disapprove SLA?',
           text: text,
           type: 'question',
           input: 'text',
@@ -352,7 +339,7 @@
         }).then((result) => {
           if (result.value) {
             $.ajax({
-              url: "/vp/wro/disapproval/" + id + "/" + result.value,
+              url: "/vp/sla/disapproval/" + id + "/" + result.value,
               type: "GET",
               success: function() {
                 Swal.fire({

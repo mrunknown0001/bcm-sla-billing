@@ -1,5 +1,7 @@
 <?php
 
+# WRO is interchanged with SLA
+
 use Illuminate\Support\Facades\Route;
 
 // User Login
@@ -17,16 +19,16 @@ Route::post('/reset-password', 'LoginController@postPasswordReset')->name('post.
 
 Route::group(['middleware' => 'auth'], function() {
 
-	Route::get('/wro/download/attachement/{id}', 'WorkOrderController@downloadWro')->name('download.wro.attachement');
+	Route::get('/sla/download/attachement/{id}', 'WorkOrderController@downloadWro')->name('download.wro.attachement');
 
 	// Accounting & Purchasing
 	Route::get('/reports', 'ReportController@index')->name('reports');
-	Route::get('/reports/all/wro/{from?}/{to?}/{status?}', 'ReportController@allWro')->name('reports.all.wro');
+	Route::get('/reports/all/sla/{from?}/{to?}/{status?}', 'ReportController@allWro')->name('reports.all.wro');
 
 
-	Route::get('/reports/view/wro/{id}', 'ReportController@viewWro')->name('reports.view.wro');
+	Route::get('/reports/view/sla/{id}', 'ReportController@viewWro')->name('reports.view.wro');
 
-	Route::get('/reports/work-order/{status?}', 'ReportController@wroStatus')->name('reports.wro..status');
+	Route::get('/reports/sla/{status?}', 'ReportController@wroStatus')->name('reports.wro..status');
 
 	Route::post('/reports/generate/download', 'ReportController@generateDownload')->name('reports.generate.download');
 
@@ -109,22 +111,22 @@ Route::group(['prefix' => 'div-head', 'middleware' => ['divhead', 'preventBackHi
 
 	Route::get('/account', 'DivHeadController@account')->name('divhead.account');
 
-	Route::get('/work-order/all', 'DivHeadController@allWorkOrder')->name('divhead.all.work.order');
+	Route::get('/sla/all', 'DivHeadController@allWorkOrder')->name('divhead.all.work.order');
 
-	Route::get('/work-order/view/{id}', 'DivHeadController@viewWorkOrder')->name('divhead.view.work.order');
+	Route::get('/sla/view/{id}', 'DivHeadController@viewWorkOrder')->name('divhead.view.work.order');
 
-	Route::get('/wro/approval/{id}', 'DivHeadController@wroApproval')->name('divhead.wro.approval');
+	Route::get('/sla/approval/{id}', 'DivHeadController@wroApproval')->name('divhead.wro.approval');
 
-	Route::get('/wro/disapproval/{id}/{comment}', 'DivHeadController@wroDisapproval')->name('divhead.wro.disapproval');
+	Route::get('/sla/disapproval/{id}/{comment}', 'DivHeadController@wroDisapproval')->name('divhead.wro.disapproval');
 
-	Route::get('/wro-download/{id}', 'GeneralController@downloadWro')->name('divhead.wro.pdf.download');
+	Route::get('/sla-download/{id}', 'GeneralController@downloadWro')->name('divhead.wro.pdf.download');
 
-	Route::get('/wro/archived', 'DivHeadController@archivedWRO')->name('divhead.archived.wro');
-	Route::get('/wro/archived/all', 'DivHeadController@allArchivedWRO')->name('divhead.all.archived.wro');	
+	Route::get('/sla/archived', 'DivHeadController@archivedWRO')->name('divhead.archived.wro');
+	Route::get('/sla/archived/all', 'DivHeadController@allArchivedWRO')->name('divhead.all.archived.wro');	
 
-	Route::get('/gs/wro/approval/{id}', 'DivHeadController@wroGsDivHeadApproval')->name('divhead.gs.wro.approval');
+	Route::get('/gs/sla/approval/{id}', 'DivHeadController@wroGsDivHeadApproval')->name('divhead.gs.wro.approval');
 
-	Route::get('/gs/wro/disapproval/{id}/{comment}', 'DivHeadController@wroGsDivHeadDisapproval')->name('divhead.gs.wro.disapproval');
+	Route::get('/gs/sla/disapproval/{id}/{comment}', 'DivHeadController@wroGsDivHeadDisapproval')->name('divhead.gs.wro.disapproval');
 });
 
 
@@ -135,17 +137,17 @@ Route::group(['prefix' => 'vp', 'middleware' => ['vp', 'preventBackHistory']], f
 
 	Route::get('/account', 'VpController@account')->name('vp.account');
 
-	Route::get('/work-order/view/{id}', 'VpController@viewWorkOrder')->name('vp.view.work.order');
+	Route::get('/sla/view/{id}', 'VpController@viewWorkOrder')->name('vp.view.work.order');
 
-	Route::get('/work-order/all', 'VpController@allWorkOrder')->name('vp.all.work.order');
+	Route::get('/sla/all', 'VpController@allWorkOrder')->name('vp.all.work.order');
 
-	Route::get('/wro/approval/{id}', 'VpController@wroGsVPApproval')->name('vp.wro.approval');
+	Route::get('/sla/approval/{id}', 'VpController@wroGsVPApproval')->name('vp.wro.approval');
 
-	Route::get('/wro/disapproval/{id}/{comment}', 'VpController@wroGsVpDisapproval')->name('vp.wro.disapproval');
+	Route::get('/sla/disapproval/{id}/{comment}', 'VpController@wroGsVpDisapproval')->name('vp.wro.disapproval');
 
-	Route::get('/wro/archived', 'VpController@archivedWro')->name('vp.archived.wro');
+	Route::get('/sla/archived', 'VpController@archivedWro')->name('vp.archived.wro');
 
-	Route::get('/wro/archived/all', 'VpController@allArchivedWro')->name('vp.all.archived.wro');
+	Route::get('/sla/archived/all', 'VpController@allArchivedWro')->name('vp.all.archived.wro');
 
 });
 
@@ -187,8 +189,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin', 'preventBackHistory
 	// 	return 'hey';
 	// });
 
-	Route::get('/wro/setup/{code}', 'WorkOrderController@wroSetupApprover')->name('admin.wro.setup.form');
-	Route::post('/wro/setup', 'WorkOrderController@postWroSetupApprover')->name('admin.post.wro.setup');
+	Route::get('/sla/setup/{code}', 'WorkOrderController@wroSetupApprover')->name('admin.wro.setup.form');
+	Route::post('/sla/setup', 'WorkOrderController@postWroSetupApprover')->name('admin.post.wro.setup');
 
 	Route::get('/get/managers', 'GeneralController@getManagers')->name('admin.get.managers');
 
@@ -221,7 +223,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin', 'preventBackHistory
 
 
 	// Truncate WRO and WRO Number
-	Route::get('/truncate/wro', 'AdminController@truncateWro')->name('admin.truncate.wro');
+	Route::get('/truncate/sla', 'AdminController@truncateWro')->name('admin.truncate.wro');
 
 
 

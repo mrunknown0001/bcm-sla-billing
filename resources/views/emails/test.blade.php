@@ -12,7 +12,7 @@
 		<p style="text-align: center;">
 			<img src="{{ asset('/assets/login/img/logo-mail.png') }}" alt="Brookside Group of Companies">
 		</p>
-		<h3 style="text-align: center;">Brookside Job and Work Request Order System</h3>
+		<h3 style="text-align: center;">Brookside SLA and Billing System</h3>
 
 		<p>Hi <b>{{ $approver }}</b>!</p>
 

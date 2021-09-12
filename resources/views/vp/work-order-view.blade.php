@@ -1,12 +1,12 @@
 @extends("layouts.app")
 
-@section("title") Work Order View @endsection
+@section("title") SLA View @endsection
 
 @section("header")
   @include("vp.includes.header")
 @endsection
 
-@section("page-title") Work Order View @endsection
+@section("page-title") SLA View @endsection
 
 @section("sidebar")
   @include("vp.includes.sidebar")
@@ -24,9 +24,9 @@
       {{-- Status --}}
       <p>Status: {!! App\Http\Controllers\GeneralController::viewWroStatus($wro->approval_sequence, $wro->cancelled, $wro->disapproved) !!}</p>
       @include('includes.common.wro-approvals')
-      @if($wro->cancelled != 1 && $wro->approval_sequence == 7 && $wro->disapproved != 1)
-        <button id="approve" data-id="{{ $wro->id }}" data-text="Do you want to approve Work Request Order {{ $wro->wr_no }}?" class="btn btn-success btn-xl"><i class="pe-7s-close-circle"></i> Approve</button>
-        <button id="disapprove" data-id="{{ $wro->id }}" data-text="Do you want to disapprove Work Request Order {{ $wro->wr_no }}?" class="btn btn-danger btn-xl"><i class="pe-7s-close-circle"></i> Disapprove</button>
+      @if($wro->cancelled != 1 && $wro->approval_sequence == 8 && $wro->disapproved != 1)
+        <button id="approve" data-id="{{ $wro->id }}" data-text="Do you want to approve SLA {{ $wro->wr_no }}?" class="btn btn-success btn-xl"><i class="pe-7s-close-circle"></i> Approve</button>
+        <button id="disapprove" data-id="{{ $wro->id }}" data-text="Do you want to disapprove SLA {{ $wro->wr_no }}?" class="btn btn-danger btn-xl"><i class="pe-7s-close-circle"></i> Disapprove</button>
       @else
         @if($wro->cancelled == 1)
           <p>Cancelled By: <strong>{{ App\Http\Controllers\GeneralController::getName($wro->user_id) }}</strong></p>
@@ -52,7 +52,7 @@
 	      var id = $(this).data('id');
 	      var text = $(this).data('text');
 	      Swal.fire({
-	        title: 'Approve Work Request Order?',
+	        title: 'Approve SLA?',
 	        text: text,
 	        type: 'question',
 	        showCancelButton: true,
@@ -62,7 +62,7 @@
 	      }).then((result) => {
 	        if (result.value) {
 	          $.ajax({
-	            url: "/vp/wro/approval/" + id,
+	            url: "/vp/sla/approval/" + id,
 	            type: "GET",
 	            success: function(value) {
 	              window.location.reload(); 
@@ -99,7 +99,7 @@
 	      var id = $(this).data('id');
 	      var text = $(this).data('text');
 	      Swal.fire({
-	        title: 'Disapprove Work Request Order?',
+	        title: 'Disapprove SLA?',
 	        text: text,
 	        type: 'question',
 	        input: 'text',
@@ -114,7 +114,7 @@
 	      }).then((result) => {
 	        if (result.value) {
 	          $.ajax({
-	            url: "/vp/wro/disapproval/" + id + "/" + result.value,
+	            url: "/vp/sla/disapproval/" + id + "/" + result.value,
 	            type: "GET",
 	            success: function() {
 	              window.location.reload(); 

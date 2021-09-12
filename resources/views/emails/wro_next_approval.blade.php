@@ -6,7 +6,7 @@
 
 	<p>Good day!</p>
 
-	<p style="text-align: justify-all;">Work Request Order <b><u><a href="{{ route($route,['id' => $wro_id]) }}">{{ $wro_no }}</a></u></b>  was already created and requested for your approval.
+	<p style="text-align: justify-all;">SLA <b><u><a href="{{ route($route,['id' => $wro_id]) }}">{{ $wro_no }}</a></u></b>  was already created and requested for your approval.
 	<br>
 	Please send message if you have any comments or clarifications.</p>
 
