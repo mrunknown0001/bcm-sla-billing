@@ -86,19 +86,6 @@
 
 @section('scripts')
   <script type="text/javascript">
-    $('#attachment').on('change',function(){
-      //get the file name
-      var fileName = $(this).val();
-      var cleanFileName = fileName.replace('C:\\fakepath\\', " ")
-      //replace the "Choose a file" label
-      if(fileName == '') {
-        $(this).next('.custom-file-label').html('Choose PDF File');
-      }
-      else {
-        $(this).next('.custom-file-label').html(cleanFileName);
-      }
-    });
-
 
     $('#farm').on('change', function () {
       $.ajax({
