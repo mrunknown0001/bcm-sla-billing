@@ -306,7 +306,7 @@ class GeneralController extends Controller
 
     public function previewProjectName($id)
     {
-        $wro = Wo::find($id);
+        $wro = Wo::where('wr_no', $id)->first();
 
         if(empty($wro)) {
             return '0';

@@ -27,13 +27,13 @@
           <select class="form-control " name="reference_number" id="reference_number" style="">
             <option value="">Select SLA</option>
             @foreach($sla as $key => $s)
-              <option value="{{ $s->id }}">{{ $s->wr_no }}</option>
+              <option value="{{ $s->wr_no }}">{{ $s->wr_no }}</option>
             @endforeach 
           </select>
         </div>
         <div class="form-group">
           <label for="project_name">Project Name</label>
-          <input type="text" name="project_name" id="project_name" placeholder="Project Name" class="form-control" disabled="true">
+          <input type="text" name="project_name" id="project_name" placeholder="Project Name" class="form-control" readonly>
         </div>
       	<div class="form-group">
       		<label for="full_name">Name of Requestor</label>
@@ -83,9 +83,7 @@
 
   <script>
     $(document).ready(function() {
-        $('#reference_number').select2({
-          maximumSelectionLength: 2,
-        });
+        $('#reference_number').select2();
 
         $('#reference_number').change(function () {
           $.ajax({
@@ -94,6 +92,7 @@
             success: function(data) {
               console.log(data);
               $('#project_name').val(data);
+              // document.getElementById("project_name").value = data;  
             }
           });
         });

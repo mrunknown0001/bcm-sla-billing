@@ -13,7 +13,7 @@ class CreateWorkOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('work_orders', function (Blueprint $table) {
+        Schema::create('work_orders', function (Blueprint $table) { // SLA
             $table->id();
             $table->string('wr_no')->nullable();
             $table->bigInteger('user_id')->unsigned();
