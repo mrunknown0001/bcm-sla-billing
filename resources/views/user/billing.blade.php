@@ -26,10 +26,9 @@
           {{-- <input type="text"  name="reference_number" id="reference_number" placeholder="Reference Number (SLA)" class="form-control" > --}}
           <select class="form-control " name="reference_number" id="reference_number" style="">
             <option value="">Select SLA</option>
-            <option value="1">SLA 1</option>
-            <option value="2">SLA 2</option>
-            <option value="3">SLA 3</option>
-
+            @foreach($sla as $key => $s)
+              <option value="{{ $s->id }}">{{ $s->wr_no }}</option>
+            @endforeach 
           </select>
         </div>
         <div class="form-group">
@@ -84,10 +83,19 @@
 
   <script>
     $(document).ready(function() {
-        $('#reference_number').select2();
+        $('#reference_number').select2({
+          maximumSelectionLength: 2,
+        });
 
         $('#reference_number').change(function () {
-          alert();
+          $.ajax({
+            url: "/u/preview/project/" + $(this).val(),
+            type: "GET",
+            success: function(data) {
+              console.log(data);
+              $('#project_name').val(data);
+            }
+          });
         });
     });
   </script>

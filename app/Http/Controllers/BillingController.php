@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\WorkOrder;
+
 class BillingController extends Controller
 {
     // Create Billing
     public function billing()
     {
-    	return view('user.billing');
+    	$sla = WorkOrder::select('wr_no','id')->get();
+    	// chekc sla if already created for approval or approved or cancelled
+    	return view('user.billing', ['sla' => $sla]);
     }
 
 

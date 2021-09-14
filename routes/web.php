@@ -68,6 +68,7 @@ Route::group(['prefix' => 'u', 'middleware' => ['user', 'preventBackHistory']], 
 	// Billing Create
 	Route::get('/billing', 'BillingController@billing')->name('user.billing');
 	Route::post('/billing', 'BillingController@postBilling')->name('user.post.billing');
+	Route::get('/preview/project/{id}', 'GeneralController@previewProjectName')->name('preview.project.name');
 
 	// Billing Archive
 	Route::get('/billign/archived', 'BillingController@archivedBilling')->name('user.archived.billing');

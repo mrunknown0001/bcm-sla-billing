@@ -303,6 +303,21 @@ class GeneralController extends Controller
     }
 
 
+
+    public function previewProjectName($id)
+    {
+        $wro = Wo::find($id);
+
+        if(empty($wro)) {
+            return '0';
+        }
+
+        $project_name = $wro->project_name;
+
+        return $project_name;
+    }
+
+
     public static function generateVerificationCode()
     {
         return random_int(100000, 999999);
