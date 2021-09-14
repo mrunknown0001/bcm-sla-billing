@@ -19,11 +19,18 @@
       @include('includes.error')
       @include('includes.errors')
     	<p>Fields with <span class="red">*</span> is required.</p>
-      <form action="" method="POST" autocomplete="off" enctype="multipart/form-data">
+      <form action="{{ route('user.post.billing') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
           <label for="reference_number">Reference Number (SLA)</label>
-          <input type="text" name="reference_number" id="reference_number" placeholder="Reference Number (SLA)" class="form-control" >
+          {{-- <input type="text"  name="reference_number" id="reference_number" placeholder="Reference Number (SLA)" class="form-control" > --}}
+          <select class="form-control " name="reference_number" id="reference_number" style="">
+            <option value="">Select SLA</option>
+            <option value="1">SLA 1</option>
+            <option value="2">SLA 2</option>
+            <option value="3">SLA 3</option>
+
+          </select>
         </div>
         <div class="form-group">
           <label for="project_name">Project Name</label>
@@ -60,13 +67,28 @@
 @endsection
 
 @section('styles')
+<link href="{{ asset('css/select2.css') }}" rel="stylesheet">
+{{-- <link href="{{ asset('css/bootstrap-select.css') }}" rel="stylesheet"> --}}
 <style type="text/css">
 	.red {
 		color: red;
 	}
+
 </style>
 @endsection
 
 @section('scripts')
+  <script src="{{ asset('js/select2.js') }}"></script>
+  {{-- <script src="{{ asset('assets/login/js/popper.js') }}"></script> --}}
+  {{-- <script src="{{ asset('js/bootstrap-select.js') }}"></script> --}}
 
+  <script>
+    $(document).ready(function() {
+        $('#reference_number').select2();
+
+        $('#reference_number').change(function () {
+          alert();
+        });
+    });
+  </script>
 @endsection

@@ -11,4 +11,20 @@ class BillingController extends Controller
     {
     	return view('user.billing');
     }
+
+
+    // Post Create Billing
+    public function postBilling(Request $request)
+    {
+    	return $request;
+    }
+
+
+
+
+    // Archived Billing
+    public function archivedBilling()
+    {
+    	return view('user.archived-billing');
+    }
 }

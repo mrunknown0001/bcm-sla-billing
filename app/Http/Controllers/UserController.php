@@ -153,6 +153,9 @@ class UserController extends Controller
 
         $next_wro_number = GC::nextWroSeries(Auth::user()->id);
 
+        // SLA
+        
+
     	return view('user.work-order', ['next_wro_number' => $next_wro_number, 'farms' => $farms]);
     }
 

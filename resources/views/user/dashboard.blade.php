@@ -33,6 +33,19 @@
           </thead>
         </table>
         <hr>
+      <h4>Billing Lists</h4>
+        <table id="billing" class="display table cell-border compact stripe hover compact" width="99%">
+          <thead>
+            <tr>
+              <th scope="col">Ref. #</th>
+              <th scope="col">Project Name</th>
+              <th scope="col">Date of Request</th>
+              <th scope="col">Actual Date Filed</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+        </table>
+        <hr>
       @endif
     </div>
   </div>

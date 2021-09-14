@@ -66,7 +66,11 @@ Route::group(['prefix' => 'u', 'middleware' => ['user', 'preventBackHistory']], 
 	Route::get('/sla/archived/all', 'UserController@allArchivedWRO')->name('user.all.archived.wro');
 
 	// Billing Create
-	Route::get('billing', 'BillingController@billing')->name('user.billing');
+	Route::get('/billing', 'BillingController@billing')->name('user.billing');
+	Route::post('/billing', 'BillingController@postBilling')->name('user.post.billing');
+
+	// Billing Archive
+	Route::get('/billign/archived', 'BillingController@archivedBilling')->name('user.archived.billing');
 });
 
 
