@@ -132,6 +132,10 @@ Route::group(['prefix' => 'manager', 'middleware' => ['manager', 'preventBackHis
 	// All Archived Billing
 	Route::get('/all/archived/billing', 'ManagerController@allArchivedBilling')->name('manager.all.archived.billing');
 
+
+	Route::get('/billing/view/{id}', 'ManagerController@viewBilling')->name('manager.billing.view');
+	Route::get('/billing/disapprove/{id}', 'ManagerController@disapproveBilling')->name('manager.billing.disapprove');
+	Route::get('/billing/approve/{id}', 'ManagerController@approveBilling')->name('mnager.billing.approve');
 });
 
 
