@@ -18,6 +18,9 @@ use App\WroApproval;
 use App\Http\Controllers\GeneralController as GC;
 use App\Http\Controllers\MailController as MC;
 
+use DataTables;
+use App\Billing;
+
 
 class DivHeadController extends Controller
 {
@@ -31,50 +34,6 @@ class DivHeadController extends Controller
         return view('divhead.account');
     }
 
-
-
-    public function allJoborder()
-    {
-        $data = [
-            'jo_no' => NULL,
-            'status' => NULL,
-            'date_of_request' => NULL,
-            'actual_date_filed' => NULL,
-            'action' => NULL,
-        ];
-
-        $requestors = Ra::where('div_head', Auth::user()->id)->get();
-
-        if(count($requestors) < 1) {
-            return $data;
-        }
-
-        $jos = collect();
-        foreach($requestors as $r) {
-            $jo = Jo::where('user_id', $r->user_id)
-                    ->where('archived', 0)
-                    ->get();
-
-            if(!empty($jo)) {
-                $jos = $jos->merge($jo);
-            }
-        }
-
-        if(count($jos) > 0) {
-            $data = NULL;
-
-            foreach($jos as $j) {
-                $data[] = [
-                    'jo' => $j->jo_no,
-                    'status' => GC::viewJoStatus($j->status),
-                    'date_of_request' => date('F j, Y', strtotime($j->date_of_request)),
-                    'actual_date_filed' => date('F j, Y', strtotime($j->created_at)),
-                    'action' => '<button id="view" data-id="' . $j->id . '" data-text="Do you want to view Job Order ' . $j->jo_no . '?" class="btn btn-primary btn-xs"><i class="pe-7s-look"></i> View</button>'
-                ];
-            }
-        }
-        return $data;
-    }
 
 
 
@@ -346,67 +305,72 @@ class DivHeadController extends Controller
     }
 
 
-    public function viewJo($id)
-    {
-        $jo = Jo::findorfail($id);
 
-        return view('divhead.job-order-view', ['jo' => $jo]);
+    // archived billing
+    public function archivedBilling()
+    {
+        return view('divhead.archived-billing');
     }
 
 
-    public function archivedJo()
+
+    // all billing
+    public function allBilling(Request $request)
     {
-        return view('divhead.archived-jo');
-    }
+        if($request->ajax()) {
 
+            $wro_approval = WroApproval::where('active', 1)->first();
 
-    public function allArchivedJo()
-    {
-        $data = [
-            [
-                'jo' =>  NULL,
-                'status' => NULL,
-                'date_of_request' => NULL,
-                'actual_date_filed' => NULL,
-                'action' => NULL,
-            ]
-        ];
+            $data = collect();
 
-        $count = 0;
-
-        $reqs = Ra::where('div_head', Auth::user()->id)->get();
-
-        if(count($reqs) > 0) {
-            foreach($reqs as $r) {
-                $jos = Jo::where('user_id', $r->user_id)
-                        ->where('archived', 1)
+            # start of GS Div head
+            if($wro_approval->gen_serv_div_head == Auth::user()->id) {
+                $billing = Billing::where('archived', 0)
                         ->get();
 
-                if(count($jos)) {
-                    
-                    foreach($jos as $j) {
-                        $count++;
-                        $data[] = [
-                            'jo' => $j->jo_no,
-                            'status' => GC::viewJoStatus($j->status),
-                            'date_of_request' => date('F j, Y', strtotime($j->date_of_request)),
-                            'actual_date_filed' => date('F j, Y', strtotime($j->created_at)),
-                            'action' => '<button id="view" data-id="' . $j->id . '" data-text="Do you want to view Job Order ' . $j->jo_no . '?" class="btn btn-primary btn-xs"><i class="pe-7s-look"></i> View</button>'
-                        ];
+                if(count($billing) > 0) {
+
+                    foreach($billing as $w) {
+                        if($w->approval_sequence >= 4) {
+                            $data->push([
+                                'ref' => $w->reference_number,
+                                'project_name' => $w->project_name,
+                                'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
+                                'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
+                                'action' => 'action',
+                            ]);
+                        }
                     }
                 }
             }
+            # end of GS Div head
+            
+            # start of farm/dept div head
+            $billing1 = Billing::where('farm_divhead_id', Auth::user()->id)
+                        ->where('archived', 0)
+                        ->get();
+
+            if(count($billing1) > 0) {
+                $data = [];
+                foreach($billing1 as $w) {
+                    if($w->approval_sequence >= 5) {
+                        $data->push([
+                            'ref' => $w->wr_no,
+                            'project_name' => $w->project_name,
+                            'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
+                            'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
+                            'action' => 'action',
+                        ]);
+                    }
+                }
+            }
+            # end o
+
+            return DataTables::of($data)
+                    ->rawColumns(['status', 'action'])
+                    ->make(true);
+
         }
-
-        if($count < 1) {
-            $data = [
-                'jo' =>  NULL,
-                'status' => NULL,
-                'action' => NULL,
-            ];
-        }
-
-        return $data;
-
     }
+
 }

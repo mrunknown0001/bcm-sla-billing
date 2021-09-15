@@ -91,21 +91,21 @@
 
 
       $(document).ready(function () {
-      let billingtable = $('#billing').DataTable({
-        processing: true,
-        serverSide: true,
-        columnDefs: [
-          { className: "dt-center", targets: [ 1, 2, 3, 4 ] }
-        ],
-        ajax: "{{ route('manager.all.billing') }}",
-        columns: [
-            {data: 'ref', name: 'ref' },
-            {data: 'project_name', name: 'project_name'},
-            {data: 'date_of_request', name: 'date_of_request'},
-            {data: 'actual_date_filed', name: 'actual_date_filed'},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
-        ]
-      });
+        let billingtable = $('#billing').DataTable({
+          processing: true,
+          serverSide: true,
+          columnDefs: [
+            { className: "dt-center", targets: [ 1, 2, 3, 4 ] }
+          ],
+          ajax: "{{ route('manager.all.billing') }}",
+          columns: [
+              {data: 'ref', name: 'ref' },
+              {data: 'project_name', name: 'project_name'},
+              {data: 'date_of_request', name: 'date_of_request'},
+              {data: 'actual_date_filed', name: 'actual_date_filed'},
+              {data: 'action', name: 'action', orderable: false, searchable: false},
+          ]
+        });
       });
 
 

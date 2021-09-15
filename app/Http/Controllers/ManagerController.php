@@ -447,23 +447,6 @@ class ManagerController extends Controller
             }
             # end of BCM Manager
 
-
-            // $wro = Wo::where('user_id', Auth::user()->id)
-            //             ->where('archived', 0)
-            //             ->get();
-            // $data = collect();
-            // if(count($wro) > 0) {
-            //     foreach($wro as $w) {
-            //         $data->push([
-            //             'wro' => $w->wr_no,
-            //             'status' => GC::viewWroStatus($w->approval_sequence, $w->cancelled, $w->disapproved),
-            //             'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
-            //             'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
-            //             'action' => GC::wroRequestorAction($w->approval_sequence, $w->id, $w->wr_no, $w->cancelled, $w->disapproved), 
-            //         ]);
-            //     }
-            // }
-
             # start of treasury manager
             if($wro_approval->treasury_manager == Auth::user()->id) {
                 $billing3 = Billing::where('archived', 0)
@@ -489,26 +472,26 @@ class ManagerController extends Controller
             }
             # end of treasury manager
             
-        # start of First Approver Manager
-        $billing1 = Billing::where('farm_manager_id', Auth::user()->id)
-                    ->where('archived', 0)
-                    ->get();
+            # start of First Approver Manager
+            $billing1 = Billing::where('farm_manager_id', Auth::user()->id)
+                        ->where('archived', 0)
+                        ->get();
 
-        if(count($billing1) > 0) {
-            $data = [];
-            foreach($billing1 as $w) {
-                if($w->approval_sequence >= 5) {
-                    $data[] = [
-                        'ref' => $w->wr_no,
-                        'project_name' => $w->project_name,
-                        'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
-                        'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
-                        'action' => 'action',
-                    ];
+            if(count($billing1) > 0) {
+                $data = [];
+                foreach($billing1 as $w) {
+                    if($w->approval_sequence >= 5) {
+                        $data[] = [
+                            'ref' => $w->wr_no,
+                            'project_name' => $w->project_name,
+                            'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
+                            'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
+                            'action' => 'action',
+                        ];
+                    }
                 }
             }
-        }
-        # end of First Approver Manger
+            # end of First Approver Manger
 
             return DataTables::of($data)
                     ->rawColumns(['status', 'action'])

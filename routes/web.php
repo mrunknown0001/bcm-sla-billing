@@ -150,7 +150,11 @@ Route::group(['prefix' => 'div-head', 'middleware' => ['divhead', 'preventBackHi
 
 
 	// Billing
+	// archived billing
 	Route::get('billing/archived', 'DivHeadController@archivedBilling')->name('div.head.archived.billing');
+
+	// all billing
+	Route::get('/billing/all', 'DivHeadController@allBilling')->name('div.head.all.billing');
 });
 
 
@@ -172,6 +176,10 @@ Route::group(['prefix' => 'vp', 'middleware' => ['vp', 'preventBackHistory']], f
 	Route::get('/sla/archived', 'VpController@archivedWro')->name('vp.archived.wro');
 
 	Route::get('/sla/archived/all', 'VpController@allArchivedWro')->name('vp.all.archived.wro');
+
+
+	// Billing
+	Route::get('/billing/archived', 'VpController@archivedBilling')->name('vp.archived.billing');
 
 });
 

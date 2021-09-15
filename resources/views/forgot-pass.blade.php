@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>Forgot Password - Job Order & Work Request Order</title>
+	<title>Forgot Password - SLA and Billing System</title>
 	<link rel="stylesheet" href="{{ asset('assets/login/css/bootstrap4.3.1.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/login/css/my-login.css') }}">
 </head>
@@ -19,7 +19,7 @@
 					</div>
 					<div class="card fat">
 						<div class="card-body">
-							<h5 class="card-title text-center">Job and Work Order Request - Forgot Password</h5>
+							<h5 class="card-title text-center">SLA and Billing System - Forgot Password</h5>
 							@include('includes.error')
 							@include('includes.success')
 							<form action="" method="POST" class="my-login-validation" autocomplete="off">
