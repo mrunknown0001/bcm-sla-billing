@@ -14,6 +14,9 @@ use App\JobOrder as Jo;
 use App\Http\Controllers\GeneralController as GC;
 use App\Http\Controllers\MailController as MC;
 
+use App\Billing;
+use DataTables;
+
 class VpController extends Controller
 {
     public function dashboard()
@@ -25,113 +28,6 @@ class VpController extends Controller
     {
         return view('vp.account');
     }
-
-
-    public function allJobOrder()
-    {
-        $data = [
-            'jo' => NULL,
-            'status' => NULL,
-            'date_of_request' => NULL,
-            'actual_date_filed' => NULL,
-            'action' => NULL
-        ];
-
-        // Manual setting of cost throttle
-        $jos = Jo::where('cost', '>=', 50000)
-                    ->where('archived', 0)
-                    ->get();
-
-        if(count($jos) > 0) {
-            $data = NULL;
-            foreach($jos as $j) {
-                $data[] = [
-                    'jo' => $j->jo_no,
-                    'status' => GC::viewJoStatus($j->status),
-                    'date_of_request' => date('F j, Y', strtotime($j->date_of_request)),
-                    'actual_date_filed' => date('F j, Y', strtotime($j->created_at)),
-                    'action' => GC::joVPAction($j->status, $j->id, $j->jo_no)
-                ];
-            }
-        }
-
-        return $data;
-    }
-
-
-
-    public function viewJO($id)
-    {
-        $jo = Jo::findorfail($id);
-
-        return view('vp.job-order-view', ['jo' => $jo]);
-    }
-
-
-    public function joApproval($id)
-    {
-       $jo = Jo::findorfail($id);
-        
-        if($jo->cost < 50000 || $jo->manager_approval == 0) {
-            return false;
-        }
-
-        $jo->vp_approval = 1;
-        $jo->vp_id = Auth::user()->id;
-        $jo->vp_approved = now();
-        $jo->status = 6;
-
-        if($jo->save()) {
-
-            # Send Approval Notice to Requestor
-            $approver = GC::getName($jo->vp_id); 
-            $approver_designation = "VP on General Services";
-            $requestor = GC::getName($jo->user_id);
-            $requestor_email =$jo->user->email;
-            $jo_view_route = "user.view.job.order";
-            $jo_id = $jo->id;
-            $jo_no = $jo->jo_no;
-            
-            MC::joApproved($approver, $approver_designation, $requestor, $requestor_email, $jo_view_route, $jo_id, $jo_no);
-
-            return 'ok';
-        }
-        
-        return 'error';
-    }
-
-
-
-    public function joDisapproval($id, $comment)
-    {
-        $jo = Jo::findorfail($id);
-        
-        if($jo->cost < 50000 || $jo->manager_approval == 0) {
-            return false;
-        }
-
-        $jo->vp_id = Auth::user()->id;
-
-        $jo->reason = $comment;
-        $jo->disapproved_on = now();
-        $jo->status = 7;
-        $jo->save();
-
-        # Send Disapproval Notice to Requestor
-
-        $approver = GC::getName($jo->vp_id); 
-        $approver_designation = "VP on General Service";
-        $requestor = GC::getName($jo->user_id);
-        $requestor_email =$jo->user->email;
-        $jo_view_route = "user.view.job.order";
-        $jo_id = $jo->id;
-        $jo_no = $jo->jo_no;
-        
-        MC::joDisapproved($approver, $approver_designation, $requestor, $requestor_email, $jo_view_route, $jo_id, $jo_no);
-
-        return true;
-    }
-
 
 
     public function allWorkOrder()
@@ -284,38 +180,71 @@ class VpController extends Controller
 
 
 
-    public function archivedJo()
+    // Archived Billing
+    public function archivedBilling ()
     {
-        return view('vp.jo-archived');
+        return view('vp.archived-billing');
     }
 
 
-    public function allArchivedJo()
+    // All Billing
+    public function allBilling(Request $request)
     {
-        $data = [
-            'jo' => NULL,
-            'status' => NULL,
-            'date_of_request' => NULL,
-            'actual_date_filed' => NULL,
-            'action' => NULL
-        ];
+        if($request->ajax()) {
+            
+            $approvals = WroApproval::where('active', 1)->first();
 
-        $jos = Jo::where('archived', 1)
-                    ->get();
+            $data = collect();
 
-        if(count($jos) > 0) {
-            $data = NULL;
-            foreach($jos as $j) {
-                $data[] = [
-                    'jo' => $j->jo_no,
-                    'status' => GC::viewJoStatus($j->status),                        
-                    'date_of_request' => date('F j, Y', strtotime($j->date_of_request)),
-                    'actual_date_filed' => date('F j, Y', strtotime($j->created_at)),
-                    'action' => GC::joVPAction($j->status, $j->id, $j->jo_no)
-                ];
+            if($approvals->vp_gen_serv == Auth::user()->id) {
+                $billing = Billing::where('archived', 0)
+                        ->get();
+
+                foreach($billing as $w) {
+                    $data->push([
+                        'ref' => $w->reference_number,
+                        'project_name' => $w->project_name,
+                        'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
+                        'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
+                        'action' => 'action', 
+                    ]);
+                }
             }
-        }
+            return DataTables::of($data)
+                    ->rawColumns(['action'])
+                    ->make(true);
 
-        return $data;
+        }
+    }
+
+
+
+    public function allArchivedBilling(Request $request)
+    {
+        if($request->ajax()) {
+            
+            $approvals = WroApproval::where('active', 1)->first();
+
+            $data = collect();
+
+            if($approvals->vp_gen_serv == Auth::user()->id) {
+                $billing = Billing::where('archived', 1)
+                        ->get();
+
+                foreach($billing as $w) {
+                    $data->push([
+                        'ref' => $w->reference_number,
+                        'project_name' => $w->project_name,
+                        'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
+                        'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
+                        'action' => 'action', 
+                    ]);
+                }
+            }
+            return DataTables::of($data)
+                    ->rawColumns(['action'])
+                    ->make(true);
+
+        }
     }
 }

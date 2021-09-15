@@ -367,7 +367,68 @@ class DivHeadController extends Controller
             # end o
 
             return DataTables::of($data)
-                    ->rawColumns(['status', 'action'])
+                    ->rawColumns(['action'])
+                    ->make(true);
+
+        }
+    }
+
+
+
+
+    public function allArchivedBilling(Request $request)
+    {
+        if($request->ajax()) {
+
+            $wro_approval = WroApproval::where('active', 1)->first();
+
+            $data = collect();
+
+            # start of GS Div head
+            if($wro_approval->gen_serv_div_head == Auth::user()->id) {
+                $billing = Billing::where('archived', 1)
+                        ->get();
+
+                if(count($billing) > 0) {
+
+                    foreach($billing as $w) {
+                        if($w->approval_sequence >= 4) {
+                            $data->push([
+                                'ref' => $w->reference_number,
+                                'project_name' => $w->project_name,
+                                'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
+                                'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
+                                'action' => 'action',
+                            ]);
+                        }
+                    }
+                }
+            }
+            # end of GS Div head
+            
+            # start of farm/dept div head
+            $billing1 = Billing::where('farm_divhead_id', Auth::user()->id)
+                        ->where('archived', 1)
+                        ->get();
+
+            if(count($billing1) > 0) {
+                $data = [];
+                foreach($billing1 as $w) {
+                    if($w->approval_sequence >= 5) {
+                        $data->push([
+                            'ref' => $w->wr_no,
+                            'project_name' => $w->project_name,
+                            'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
+                            'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
+                            'action' => 'action',
+                        ]);
+                    }
+                }
+            }
+            # end o
+
+            return DataTables::of($data)
+                    ->rawColumns(['action'])
                     ->make(true);
 
         }

@@ -500,4 +500,89 @@ class ManagerController extends Controller
         }
     }
 
+
+
+    public function allArchivedBilling(Request $request)
+    {
+        if($request->ajax()) {
+
+            $wro_approval = WroApproval::where('active', 1)->first();
+
+            $data = collect();
+
+            # start of BCM Manager
+            if($wro_approval->bcm_manager == Auth::user()->id) {
+                $billing = Billing::where('archived', 1)
+                        ->get();
+
+                if(count($billing) > 0) {
+
+                    foreach($billing as $w) {
+                        if($w->approval_sequence >= 3) {
+                            $data->push([
+                                'ref' => $w->reference_number,
+                                'project_name' => $w->project_name,
+                                'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
+                                'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
+                                'action' => 'action',
+                            ]);
+                        }
+                    }
+                }
+            }
+            # end of BCM Manager
+
+            # start of treasury manager
+            if($wro_approval->treasury_manager == Auth::user()->id) {
+                $billing3 = Billing::where('archived', 1)
+                        ->get();
+
+
+                if(count($billing3) > 0) {
+
+
+                    foreach($billing3 as $w) {
+                        // if($w->approval_sequence >= 5) { # old code changed on 9/1/21
+                        if($w->approval_sequence >= 7) {
+                            $data->push([
+                                'ref' => $w->wr_no,
+                                'project_name' => $w->project_name,
+                                'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
+                                'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
+                                'action' => 'action',
+                            ]);
+                        }
+                    }
+                }
+            }
+            # end of treasury manager
+            
+            # start of First Approver Manager
+            $billing1 = Billing::where('farm_manager_id', Auth::user()->id)
+                        ->where('archived', 1)
+                        ->get();
+
+            if(count($billing1) > 0) {
+                $data = [];
+                foreach($billing1 as $w) {
+                    if($w->approval_sequence >= 5) {
+                        $data[] = [
+                            'ref' => $w->wr_no,
+                            'project_name' => $w->project_name,
+                            'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
+                            'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
+                            'action' => 'action',
+                        ];
+                    }
+                }
+            }
+            # end of First Approver Manger
+
+            return DataTables::of($data)
+                    ->rawColumns(['status', 'action'])
+                    ->make(true);
+
+        }
+    }
+
 }

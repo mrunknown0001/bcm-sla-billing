@@ -215,5 +215,105 @@
           }
         });
     });
+
+
+
+    // Billing
+    $(document).on('click', '#viewbilling', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        var text = $(this).data('text');
+        Swal.fire({
+          title: 'View Billing Details?',
+          text: text,
+          type: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Continue'
+        }).then((result) => {
+          if (result.value) {
+            // view here
+            window.location.replace("/u/billing/view/" + id);
+
+          }
+          else {
+            Swal.fire({
+              title: 'Action Cancelled',
+              text: "",
+              type: 'info',
+              showCancelButton: false,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Close'
+            });
+          }
+        });
+    });
+
+    $(document).on('click', '#cancelbilling', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        var text = $(this).data('text');
+        Swal.fire({
+          title: 'Cancel Billing?',
+          text: text,
+          type: 'question',
+          input: 'text',
+          inputPlaceholder: 'Comment Here...',
+          inputValidator: (value) => {
+            return !value && 'Please leave a comment!'
+          },
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Continue',
+        }).then((result) => {
+          if (result.value) {
+
+            $.ajax({
+              url: "/u/billing/cancel/" + id + "/" + result.value,
+              type: "GET",
+              success: function() {
+                Swal.fire({
+                  title: 'Billing Cancelled!',
+                  text: "",
+                  type: 'success',
+                  showCancelButton: false,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Close'
+                });
+
+                var table = $('#billing').DataTable();
+                table.ajax.reload();
+              },
+              error: function(err) {
+
+                Swal.fire({
+                  title: 'Error Occured! Tray Again Later.',
+                  text: "",
+                  type: 'error',
+                  showCancelButton: false,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Close'
+                });
+              }
+            });
+          }
+          else {
+            Swal.fire({
+              title: 'Action Cancelled',
+              text: "",
+              type: 'info',
+              showCancelButton: false,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Close'
+            });
+          }
+        });
+    });
   </script>
 @endsection

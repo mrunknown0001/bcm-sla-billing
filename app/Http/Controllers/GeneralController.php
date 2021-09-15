@@ -856,13 +856,13 @@ class GeneralController extends Controller
     public static function billingRequestorAction($status, $id, $sla_number, $cancelled, $disapproved)
     {
         if($cancelled == 0 && $status == 3 && $disapproved == 0) {
-            return '<button id="view1" data-id="' . $id . '" data-text="Do you want to view SLA ' . $sla_number . '?"class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button> <button id="cancel1" class="btn btn-danger btn-xs" data-id="' . $id . '" data-text="Do you want to cancel SLA ' . $sla_number . '?"><i class="pe-7s-close-circle"></i> Cancel</button>';
+            return '<button id="viewbilling" data-id="' . $id . '" data-text="Do you want to view Billing ' . $sla_number . '?"class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button> <button id="cancelbilling" class="btn btn-danger btn-xs" data-id="' . $id . '" data-text="Do you want to cancel Billing ' . $sla_number . '?"><i class="pe-7s-close-circle"></i> Cancel</button>';
         }
         elseif ($status == 9) {
-            return '<button id="view1" data-id="' . $id . '" data-text="Do you want to view SLA ' . $sla_number . '?"class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button> <a href="' . route('user.wro.pdf.download', ['id' => $id]) . '" class="btn btn-primary btn-xs"><i class="pe-7s-download"></i> Download</a>';
+            return '<button id="viewbilling" data-id="' . $id . '" data-text="Do you want to view Billing ' . $sla_number . '?"class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button> <a href="' . route('user.wro.pdf.download', ['id' => $id]) . '" class="btn btn-primary btn-xs"><i class="pe-7s-download"></i> Download</a>';
         }
         else {
-            return '<button id="view1" data-id="' . $id . '" data-text="Do you want to view SLA ' . $sla_number . '?"class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button>';
+            return '<button id="viewbilling" data-id="' . $id . '" data-text="Do you want to view Billing ' . $sla_number . '?"class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button>';
         }
     }
  

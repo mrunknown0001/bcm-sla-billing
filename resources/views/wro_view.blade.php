@@ -15,7 +15,7 @@
             <p class="text-center"><strong>Server Level Agreement Document</strong></p>
             <br>
             <p>
-                SLAr #: <b>{{ $wro->wr_no }}</b>
+                SLA #: <b>{{ $wro->wr_no }}</b>
                 <br>
                 Requestor: <b>{{ ucfirst($wro->user->first_name) . ' ' . ucfirst($wro->user->last_name) }}</b>
                 <br>

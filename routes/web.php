@@ -75,6 +75,15 @@ Route::group(['prefix' => 'u', 'middleware' => ['user', 'preventBackHistory']], 
 
 	// all billing
 	Route::get('/all/billing', 'BillingController@all')->name('user.all.billing');
+
+	// all archived billing
+	Route::Get('/all/archived/billing', 'BillingController@allArchivedBilling')->name('user.all.archived.billing');
+
+	// view billing
+	Route::get('/billing/view/{id}', 'BillingController@viewBilling')->name('user.billing.view');
+
+	// cancel billing
+	Route::get('/billing/cancel/{id}/{result}', 'BillingController@cancelBilling')->name('user.billing.cancel');
 });
 
 
@@ -120,6 +129,9 @@ Route::group(['prefix' => 'manager', 'middleware' => ['manager', 'preventBackHis
 	// BCM Manager Billing
 	Route::get('/billing/archived', 'ManagerController@archivedBilling')->name('manager.billing.archived');
 
+	// All Archived Billing
+	Route::get('/all/archived/billing', 'ManagerController@allArchivedBilling')->name('manager.all.archived.billing');
+
 });
 
 
@@ -155,6 +167,8 @@ Route::group(['prefix' => 'div-head', 'middleware' => ['divhead', 'preventBackHi
 
 	// all billing
 	Route::get('/billing/all', 'DivHeadController@allBilling')->name('div.head.all.billing');
+
+	Route::get('/billing/archived/all', 'DivHeadController@allArchivedBilling')->name('div.head.all.archived.billing');
 });
 
 
@@ -180,6 +194,10 @@ Route::group(['prefix' => 'vp', 'middleware' => ['vp', 'preventBackHistory']], f
 
 	// Billing
 	Route::get('/billing/archived', 'VpController@archivedBilling')->name('vp.archived.billing');
+
+	Route::get('/billing/all', 'VpController@allBilling')->name('vp.all.billing');
+
+	Route::get('/billing/archived/all', 'VpController@allArchivedBilling')->name('vp.all.archived.billing');
 
 });
 

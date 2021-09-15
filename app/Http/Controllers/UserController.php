@@ -117,7 +117,7 @@ class UserController extends Controller
             return abort(404);
         }
 
-        if($wro->cancelled == 1 || $wro->approval_sequence != 1) {
+        if($wro->cancelled == 1 || $wro->approval_sequence != 3) {
             return false;
         }
 

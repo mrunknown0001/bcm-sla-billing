@@ -27,7 +27,7 @@
           <select class="form-control " name="reference_number" id="reference_number" style="">
             <option value="">Select SLA</option>
             @foreach($sla as $key => $s)
-              <option value="{{ $s->wr_no }}">{{ $s->wr_no }}</option>
+              <option value="{{ $s['wr_no'] }}">{{ $s['wr_no'] }}</option>
             @endforeach 
           </select>
         </div>

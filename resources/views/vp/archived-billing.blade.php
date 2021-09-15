@@ -3,26 +3,24 @@
 @section("title") Archived Billing @endsection
 
 @section("header")
-  @include("manager.includes.header")
+  @include("vp.includes.header")
 @endsection
 
 @section("page-title") Archived Billing @endsection
 
 @section("sidebar")
-  @include("manager.includes.sidebar")
+  @include("vp.includes.sidebar")
 @endsection
 
 @section("page-content")
   <div class="row">
     <div class="col-md-12">
-      {{-- <h4>Archived Work Request Order Lists</h4> --}}
+	    <h4>Archived Billing List</h4>
 
-        @include('includes.error')
-        @include('includes.success')
        <table id="billing" class="table cell-border compact stripe hover" width="99%">
           <thead>
             <tr>
-              <th scope="col">Ref. #</th>
+              <th scope="col">Ref #</th>
               <th scope="col">Project Name</th>
               <th scope="col">Date of Request</th>
               <th scope="col">Actual Date Filed</th>
@@ -30,6 +28,7 @@
             </tr>
           </thead>
         </table>
+        <hr>
     </div>
   </div>
 @endsection
@@ -41,17 +40,17 @@
 @section('scripts')
   <script src="{{ asset('js/datatables.js') }}"></script>
   <script src="{{ asset('js/sweetalert.js') }}"></script>
+
   <script>
-
-
     $(document).ready(function() {
+
       let billingtable = $('#billing').DataTable({
         processing: true,
         serverSide: true,
         columnDefs: [
           { className: "dt-center", targets: [ 1, 2, 3, 4 ] }
         ],
-        ajax: "{{ route('manager.all.archived.billing') }}",
+        ajax: "{{ route('vp.all.archived.billing') }}",
         columns: [
             {data: 'ref', name: 'ref' },
             {data: 'project_name', name: 'project_name'},
@@ -61,6 +60,7 @@
         ]
       });
     });
+
 
     $(document).on('click', '#view1', function (e) {
         e.preventDefault();
@@ -77,7 +77,7 @@
         }).then((result) => {
           if (result.value) {
             // view here
-            window.location.replace("/manager/sla/view/" + id);
+            window.location.replace("/vp/work-order/view/" + id);
 
           }
           else {
@@ -93,6 +93,8 @@
           }
         });
     });
+
+
 
   </script>
 @endsection
