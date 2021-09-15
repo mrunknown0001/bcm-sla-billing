@@ -45,6 +45,12 @@
                     Archived SLA
                 </a>
               </li>
+              <li>
+                <a href="{{ route('div.head.archived.billing') }}" class="{{ route('div.head.archived.billing') == url()->current() ? 'mm-active' : '' }}">
+                  <i class="metismenu-icon pe-7s-portfolio"></i>
+                    Archived Billing
+                </a>
+              </li>
 
             </ul>
           </div>

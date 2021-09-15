@@ -550,7 +550,7 @@ class GeneralController extends Controller
 
     public static function wroRequestorAction($status, $id, $wro, $cancelled, $disapproved)
     {
-        if($cancelled == 0 && $status == 1 && $disapproved == 0) {
+        if($cancelled == 0 && $status == 3 && $disapproved == 0) {
             return '<button id="view1" data-id="' . $id . '" data-text="Do you want to view SLA ' . $wro . '?"class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button> <button id="cancel1" class="btn btn-danger btn-xs" data-id="' . $id . '" data-text="Do you want to cancel SLA ' . $wro . '?"><i class="pe-7s-close-circle"></i> Cancel</button>';
         }
         elseif ($status == 9) {
@@ -845,6 +845,25 @@ class GeneralController extends Controller
         }
         $data .= "]";
         return $data;
+    }
+
+
+
+
+
+
+    // actions on billing per user
+    public static function billingRequestorAction($status, $id, $sla_number, $cancelled, $disapproved)
+    {
+        if($cancelled == 0 && $status == 3 && $disapproved == 0) {
+            return '<button id="view1" data-id="' . $id . '" data-text="Do you want to view SLA ' . $sla_number . '?"class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button> <button id="cancel1" class="btn btn-danger btn-xs" data-id="' . $id . '" data-text="Do you want to cancel SLA ' . $sla_number . '?"><i class="pe-7s-close-circle"></i> Cancel</button>';
+        }
+        elseif ($status == 9) {
+            return '<button id="view1" data-id="' . $id . '" data-text="Do you want to view SLA ' . $sla_number . '?"class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button> <a href="' . route('user.wro.pdf.download', ['id' => $id]) . '" class="btn btn-primary btn-xs"><i class="pe-7s-download"></i> Download</a>';
+        }
+        else {
+            return '<button id="view1" data-id="' . $id . '" data-text="Do you want to view SLA ' . $sla_number . '?"class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button>';
+        }
     }
  
 }

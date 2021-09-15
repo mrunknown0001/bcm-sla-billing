@@ -19,7 +19,7 @@
       @include('includes.success')
       @include('includes.error')
 
-	    <h4>SLA</h4>
+	    <h4>SLA List</h4>
 
        <table id="wro" class="table cell-border compact stripe hover" width="99%">
           <thead>
@@ -33,6 +33,19 @@
           </thead>
         </table>
         <hr>
+      <h4>Billing List</h4>
+
+       <table id="wro" class="table cell-border compact stripe hover" width="99%">
+          <thead>
+            <tr>
+              <th scope="col">Ref #</th>
+              <th scope="col">Project Name</th>
+              <th scope="col">Date of Request</th>
+              <th scope="col">Actual Date Filed</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+        </table>
     </div>
   </div>
 @endsection

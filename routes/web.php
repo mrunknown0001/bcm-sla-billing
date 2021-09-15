@@ -112,6 +112,14 @@ Route::group(['prefix' => 'manager', 'middleware' => ['manager', 'preventBackHis
 
 	Route::get('/sla/trsry/manager/disapproval/{id}/{comment}', 'ManagerController@wroTrsryManagerDisapproval')->name('manager.trsry.approve.wro');
 
+
+
+	// All Billing
+	Route::get('/all/billing', 'ManagerController@allBilling')->name('manager.all.billing');
+
+	// BCM Manager Billing
+	Route::get('/billing/archived', 'ManagerController@archivedBilling')->name('manager.billing.archived');
+
 });
 
 
@@ -138,6 +146,11 @@ Route::group(['prefix' => 'div-head', 'middleware' => ['divhead', 'preventBackHi
 	Route::get('/gs/sla/approval/{id}', 'DivHeadController@wroGsDivHeadApproval')->name('divhead.gs.wro.approval');
 
 	Route::get('/gs/sla/disapproval/{id}/{comment}', 'DivHeadController@wroGsDivHeadDisapproval')->name('divhead.gs.wro.disapproval');
+
+
+
+	// Billing
+	Route::get('billing/archived', 'DivHeadController@archivedBilling')->name('div.head.archived.billing');
 });
 
 

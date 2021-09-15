@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\UnitOfMeasurement as Uom;
 use App\RequestorApprover as Ra;
-use App\JobOrder as Jo;
 use App\WorkOrder as Wo;
-use App\JoNumber;
 use App\Farm;
 use App\User;
 

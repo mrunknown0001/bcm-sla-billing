@@ -48,7 +48,7 @@
                 </a>
               </li>
               <li>
-                <a href="">
+                <a href="{{ route('manager.billing.archived') }}" class="{{ route('manager.billing.archived') == url()->current() ? 'mm-active' : '' }}">
                   <i class="metismenu-icon pe-7s-portfolio"></i>
                     Archived Billing
                 </a>

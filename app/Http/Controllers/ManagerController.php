@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 use App\JobOrder as Jo;
 use App\WorkOrder as Wo;
 use Auth;
+use App\Billing;
 
 use App\Http\Controllers\GeneralController as GC;
 use App\Http\Controllers\MailController as MC;
 
 use App\WroApproval;
+use DataTables;
 
 class ManagerController extends Controller
 {
@@ -230,44 +232,6 @@ class ManagerController extends Controller
     }
 
 
-    public function archivedJO()
-    {
-        return view('manager.archived-jo');
-    }
-
-    public function allArchivedJO()
-    {
-        $data = [
-            'jo' => NULL,
-            'status' => NULL,
-            'date_of_request' => NULL,
-            'actual_date_filed' => NULL,
-            'action' => NULL,
-        ];
-
-
-        $jos = Jo::where('manager_id', Auth::user()->id)
-                    ->where('archived', 1)
-                    ->get();
-
-        if(count($jos) > 0) {
-            $data = [];
-            foreach($jos as $j) {
-                $data[] = [
-                    'jo' => $j->jo_no,
-                    'status' => GC::viewJoStatus($j->status),
-                    'date_of_request' => date('F j, Y', strtotime($j->date_of_request)),
-                    'actual_date_filed' => date('F j, Y', strtotime($j->created_at)),
-                    'action' => $j->status == 2 ? '<button id="view" data-id="' . $j->id . '" data-text="Do you want to view Job Order ' . $j->jo_no . '?" class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button> <a href="' . route("manager.jo.pdf.download", ['id' => $j->id]) . '" class="btn btn-primary btn-xs"><i class="pe-7s-download"></i> Download</a>'
-                    :
-                    '<button id="view" data-id="' . $j->id . '" data-text="Do you want to view Job Order ' . $j->jo_no . '?" class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button>', 
-                ];
-            }
-        }
-
-        return $data;
-
-    }
 
 
     public function archivedWRO()
@@ -440,6 +404,117 @@ class ManagerController extends Controller
         MC::wroDisapproved($approver, $approver_designation, $requestor, $requestor_email, $wro_view_route, $wro->id, $wro->wr_no);
         
         return true;
+    }
+
+
+
+
+    // Billing
+    public function archivedBilling()
+    {
+        return view('manager.archived-billing');
+    }
+
+
+    // All Billing
+    public function allBilling(Request $request)
+    {
+        if($request->ajax()) {
+
+            $wro_approval = WroApproval::where('active', 1)->first();
+
+            $data = collect();
+
+            # start of BCM Manager
+            if($wro_approval->bcm_manager == Auth::user()->id) {
+                $billing = Billing::where('archived', 0)
+                        ->get();
+
+                if(count($billing) > 0) {
+
+                    foreach($billing as $w) {
+                        if($w->approval_sequence >= 3) {
+                            $data->push([
+                                'ref' => $w->reference_number,
+                                'project_name' => $w->project_name,
+                                'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
+                                'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
+                                'action' => 'action',
+                            ]);
+                        }
+                    }
+                }
+            }
+            # end of BCM Manager
+
+
+            // $wro = Wo::where('user_id', Auth::user()->id)
+            //             ->where('archived', 0)
+            //             ->get();
+            // $data = collect();
+            // if(count($wro) > 0) {
+            //     foreach($wro as $w) {
+            //         $data->push([
+            //             'wro' => $w->wr_no,
+            //             'status' => GC::viewWroStatus($w->approval_sequence, $w->cancelled, $w->disapproved),
+            //             'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
+            //             'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
+            //             'action' => GC::wroRequestorAction($w->approval_sequence, $w->id, $w->wr_no, $w->cancelled, $w->disapproved), 
+            //         ]);
+            //     }
+            // }
+
+            # start of treasury manager
+            if($wro_approval->treasury_manager == Auth::user()->id) {
+                $billing3 = Billing::where('archived', 0)
+                        ->get();
+
+
+                if(count($billing3) > 0) {
+
+
+                    foreach($billing3 as $w) {
+                        // if($w->approval_sequence >= 5) { # old code changed on 9/1/21
+                        if($w->approval_sequence >= 7) {
+                            $data->push([
+                                'ref' => $w->wr_no,
+                                'project_name' => $w->project_name,
+                                'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
+                                'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
+                                'action' => 'action',
+                            ]);
+                        }
+                    }
+                }
+            }
+            # end of treasury manager
+            
+        # start of First Approver Manager
+        $billing1 = Billing::where('farm_manager_id', Auth::user()->id)
+                    ->where('archived', 0)
+                    ->get();
+
+        if(count($billing1) > 0) {
+            $data = [];
+            foreach($billing1 as $w) {
+                if($w->approval_sequence >= 5) {
+                    $data[] = [
+                        'ref' => $w->wr_no,
+                        'project_name' => $w->project_name,
+                        'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
+                        'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
+                        'action' => 'action',
+                    ];
+                }
+            }
+        }
+        # end of First Approver Manger
+
+            return DataTables::of($data)
+                    ->rawColumns(['status', 'action'])
+                    ->make(true);
+
+        }
     }
 
 }

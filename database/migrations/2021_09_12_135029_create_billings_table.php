@@ -56,6 +56,13 @@ class CreateBillingsTable extends Migration
             // 8 vp
             $table->bigInteger('next_approver')->nullable(); // for excempted case
 
+            $table->string('farm_manager_id');
+            $table->string('farm_divhead_id');
+            $table->string('farm_manager_approval')->nullable();
+            $table->string('farm_manager_approved')->nullable();
+            $table->string('farm_divhead_approval')->nullable();
+            $table->string('farm_divhead_approved')->nullable();
+
             $table->bigInteger('manager_id')->unsigned()->nullable();
             $table->foreign('manager_id')->references('id')->on('users');
             $table->boolean('manager_approval')->default(0);

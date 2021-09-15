@@ -7,6 +7,15 @@ use Illuminate\Http\Request;
 use App\Billing;
 use App\WorkOrder;
 use Auth;
+use App\User;
+
+use App\RequestorApprover as Ra;
+use App\Farm;
+
+use DataTables;
+
+use App\Http\Controllers\GeneralController as GC;
+use App\Http\Controllers\MailController as MC;
 
 class BillingController extends Controller
 {
@@ -43,6 +52,33 @@ class BillingController extends Controller
     		return redirect()->route('user.billing')->with('error', 'Reference Number is already used!');
     	}
 
+
+    	// checking from sla
+        $ra = Ra::where('user_id', Auth::user()->id)
+                ->where('active', 1)
+                ->first();
+
+        $farm_code = substr($request->reference_number, 4, 3);
+        $farm = Farm::where('code', $farm_code)->first();
+
+        $farm_manager = User::where('farm_id', $farm->id)
+                            ->where('user_type', 4)
+                            // ->where([['dept_id', '=', 7],['dept_id', '=', 8]]) // poultry & swine
+                            ->where(function ($query) {
+                                $query->where('dept_id', 7)
+                                    ->orWhere('dept_id', 8);
+                            })
+                            ->first();
+
+        $farm_div_head = User::where('farm_id', $farm->id)
+                            ->where('user_type', 3)
+                            // ->where([['dept_id', '=', 7],['dept_id', '=', 8]]) // poultry & swine
+                            ->where(function ($query) {
+                                $query->where('dept_id', 7)
+                                    ->orWhere('dept_id', 8);
+                            })
+                            ->first();
+
     	$billing = new Billing();
     	$billing->reference_number = $request->reference_number;
     	$billing->project_name = $ref->project_name;
@@ -51,6 +87,12 @@ class BillingController extends Controller
     	$billing->date_needed = date('Y-m-d', strtotime($request->date_needed));
     	$billing->mobilization = $request->mobilization;
     	$billing->url = $request->url;
+
+
+        $billing->approval_sequence = 3;
+
+        $billing->farm_manager_id = $farm_manager->id; # new
+        $billing->farm_divhead_id = $farm_div_head->id; # new
 
     	if($billing->save()) {
     		return redirect()->route('user.billing')->with('success', 'Billing Successfully Created!');
@@ -71,12 +113,13 @@ class BillingController extends Controller
 
 
     // all billing
-    public function all()
+    public function all(Request $request)
     {
         if($request->ajax()) {
             $billing = Billing::where('user_id', Auth::user()->id)
                         ->where('archived', 0)
                         ->get();
+
             $data = collect();
             if(count($billing) > 0) {
                 foreach($billing as $w) {
@@ -85,14 +128,16 @@ class BillingController extends Controller
                         'project_name' => $w->project_name,
                         'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
                         'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
-                        'action' => 'action', 
+                        'action' => GC::billingRequestorAction($w->approval_sequence, $w->id, $w->reference_number, $w->cancelled, $w->disapproved), 
                     ]);
                 }
             }
             return DataTables::of($data)
-                    ->rawColumns(['status', 'action'])
+                    ->rawColumns(['action'])
                     ->make(true);
 
         }
     }
+
+
 }
