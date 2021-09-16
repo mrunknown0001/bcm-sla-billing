@@ -71,7 +71,7 @@ Route::group(['prefix' => 'u', 'middleware' => ['user', 'preventBackHistory']], 
 	Route::get('/preview/project/{id}', 'GeneralController@previewProjectName')->name('preview.project.name');
 
 	// Billing Archive
-	Route::get('/billign/archived', 'BillingController@archivedBilling')->name('user.archived.billing');
+	Route::get('/billing/archived', 'BillingController@archivedBilling')->name('user.archived.billing');
 
 	// all billing
 	Route::get('/all/billing', 'BillingController@all')->name('user.all.billing');
@@ -142,6 +142,11 @@ Route::group(['prefix' => 'manager', 'middleware' => ['manager', 'preventBackHis
 	Route::get('/billing/bcm/manager/approval/{id}', 'ManagerController@billingBCMManagerApproval')->name('manager.bcm.approve.billing');
 
 	Route::get('/billing/bcm/manager/disapproval/{id}/{comment}', 'ManagerController@billingBCMManagerDisapproval')->name('manager.bcm.approve.billing');
+
+	// farm manager
+	Route::get('/billing/approval/{id}', 'ManagerController@billingApproval')->name('manager.billing.approval');
+
+	Route::get('/billing/disapproval/{id}/{comment}', 'ManagerController@billingDisapproval')->name('manager.billing.disapproval');
 });
 
 
@@ -179,6 +184,19 @@ Route::group(['prefix' => 'div-head', 'middleware' => ['divhead', 'preventBackHi
 	Route::get('/billing/all', 'DivHeadController@allBilling')->name('div.head.all.billing');
 
 	Route::get('/billing/archived/all', 'DivHeadController@allArchivedBilling')->name('div.head.all.archived.billing');
+
+
+	Route::get('/billing/view/{id}', 'DivHeadController@viewBilling')->name('div.head.view.billing');
+
+
+	Route::get('/gs/billing/approval/{id}', 'DivHeadController@billingGsDivHeadApproval')->name('divhead.gs.billing.approval');
+
+	Route::get('/gs/billing/disapproval/{id}/{comment}', 'DivHeadController@billingGsDivHeadDisapproval')->name('divhead.gs.billing.disapproval');
+
+	Route::get('/billing/approval/{id}', 'DivHeadController@billingApproval')->name('divhead.billing.approval');
+
+	Route::get('/billing/disapproval/{id}/{comment}', 'DivHeadController@billingDisapproval')->name('divhead.billing.disapproval');
+
 });
 
 

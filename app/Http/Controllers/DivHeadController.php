@@ -337,7 +337,7 @@ class DivHeadController extends Controller
                                 'project_name' => $w->project_name,
                                 'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
                                 'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
-                                'action' => 'action',
+                                'action' => GC::billingGenServDivHeadAction($w->approval_sequence, $w->id, $w->reference_number, $w->cancelled, $w->disapproved, $w->archived),
                             ]);
                         }
                     }
@@ -351,15 +351,15 @@ class DivHeadController extends Controller
                         ->get();
 
             if(count($billing1) > 0) {
-                $data = [];
+                $data = collect();
                 foreach($billing1 as $w) {
                     if($w->approval_sequence >= 5) {
                         $data->push([
-                            'ref' => $w->wr_no,
+                            'ref' => $w->reference_number,
                             'project_name' => $w->project_name,
                             'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
                             'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
-                            'action' => 'action',
+                            'action' => GC::billingDivHeadAction($w->approval_sequence, $w->id, $w->reference_number, $w->cancelled, $w->disapproved, $w->archived),
                         ]);
                     }
                 }
@@ -434,4 +434,102 @@ class DivHeadController extends Controller
         }
     }
 
+
+
+
+    // View Billing
+    public function viewBilling($id)
+    {
+        $billing = Billing::findorfail($id);
+
+        return view('divhead.billing-view', ['billing' => $billing]);
+    }
+
+
+
+
+    public function billingGsDivHeadApproval($id)
+    {
+        $wro = Billing::findorfail($id);
+
+
+        if($wro->cancelled == 1 || $wro->approval_sequence != 4 || $wro->disapproved == 1) {
+            return false;
+        }
+
+        if($wro->farm_manager_id == NULL || $wro->farm_manager_id == '') {
+            return redirect()->back()->with('error', 'Invalid Entry! Cancel this WRO and create new.');
+        }
+
+        if($wro->farm_divhead_id == NULL || $wro->farm_divhead_id == '') {
+            return redirect()->back()->with('error', 'Invalid Entry! Cancel this WRO and create new.');
+        }
+
+
+        $wro->approval_sequence = 5;
+        $wro->gen_serv_div_head_id = Auth::user()->id;
+        $wro->gen_serv_div_head_approval = 1;
+        $wro->gen_serv_div_head_approved = date('Y-m-d H:i:s', strtotime(now()));
+        $wro->save();
+
+        
+
+
+        $approvals =  WroApproval::find(1);
+
+
+        $next_approver = GC::getName($wro->farm_manager_id); 
+        $next_approver_email = GC::getEmail($wro->farm_manager_id); 
+        $prev_approver = GC::getName($approvals->gen_serv_div_head);
+        $prev_approver_designation = 'General Services - Division Head';
+        $wro_view_route = 'manager.view.work.order';
+        $wro_id = $wro->id;
+        $wro_no = $wro->reference_number;
+        # Send email to next Approver (Farm Manager)
+        MC::billingNextApproval($next_approver, $next_approver_email, $prev_approver, $prev_approver_designation, $wro_view_route, $wro_id, $wro_no);
+        return true;
+    }
+
+
+
+    public function billingGsDivHeadDisapproval($id, $comment)
+    {
+        $wro = Billing::findorfail($id);
+
+        if($wro->cancelled == 1 || $wro->approval_sequence != 4 || $wro->disapproved == 1) {
+            return false;
+        }
+
+        $wro->disapproved_by = Auth::user()->id;
+        $wro->disapproved = 1;
+        $wro->disapproved_on = now();
+        $wro->reason = $comment;
+        $wro->save();
+
+        # Send Disapproval Email Notification to Requestor
+
+         $approvals = WroApproval::find(1);
+        $requestor = GC::getName($wro->user_id);
+        $requestor_email = GC::getEmail($wro->user_id);
+        $approver = GC::getName($approvals->gen_serv_div_head);
+        $approver_designation = 'General Services - Division Head';
+        $wro_view_route = 'user.view.work.order';
+
+        MC::billingDisapproved($approver, $approver_designation, $requestor, $requestor_email, $wro_view_route, $wro->id, $wro->billing);
+
+        return true;
+    }
+
+
+    // farm divhead approval
+    public function billingApproval()
+    {
+
+    }
+
+    // farm divhead disapproval
+    public function billingDisapproval()
+    {
+        
+    }
 }

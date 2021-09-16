@@ -665,4 +665,36 @@ class ManagerController extends Controller
 
     }
 
+
+
+    public function billingApproval($id)
+    {
+        // check owner ship
+        $wro = Billing::findorfail($id);
+
+        if($wro->farm_manager_id != Auth::user()->id) {
+            return abort(404);
+        }
+
+        if($wro->cancelled == 1 || $wro->approval_sequence != 5) {
+            return false;
+        }
+
+        $wro->approval_sequence = 6;
+        $wro->farm_manager_approval = 1;
+        $wro->farm_manager_approved = date('Y-m-d H:i:s', strtotime(now()));
+        $wro->save();
+
+        $next_approver = GC::getName($wro->farm_divhead_id);
+        $next_approver_email = GC::getEmail($wro->farm_divhead_id);
+        $prev_approver = GC::getName($wro->farm_manager_id);
+        $prev_approver_designation = 'Manager';
+        $wro_view_route = 'divhead.view.work.order';
+        $wro_id = $wro->id;
+        $wro_no = $wro->reference_number;
+
+        MC::billingNextApproval($next_approver, $next_approver_email, $prev_approver, $prev_approver_designation, $wro_view_route, $wro_id, $wro_no);
+
+        return true;
+    }
 }

@@ -608,6 +608,164 @@
 
 
     // Billing
+    $(document).on('click', '#viewbilling', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        var text = $(this).data('text');
+        Swal.fire({
+          title: 'View Billing Details?',
+          text: text,
+          type: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Continue'
+        }).then((result) => {
+          if (result.value) {
+            // view here
+            window.location.replace("/manager/billing/view/" + id);
+
+          }
+          else {
+            Swal.fire({
+              title: 'Action Cancelled',
+              text: "",
+              type: 'info',
+              showCancelButton: false,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Close'
+            });
+          }
+        });
+    });
+
+    $(document).on('click', '#approvebilling', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        var text = $(this).data('text');
+        Swal.fire({
+          title: 'Approve Billing?',
+          text: text,
+          type: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Approve'
+        }).then((result) => {
+          if (result.value) {
+            $.ajax({
+              url: "/manager/billing/approval/" + id,
+              type: "GET",
+              success: function(succ) {
+                console.log(succ)
+                Swal.fire({
+                  title: 'Approval Successfull!',
+                  text: "",
+                  type: 'success',
+                  showCancelButton: false,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Close'
+                });
+                var table = $('#billing').DataTable();
+                table.ajax.reload();
+              },
+              error: function(err) {
+                console.log(err)
+                Swal.fire({
+                  title: 'Error Occured! Tray Again Later.',
+                  text: "",
+                  type: 'error',
+                  showCancelButton: false,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Close'
+                });
+              }
+            });
+
+          }
+          else {
+            Swal.fire({
+              title: 'Approval Action Cancelled',
+              text: "",
+              type: 'info',
+              showCancelButton: false,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Close'
+            });
+          }
+        });
+    });
+
+
+    $(document).on('click', '#disapprovebilling', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        var text = $(this).data('text');
+        Swal.fire({
+          title: 'Disapprove Billing?',
+          text: text,
+          type: 'question',          
+          input: 'text',
+          inputPlaceholder: 'Comment Here...',
+          inputValidator: (value) => {
+            return !value && 'Please leave a comment!'
+          },
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Disapprove'
+        }).then((result) => {
+          if (result.value) {
+            $.ajax({
+              url: "/manager/billing/disapproval/" + id + "/" + result.value,
+              type: "GET",
+              success: function() {
+                Swal.fire({
+                  title: 'Disapprove Successfull!',
+                  text: "",
+                  type: 'success',
+                  showCancelButton: false,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Close'
+                });
+                var table = $('#billing').DataTable();
+                table.ajax.reload();
+              },
+              error: function(err) {
+                console.log(err)
+                Swal.fire({
+                  title: 'Error Occured! Tray Again Later.',
+                  text: "",
+                  type: 'error',
+                  showCancelButton: false,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Close'
+                });
+              }
+            });
+
+          }
+          else {
+            Swal.fire({
+              title: 'Action Cancelled',
+              text: "",
+              type: 'info',
+              showCancelButton: false,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Close'
+            });
+          }
+        });
+    });
+
+    // bcm manager
     $(document).on('click', '#view_billing_bcm_mgr', function (e) {
         e.preventDefault();
         var id = $(this).data('id');

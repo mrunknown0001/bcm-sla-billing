@@ -873,28 +873,28 @@ class GeneralController extends Controller
         if($archived == 0) {
             if($cancelled == 0 && $disapproved == 0) {
                 if($status == 5) {
-                    return "<button id='viewbilling1' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>
-                    <button id='approve1' data-id='" . $id . "' data-text='Do you want to approve Billing " . $sla_number . "?' class='btn btn-success btn-xs'><i class='pe-7s-check'></i> Approve</button>
-                    <button id='disapprove1' data-id='" . $id . "' data-text='Do you want to disapprove Billing " . $sla_number . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
+                    return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>
+                    <button id='approvebilling' data-id='" . $id . "' data-text='Do you want to approve Billing " . $sla_number . "?' class='btn btn-success btn-xs'><i class='pe-7s-check'></i> Approve</button>
+                    <button id='disapprovebilling' data-id='" . $id . "' data-text='Do you want to disapprove Billing " . $sla_number . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
                 }
                 elseif($status == 9) {
-                    return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a> <button id='archive1' data-id='" . $id . "' data-text='Do you want to archive Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-portfolio'></i> Archive</button>";
+                    return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a> <button id='archive1' data-id='" . $id . "' data-text='Do you want to archive Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-portfolio'></i> Archive</button>";
                 }
                 else {
-                    return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+                    return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
                 }
             }
             else
              {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <button id='archive1' data-id='" . $id . "' data-text='Do you want to archive Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-portfolio'></i> Archive</button>";
+                return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <button id='archive1' data-id='" . $id . "' data-text='Do you want to archive Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-portfolio'></i> Archive</button>";
             }
         }
         else {
             if($status == 9) {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a>";
+                return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a>";
             }
             else {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+                return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
             }
         }
     }
@@ -924,4 +924,53 @@ class GeneralController extends Controller
         }
     }
  
+
+
+    // div head gs billing actions
+   public static function billingGenServDivHeadAction($status, $id, $sla_number, $cancelled, $disapproved, $archived)
+    {
+        if($cancelled == 0 && $disapproved != 1) {
+            if($status == 4) {
+                return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>
+                <button id='approve_billing_gs_div_head' data-id='" . $id . "' data-text='Do you want to approve Billing " . $sla_number . "?' class='btn btn-success btn-xs'><i class='pe-7s-check'></i> Approve</button>
+                <button id='disapprove_billing_gs_div_head' data-id='" . $id . "' data-text='Do you want to disapprove Billing " . $sla_number . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
+            }
+            elseif($status == 9) {
+                return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+            }
+            else {
+                return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+            }
+        }
+        elseif($disapproved == 1) {
+            return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+        }
+        else {
+            return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+        }
+    }
+
+
+    public static function billingDivHeadAction($status, $id, $sla_number, $cancelled, $disapproved, $archived)
+    {
+        if($cancelled == 0 && $disapproved != 1 && $archived == 0) {
+            if($status == 6) {
+                return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>
+                <button id='approvebilling' data-id='" . $id . "' data-text='Do you want to approve Billing " . $sla_number . "?' class='btn btn-success btn-xs'><i class='pe-7s-check'></i> Approve</button>
+                <button id='disapprovebilling' data-id='" . $id . "' data-text='Do you want to disapprove Billing " . $sla_number . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
+            }
+            elseif($status == 9) {
+                return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a>";
+            }
+            else {
+                return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+            }
+        }
+        elseif($disapproved == 1) {
+            return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+        }
+        else {
+            return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+        }
+    }
 }
