@@ -42,6 +42,7 @@
 
 
             <p class="">
+              Requested By: <br>
               <img src="{{ public_path("uploads/signature/" . $wro->user_id . ".png") }}" alt="" height="120px">
               <br>
               <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->user_id)) !!}</b>
@@ -52,6 +53,7 @@
             <br>
             <br>
             <p class="">
+              Checked By: <br>
               <img src="{{ public_path("uploads/signature/" . $wro->bcm_manager_id . ".png") }}" alt="" height="120px">
               <br>
               <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->bcm_manager_id)) !!}</b>
@@ -62,6 +64,7 @@
             <br>
             <br>
             <p class="">
+              Verified By: <br>
               <img src="{{ public_path("uploads/signature/" . $wro->gen_serv_div_head_id . ".png") }}" alt="" height="120px">
               <br>
               <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->gen_serv_div_head_id)) !!}</b>
@@ -72,6 +75,7 @@
             <br>
             <br>
             <p class="">
+              Noted By: <br>
               <img src="{{ public_path("uploads/signature/" . $wro->farm_manager_id . ".png") }}" alt="" height="120px">
               <br>
               <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->farm_manager_id )) !!}</b>
@@ -82,6 +86,7 @@
             <br>
             <br>
             <p class="">
+              Recommending Approval By: <br>
               <img src="{{ public_path("uploads/signature/" . $wro->farm_divhead_id . ".png") }}" alt="" height="120px">
               <br>
               <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->farm_divhead_id )) !!}</b>
@@ -92,6 +97,7 @@
             <br>
             <br>
             <p class="">
+              Approved By: <br>
               <img src="{{ public_path("uploads/signature/" . $wro->treasury_manager_id . ".png") }}" alt="" height="120px">
               <br>
               <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->treasury_manager_id )) !!}</b>
@@ -112,6 +118,7 @@
             <br>
             <br> --}}
             <p class="">
+              Approved By: <br>
               <img src="{{  public_path("uploads/signature/" . $wro->vp_gen_serv_id . ".png") }}" alt="" height="120px">
               <br>
               <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->vp_gen_serv_id  )) !!}</b>

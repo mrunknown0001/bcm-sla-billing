@@ -545,7 +545,7 @@
         var id = $(this).data('id');
         var text = $(this).data('text');
         Swal.fire({
-          title: 'Approve billing?',
+          title: 'Approve Billing?',
           text: text,
           type: 'question',
           showCancelButton: true,

@@ -206,7 +206,7 @@ class VpController extends Controller
                         'project_name' => $w->project_name,
                         'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
                         'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
-                        'action' => 'action', 
+                        'action' => GC::billingGsVpAction($w->approval_sequence, $w->id, $w->reference_number, $w->cancelled, $w->disapproved, $w->archived),
                     ]);
                 }
             }
@@ -237,7 +237,7 @@ class VpController extends Controller
                         'project_name' => $w->project_name,
                         'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
                         'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
-                        'action' => 'action', 
+                        'action' => GC::billingGsVpAction($w->approval_sequence, $w->id, $w->reference_number, $w->cancelled, $w->disapproved, $w->archived), 
                     ]);
                 }
             }
@@ -246,5 +246,78 @@ class VpController extends Controller
                     ->make(true);
 
         }
+    }
+
+
+    public function viewBilling($id)
+    {
+        $wro = Billing::findorfail($id);
+
+        return view('vp.billing-view', ['billing' => $wro]);
+    }
+
+
+
+    public function billingGsVPApproval($id)
+    {
+        $wro = Billing::findorfail($id);
+
+        if($wro->cancelled == 1 || $wro->approval_sequence != 8 || $wro->disapproved == 1) {
+            return false;
+        }
+
+        $wro->approval_sequence = 9;
+        $wro->vp_gen_serv_id = Auth::user()->id;
+        $wro->vp_gen_serv_approval = 1;
+        $wro->vp_gen_serv_approved = date('Y-m-d H:i:s', strtotime(now()));
+        $wro->save();
+
+        # Send email to Approver
+        $approver = GC::getName(Auth::user()->id);
+        $approver_designation = 'VP on General Services';
+        $receivers = [
+            GC::getEmail($wro->user_id),
+            GC::getEmail($wro->bcm_manager_id),
+            GC::getEmail($wro->gen_serv_div_head_id),
+            GC::getEmail($wro->treasury_manager_id),
+            GC::getEmail($wro->farm_manager_id),
+            GC::getEmail($wro->farm_divhead_id),
+            // GC::getEmail($wro->coo_id),
+        ];
+        // $receivers = ['m.trinidad@bfcgroup.org', 'maet.bgc@gmail.com'];
+        $wro_no = $wro->reference_number;
+        MC::billingApproved($approver, $approver_designation, $receivers, $wro_no);
+
+        return true;
+    }
+
+
+    public function billingGsVpDisapproval($id, $comment)
+    {
+        $wro = Billing::findorfail($id);
+
+
+        if($wro->cancelled == 1 || $wro->approval_sequence != 8 || $wro->disapproved == 1) {
+            return false;
+        }
+
+        $wro->disapproved_by = Auth::user()->id;
+        $wro->disapproved = 1;
+        $wro->disapproved_on = now();
+        $wro->reason = $comment;
+        $wro->save();
+
+        # Send Disapproval Email Notification to Requestor
+         $approvals = WroApproval::find(1);
+        $requestor = GC::getName($wro->user_id);
+        $requestor_email = GC::getEmail($wro->user_id);
+        $approver = GC::getName($approvals->vp_gen_serv);
+        $approver_designation = 'VP - General Services';
+        $wro_view_route = 'user.view.work.order';
+
+        MC::billingDisapproved($approver, $approver_designation, $requestor, $requestor_email, $wro_view_route, $wro->id, $wro->reference_number);
+
+        return true;
+
     }
 }

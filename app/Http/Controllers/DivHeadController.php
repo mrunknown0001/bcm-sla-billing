@@ -522,14 +522,74 @@ class DivHeadController extends Controller
 
 
     // farm divhead approval
-    public function billingApproval()
+    public function billingApproval($id)
     {
+        $wro = Billing::findorfail($id);
 
+        if($wro->farm_divhead_id != Auth::user()->id) {
+            return 'error1';
+        }
+
+        if($wro->cancelled == 1 || $wro->approval_sequence != 6 || $wro->disapproved == 1) {
+            return 'error2';
+        }
+
+        $wro->approval_sequence = 7;
+        $wro->farm_divhead_approval = 1;
+        $wro->farm_divhead_approved = date('Y-m-d H:i:s', strtotime(now()));
+        $wro->save();
+
+        # Send email to next Approver (Treasury Manager)
+
+        $approvals =  WroApproval::find(1);
+
+
+        $next_approver = GC::getName($approvals->treasury_manager);
+        $next_approver_email = GC::getEmail($approvals->treasury_manager);
+        $prev_approver = GC::getName($wro->farm_divhead_id);
+        $prev_approver_designation = 'Division Head';
+        $wro_view_route = 'manager.view.work.order';
+        $wro_id = $wro->id;
+        $wro_no = $wro->reference_number;
+
+        MC::billingNextApproval($next_approver, $next_approver_email, $prev_approver, $prev_approver_designation, $wro_view_route, $wro_id, $wro_no);
+         
+        return true;
     }
 
     // farm divhead disapproval
     public function billingDisapproval()
     {
-        
+        $wro = Wo::findorfail($id);
+
+        if($wro->farm_divhead_id != Auth::user()->id) {
+            return false;
+        }
+
+        if($wro->cancelled == 1 || $wro->approval_sequence != 6 || $wro->disapproved == 1) {
+            return false;
+        }
+
+        $wro->disapproved_by = Auth::user()->id;
+        $wro->disapproved = 1;
+        $wro->disapproved_on = now();
+        $wro->reason = $comment;
+        $wro->save();
+
+        # Send Disapproval Email Notification to Requestor
+         $approvals = WroApproval::find(1);
+        $requestor = GC::getName($wro->user_id);
+        $requestor_email = GC::getEmail($wro->user_id);
+        $approver = GC::getName($approvals->farm_divhead_id);
+        $approver_designation = 'Division Head';
+        $wro_view_route = 'user.view.work.order';
+
+        MC::billingDisapproved($approver, $approver_designation, $requestor, $requestor_email, $wro_view_route, $wro->id, $wro->reference_number);
+
+
+        return true;
     }
+
+
+
 }

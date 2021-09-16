@@ -242,4 +242,26 @@ class MailController extends Controller
     }
 
 
+
+    public static function billingApproved($approver, $approver_designation, $receivers, $wro_no)
+    {
+
+		$data = array(
+			"approver" => $approver,
+			"approver_designation" => $approver_designation,
+			"wro_no" => $wro_no
+
+		);
+
+		$subject = "[APPROVED] " . $wro_no; // subject of email Static
+
+    	if(static::$status == 1) {
+			Mail::send("emails.billing_approved_all", $data, function($message) use ($receivers, $subject) {
+				$message->to($receivers)->subject($subject);
+				$message->from("no-reply@bfcgroup.ph", "Brookside SLA and Blling System");
+			});
+		}
+    }
+
+
 }

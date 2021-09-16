@@ -147,6 +147,14 @@ Route::group(['prefix' => 'manager', 'middleware' => ['manager', 'preventBackHis
 	Route::get('/billing/approval/{id}', 'ManagerController@billingApproval')->name('manager.billing.approval');
 
 	Route::get('/billing/disapproval/{id}/{comment}', 'ManagerController@billingDisapproval')->name('manager.billing.disapproval');
+
+	// treasury manager
+	Route::get('/billing/trsry/manager/approval/{id}', 'ManagerController@billingTrsryManagerApproval')->name('manager.trsry.approve.billing');
+
+	Route::get('/billing/trsry/manager/disapproval/{id}/{comment}', 'ManagerController@billingTrsryManagerDisapproval')->name('manager.trsry.approve.billing');
+
+
+	Route::get('/billing/archive/{id}', 'ManagerController@archiveBilling')->name('manger.archive.billing');
 });
 
 
@@ -226,6 +234,13 @@ Route::group(['prefix' => 'vp', 'middleware' => ['vp', 'preventBackHistory']], f
 	Route::get('/billing/all', 'VpController@allBilling')->name('vp.all.billing');
 
 	Route::get('/billing/archived/all', 'VpController@allArchivedBilling')->name('vp.all.archived.billing');
+
+	Route::get('/billing/view/{id}', 'VpController@viewBilling')->name('vp.view.billing');
+
+	Route::get('/billing/approval/{id}', 'VpController@billingGsVPApproval')->name('vp.billing.approval');
+
+	Route::get('/billing/disapproval/{id}/{comment}', 'VpController@billingGsVpDisapproval')->name('vp.billing.disapproval');
+
 
 });
 

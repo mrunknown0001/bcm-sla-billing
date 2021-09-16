@@ -36,6 +36,7 @@
 
 
             <p class="">
+              Requested By: <br>
               <img src="{{ public_path("uploads/signature/" . $billing->user_id . ".png") }}" alt="" height="120px">
               <br>
               <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($billing->user_id)) !!}</b>
@@ -46,6 +47,7 @@
             <br>
             <br>
             <p class="">
+              Checked By: <br>
               <img src="{{ public_path("uploads/signature/" . $billing->bcm_manager_id . ".png") }}" alt="" height="120px">
               <br>
               <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($billing->bcm_manager_id)) !!}</b>
@@ -56,6 +58,7 @@
             <br>
             <br>
             <p class="">
+              Verified By: <br>
               <img src="{{ public_path("uploads/signature/" . $billing->gen_serv_div_head_id . ".png") }}" alt="" height="120px">
               <br>
               <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($billing->gen_serv_div_head_id)) !!}</b>
@@ -66,6 +69,7 @@
             <br>
             <br>
             <p class="">
+              Noted By: <br>
               <img src="{{ public_path("uploads/signature/" . $billing->farm_manager_id . ".png") }}" alt="" height="120px">
               <br>
               <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($billing->farm_manager_id )) !!}</b>
@@ -76,6 +80,7 @@
             <br>
             <br>
             <p class="">
+              Recommending Approval By: <br>
               <img src="{{ public_path("uploads/signature/" . $billing->farm_divhead_id . ".png") }}" alt="" height="120px">
               <br>
               <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($billing->farm_divhead_id )) !!}</b>
@@ -86,6 +91,7 @@
             <br>
             <br>
             <p class="">
+              Approved By: <br>
               <img src="{{ public_path("uploads/signature/" . $billing->treasury_manager_id . ".png") }}" alt="" height="120px">
               <br>
               <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($billing->treasury_manager_id )) !!}</b>
@@ -106,6 +112,7 @@
             <br>
             <br> --}}
             <p class="">
+              Approved By: <br>
               <img src="{{  public_path("uploads/signature/" . $billing->vp_gen_serv_id . ".png") }}" alt="" height="120px">
               <br>
               <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($billing->vp_gen_serv_id  )) !!}</b>
