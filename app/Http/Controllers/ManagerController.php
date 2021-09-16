@@ -439,7 +439,7 @@ class ManagerController extends Controller
                                 'project_name' => $w->project_name,
                                 'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
                                 'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
-                                'action' => 'action',
+                                'action' => GC::billingBCMManagerAction($w->approval_sequence, $w->id, $w->reference_number, $w->cancelled, $w->disapproved, $w->archived),
                             ]);
                         }
                     }
@@ -486,7 +486,7 @@ class ManagerController extends Controller
                             'project_name' => $w->project_name,
                             'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
                             'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
-                            'action' => 'action',
+                            'action' => GC::billingManagerAction($w->approval_sequence, $w->id, $w->reference_number, $w->cancelled, $w->disapproved, $w->archived),
                         ];
                     }
                 }
@@ -583,6 +583,86 @@ class ManagerController extends Controller
                     ->make(true);
 
         }
+    }
+
+
+
+    public function viewBilling($id)
+    {
+        $billing = Billing::findorfail($id);
+
+        return view('manager.billing-view', ['billing' => $billing]);
+    }
+
+
+
+    public function billingBCMManagerApproval($id)
+    {
+        // validate
+        $billing = Billing::findorfail($id);
+
+        if($billing->cancelled == 1 || $billing->approval_sequence != 3 || $billing->disapproved == 1) {
+            return false;
+        }
+
+        // update
+        $billing->approval_sequence = 4;
+        $billing->bcm_manager_id = Auth::user()->id;
+        $billing->bcm_manager_approval = 1;
+        $billing->bcm_manager_approved = date('Y-m-d H:i:s', strtotime(now()));
+        $billing->save();
+
+        // save
+
+        $approvals =  WroApproval::find(1);
+
+
+        # Send Email to Next Approver (GS Div Head)
+
+        $next_approver = GC::getName($approvals->gen_serv_div_head);
+        $next_approver_email = GC::getEmail($approvals->gen_serv_div_head);
+        $prev_approver = GC::getName($approvals->bcm_manager);
+        $prev_approver_designation = 'BCM Manager';
+        $wro_view_route = 'divhead.view.work.order';
+        $wro_id = $billing->id;
+        $wro_no = $billing->reference_number;
+
+        MC::billingNextApproval($next_approver, $next_approver_email, $prev_approver, $prev_approver_designation, $wro_view_route, $wro_id, $wro_no);
+ 
+        
+        return true;
+    }
+
+
+
+    public function billingBCMManagerDisapproval($id, $comment)
+    {
+        $wro = Billing::findorfail($id);
+
+        if($wro->cancelled == 1 || $wro->approval_sequence != 3 || $wro->disapproved == 1) {
+            return false;
+        }
+
+        $wro->disapproved_by = Auth::user()->id;
+        $wro->disapproved = 1;
+        $wro->disapproved_on = now();
+        $wro->reason = $comment;
+        $wro->save();
+
+        # Send Disapproval Email Notification to Requestor
+
+        $approvals = WroApproval::find(1);
+        $requestor = GC::getName($wro->user_id);
+        $requestor_email = GC::getEmail($wro->user_id);
+        $approver = GC::getName($approvals->bcm_manager);
+        $approver_designation = 'BCM Manager';
+        $wro_view_route = 'user.view.work.order';
+
+        MC::billingDisapproved($approver, $approver_designation, $requestor, $requestor_email, $wro_view_route, $wro->id, $wro->reference_number);
+
+        return true;
+
+
     }
 
 }

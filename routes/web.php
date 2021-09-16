@@ -136,6 +136,12 @@ Route::group(['prefix' => 'manager', 'middleware' => ['manager', 'preventBackHis
 	Route::get('/billing/view/{id}', 'ManagerController@viewBilling')->name('manager.billing.view');
 	Route::get('/billing/disapprove/{id}', 'ManagerController@disapproveBilling')->name('manager.billing.disapprove');
 	Route::get('/billing/approve/{id}', 'ManagerController@approveBilling')->name('mnager.billing.approve');
+
+
+	// BCM Manager Approval and Disapproval for Billing
+	Route::get('/billing/bcm/manager/approval/{id}', 'ManagerController@billingBCMManagerApproval')->name('manager.bcm.approve.billing');
+
+	Route::get('/billing/bcm/manager/disapproval/{id}/{comment}', 'ManagerController@billingBCMManagerDisapproval')->name('manager.bcm.approve.billing');
 });
 
 

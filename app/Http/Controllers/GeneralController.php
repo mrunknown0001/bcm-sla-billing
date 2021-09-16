@@ -865,5 +865,63 @@ class GeneralController extends Controller
             return '<button id="viewbilling" data-id="' . $id . '" data-text="Do you want to view Billing ' . $sla_number . '?"class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button>';
         }
     }
+
+
+    // action for billing manager
+    public static function billingManagerAction($status, $id, $sla_number, $cancelled, $disapproved, $archived)
+    {
+        if($archived == 0) {
+            if($cancelled == 0 && $disapproved == 0) {
+                if($status == 5) {
+                    return "<button id='viewbilling1' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>
+                    <button id='approve1' data-id='" . $id . "' data-text='Do you want to approve Billing " . $sla_number . "?' class='btn btn-success btn-xs'><i class='pe-7s-check'></i> Approve</button>
+                    <button id='disapprove1' data-id='" . $id . "' data-text='Do you want to disapprove Billing " . $sla_number . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
+                }
+                elseif($status == 9) {
+                    return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a> <button id='archive1' data-id='" . $id . "' data-text='Do you want to archive Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-portfolio'></i> Archive</button>";
+                }
+                else {
+                    return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+                }
+            }
+            else
+             {
+                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <button id='archive1' data-id='" . $id . "' data-text='Do you want to archive Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-portfolio'></i> Archive</button>";
+            }
+        }
+        else {
+            if($status == 9) {
+                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a>";
+            }
+            else {
+                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+            }
+        }
+    }
+
+
+    // bmc manager billing action
+    public static function billingBCMManagerAction($status, $id, $sla_number, $cancelled, $disapproved, $archived)
+    {
+        if($cancelled == 0 && $disapproved != 1) {
+            if($status == 3) {
+                return "<button id='view_billing_bcm_mgr' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>
+                <button id='approve_billing_bcm_mgr' data-id='" . $id . "' data-text='Do you want to approve Billing " . $sla_number . "?' class='btn btn-success btn-xs'><i class='pe-7s-check'></i> Approve</button>
+                <button id='disapprove_billing_bcm_mgr' data-id='" . $id . "' data-text='Do you want to disapprove Billing " . $sla_number . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
+            }
+            elseif($status == 9) {
+                return "<button id='view_billing_bcm_mgr' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <button id='archive_billing_bcm_mgr' data-id='" . $id . "' data-text='Do you want to archive Billing " . $sla_number . "?' class='btn btn-primary btn-xs'><i class='pe-7s-portfolio'></i> Archive</button>";
+            }
+            else {
+                return "<button id='view_billing_bcm_mgr' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+            }
+        }
+        elseif($disapproved == 1) {
+            return "<button id='view_billing_bcm_mgr' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <button id='archive_billing_bcm_mgr' data-id='" . $id . "' data-text='Do you want to archive Billing " . $sla_number . "?' class='btn btn-primary btn-xs'><i class='pe-7s-portfolio'></i> Archive</button>";
+        }
+        else {
+            return "<button id='view_billing_bcm_mgr' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+        }
+    }
  
 }
