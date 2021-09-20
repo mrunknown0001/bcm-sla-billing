@@ -9,16 +9,6 @@ use App\MailSetting;
 
 class MailController extends Controller
 {
-	private static $status = 0;
-
-	public function __construct()
-	{
-		$s = MailSetting::find(1);
-		if(!empty($s)) {
-			static::$status = $s->status;
-		}
-	}
-
 
 	public function setup(Request $request)
 	{
@@ -30,14 +20,31 @@ class MailController extends Controller
 
 		if($request->mail_switch == 'on') {
 			$ms->status = 1;
-			$ms->save();
 		}
 		else {
 			$ms->status = 0;
-			$ms->save();
 		}
 
+		$ms->save();
+
 		return redirect()->route('admin.module')->with('success', 'Mail Setting Updated!');
+	}
+
+	private static function checkStatus()
+	{
+		$ms = MailSetting::find(1);
+
+		if(empty($ms)) {
+			return false;
+		}
+		else {
+			if($ms->status == 1) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
 	}
     
     public static function sendVerificationCode($code, $email, $name, $link)
@@ -50,7 +57,7 @@ class MailController extends Controller
 
     	$subject = "Brookside SLA and Billing Order - Account Password Reset";
 
-    	if(static::$status == 1) {
+    	if(self::checkStatus()) {
 	    	Mail::send("emails.password-reset", $data, function($message) use ($name, $email, $subject) {
 				$message->to($email, $name)->subject($subject);
 				$message->from("no-reply@bfcgroup.ph", "Brookside SLA and Blling System");
@@ -76,7 +83,7 @@ class MailController extends Controller
 
 		$subject = "[FOR APPROVAL] " . $wro_no; // subject of email Static
 
-    	if(static::$status == 1) {
+    	if(self::checkStatus()) {
 			Mail::send("emails.wro_manager_approval", $data, function($message) use ($approver, $approver_email, $subject) {
 				$message->to($approver_email, $approver)->subject($subject);
 				$message->from("no-reply@bfcgroup.ph", "Brookside SLA and Blling System");
@@ -101,7 +108,7 @@ class MailController extends Controller
 
 		$subject = "[FOR APPROVAL] " . $wro_no; // subject of email Static
 
-    	if(static::$status == 1) {
+    	if(self::checkStatus()) {
 			Mail::send("emails.wro_next_approval", $data, function($message) use ($next_approver, $next_approver_email, $subject) {
 				$message->to($next_approver_email, $next_approver)->subject($subject);
 				$message->from("no-reply@bfcgroup.ph", "Brookside SLA and Blling System");
@@ -129,7 +136,7 @@ class MailController extends Controller
 
 		$subject = "[DISAPPROVED] " . $wro_no; // subject of email Static
 
-    	if(static::$status == 1) {
+    	if(self::checkStatus()) {
 			Mail::send("emails.wro_disapproved", $data, function($message) use ($requestor, $requestor_email, $subject, $wro_no) {
 				$message->to($requestor_email, $requestor)->subject($subject);
 				$message->from("no-reply@bfcgroup.ph", "Brookside SLA and Blling System");
@@ -151,7 +158,7 @@ class MailController extends Controller
 
 		$subject = "[APPROVED] " . $wro_no; // subject of email Static
 
-    	if(static::$status == 1) {
+    	if(self::checkStatus()) {
 			Mail::send("emails.wro_approved_all", $data, function($message) use ($receivers, $subject) {
 				$message->to($receivers)->subject($subject);
 				$message->from("no-reply@bfcgroup.ph", "Brookside SLA and Blling System");
@@ -181,7 +188,7 @@ class MailController extends Controller
 
 		$subject = "[FOR APPROVAL] " . $wro_no; // subject of email Static
 
-    	if(static::$status == 1) {
+    	if(self::checkStatus()) {
 			Mail::send("emails.billing_next_approval", $data, function($message) use ($next_approver, $next_approver_email, $subject) {
 				$message->to($next_approver_email, $next_approver)->subject($subject);
 				$message->from("no-reply@bfcgroup.ph", "Brookside SLA and Blling System");
@@ -207,7 +214,7 @@ class MailController extends Controller
 
 		$subject = "[DISAPPROVED] " . $wro_no; // subject of email Static
 
-    	if(static::$status == 1) {
+    	if(self::checkStatus()) {
 			Mail::send("emails.billing_disapproved", $data, function($message) use ($requestor, $requestor_email, $subject, $wro_no) {
 				$message->to($requestor_email, $requestor)->subject($subject);
 				$message->from("no-reply@bfcgroup.ph", "Brookside SLA and Blling System");
@@ -233,7 +240,7 @@ class MailController extends Controller
 
 		$subject = "[FOR APPROVAL] " . $wro_no; // subject of email Static
 
-    	if(static::$status == 1) {
+    	if(self::checkStatus()) {
 			Mail::send("emails.billing_manager_approval", $data, function($message) use ($approver, $approver_email, $subject) {
 				$message->to($approver_email, $approver)->subject($subject);
 				$message->from("no-reply@bfcgroup.ph", "Brookside SLA and Blling System");
@@ -255,7 +262,7 @@ class MailController extends Controller
 
 		$subject = "[APPROVED] " . $wro_no; // subject of email Static
 
-    	if(static::$status == 1) {
+    	if(self::checkStatus()) {
 			Mail::send("emails.billing_approved_all", $data, function($message) use ($receivers, $subject) {
 				$message->to($receivers)->subject($subject);
 				$message->from("no-reply@bfcgroup.ph", "Brookside SLA and Blling System");

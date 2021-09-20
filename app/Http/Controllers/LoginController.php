@@ -122,7 +122,7 @@ class LoginController extends Controller
 
 
         // send email with link and verification code
-        MC::sendVerificationCode($code, $email, $name, $link);
+        return MC::sendVerificationCode($code, $email, $name, $link);
 
         // redirect to verificaton code input
         return redirect()->route('login')->with('success', 'Please check your email for Password Reset Link and Code send to you email!');
