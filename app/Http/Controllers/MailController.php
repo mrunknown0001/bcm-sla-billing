@@ -48,7 +48,7 @@ class MailController extends Controller
     		"link" => $link
     	);
 
-    	$subject = "Brookside Job and Work Request Order - Account Password Reset";
+    	$subject = "Brookside SLA and Billing Order - Account Password Reset";
 
     	if(static::$status == 1) {
 	    	Mail::send("emails.password-reset", $data, function($message) use ($name, $email, $subject) {
