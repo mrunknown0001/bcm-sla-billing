@@ -28,7 +28,7 @@
       {{-- Status --}}
       <p>Status: {!! App\Http\Controllers\GeneralController::viewWroStatus($wro->approval_sequence, $wro->cancelled, $wro->disapproved) !!}</p>
       @include('includes.common.wro-approvals')
-      @if($wro->cancelled != 1 && $wro->approval_sequence == 1 && $wro->disapproved != 1)
+      @if($wro->cancelled != 1 && $wro->approval_sequence == 5 && $wro->disapproved != 1)
         <button id="approve" data-id="{{ $wro->id }}" data-text="Do you want to approve SLA {{ $wro->wr_no }}?" class="btn btn-success btn-xl"><i class="pe-7s-close-circle"></i> Approve</button>
         <button id="disapprove" data-id="{{ $wro->id }}" data-text="Do you want to disapprove SLA {{ $wro->wr_no }}?" class="btn btn-danger btn-xl"><i class="pe-7s-close-circle"></i> Disapprove</button>
       @elseif($wro->cancelled != 1 && $wro->approval_sequence == 3 && $wro->disapproved != 1)
