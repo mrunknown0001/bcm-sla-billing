@@ -250,6 +250,7 @@ class ManagerController extends Controller
         ];
 
         $wro = Wo::where('bcm_manager_id', Auth::user()->id)
+                    ->orwhere('manager_id', Auth::user()->id)
                     ->where('archived', 1)
                     ->get();
 
