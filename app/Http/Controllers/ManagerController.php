@@ -436,7 +436,7 @@ class ManagerController extends Controller
                         if($w->approval_sequence >= 3) {
                             $data->push([
                                 'ref' => $w->reference_number,
-                                'project_name' => $w->project_name,
+                                'status' => GC::viewWroStatus($w->approval_sequence, $w->cancelled, $w->disapproved),
                                 'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
                                 'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
                                 'action' => GC::billingBCMManagerAction($w->approval_sequence, $w->id, $w->reference_number, $w->cancelled, $w->disapproved, $w->archived),
@@ -461,7 +461,7 @@ class ManagerController extends Controller
                         if($w->approval_sequence >= 7) {
                             $data->push([
                                 'ref' => $w->reference_number,
-                                'project_name' => $w->project_name,
+                                'status' => GC::viewWroStatus($w->approval_sequence, $w->cancelled, $w->disapproved),
                                 'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
                                 'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
                                 'action' => GC::billingTreasuryMgrAction($w->approval_sequence, $w->id, $w->reference_number, $w->cancelled, $w->disapproved, $w->archived),
@@ -483,7 +483,7 @@ class ManagerController extends Controller
                     if($w->approval_sequence >= 5) {
                         $data[] = [
                             'ref' => $w->reference_number,
-                            'project_name' => $w->project_name,
+                            'status' => GC::viewWroStatus($w->approval_sequence, $w->cancelled, $w->disapproved),
                             'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
                             'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
                             'action' => GC::billingManagerAction($w->approval_sequence, $w->id, $w->reference_number, $w->cancelled, $w->disapproved, $w->archived),
@@ -521,7 +521,7 @@ class ManagerController extends Controller
                         if($w->approval_sequence >= 3) {
                             $data->push([
                                 'ref' => $w->reference_number,
-                                'project_name' => $w->project_name,
+                                'status' => GC::viewWroStatus($w->approval_sequence, $w->cancelled, $w->disapproved),
                                 'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
                                 'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
                                 'action' => GC::billingBCMManagerAction($w->approval_sequence, $w->id, $w->reference_number, $w->cancelled, $w->disapproved, $w->archived),
@@ -546,7 +546,7 @@ class ManagerController extends Controller
                         if($w->approval_sequence >= 7) {
                             $data->push([
                                 'ref' => $w->reference_number,
-                                'project_name' => $w->project_name,
+                                'status' => GC::viewWroStatus($w->approval_sequence, $w->cancelled, $w->disapproved),
                                 'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
                                 'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
                                 'action' => 'action',
@@ -568,7 +568,7 @@ class ManagerController extends Controller
                     if($w->approval_sequence >= 5) {
                         $data[] = [
                             'ref' => $w->reference_number,
-                            'project_name' => $w->project_name,
+                            'status' => GC::viewWroStatus($w->approval_sequence, $w->cancelled, $w->disapproved),
                             'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
                             'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
                             'action' => 'action',

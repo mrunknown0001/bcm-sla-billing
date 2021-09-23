@@ -21,7 +21,7 @@
 
       @if(\App\Http\Controllers\GeneralController::getDeptCode(Auth::user()->dept_id) == 'BCM')
       <h4>SLA Lists</h4>
-        <table id="wro" class="display table cell-border compact stripe hover compact" width="99%">
+        <table id="wro" class="display table cell-border compact stripe hover compact nowrap" width="99%">
           <thead>
             <tr>
               <th scope="col">SLA #</th>
@@ -34,11 +34,11 @@
         </table>
         <hr>
       <h4>Billing Lists</h4>
-        <table id="billing" class="display table cell-border compact stripe hover compact" width="99%">
+        <table id="billing" class="display table cell-border compact stripe hover nowrap" width="99%">
           <thead>
             <tr>
               <th scope="col">Ref. #</th>
-              <th scope="col">Project Name</th>
+              <th scope="col">Status</th>
               <th scope="col">Date of Request</th>
               <th scope="col">Actual Date Filed</th>
               <th scope="col">Action</th>
@@ -85,6 +85,7 @@
       let wrotable = $('#wro').DataTable({
         processing: true,
         serverSide: true,
+        scrollX: true,
         columnDefs: [
           { className: "dt-center", targets: [ 1, 2, 3, 4 ] }
         ],
@@ -103,13 +104,14 @@
       let billingtable = $('#billing').DataTable({
         processing: true,
         serverSide: true,
+        scrollX: true,
         columnDefs: [
           { className: "dt-center", targets: [ 1, 2, 3, 4 ] }
         ],
         ajax: "{{ route('user.all.billing') }}",
         columns: [
             {data: 'ref', name: 'ref' },
-            {data: 'project_name', name: 'project_name'},
+            {data: 'status', name: 'status', searchable: false},
             {data: 'date_of_request', name: 'date_of_request'},
             {data: 'actual_date_filed', name: 'actual_date_filed'},
             {data: 'action', name: 'action', orderable: false, searchable: false},

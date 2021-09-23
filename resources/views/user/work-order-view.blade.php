@@ -27,7 +27,7 @@
       <hr>
       <p>Status: {!! App\Http\Controllers\GeneralController::viewWroStatus($wro->approval_sequence, $wro->cancelled, $wro->disapproved) !!}</p>
       @include('includes.common.wro-approvals')
-      @if($wro->cancelled != 1 && $wro->approval_sequence == 1 && $wro->disapproved != 1)
+      @if($wro->cancelled != 1 && $wro->approval_sequence == 3 && $wro->disapproved != 1)
         <button id="cancel" data-id="{{ $wro->id }}" data-text="Do you want to cancel SLA {{ $wro->wr_no }}?" class="btn btn-danger btn-xl"><i class="pe-7s-close-circle"></i> Cancel</button>
       @else
         @if($wro->cancelled == 1)

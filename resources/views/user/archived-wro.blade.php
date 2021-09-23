@@ -18,7 +18,7 @@
       {{-- <h4>Archived Work Request Order Lists</h4> --}}
         @include('includes.error')
         @include('includes.success')
-       <table id="wro" class="table cell-border compact stripe hover" width="99%">
+       <table id="wro" class="table cell-border compact stripe hover display nowrap" width="99%">
           <thead>
             <tr>
               <th scope="col">SLA #</th>
@@ -45,6 +45,7 @@
     $(document).ready(function() {
       $('#wro').DataTable({
         // serverSide: true,
+        scrollX: true,
         columnDefs: [
            { className: "dt-center", targets: [ 0, 1, 2, 3, 4 ] }
         ],

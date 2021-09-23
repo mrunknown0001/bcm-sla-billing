@@ -34,6 +34,8 @@ Route::group(['middleware' => 'auth'], function() {
 
 
 	Route::post('/password/change', 'GeneralController@postChangePassword')->name('post.change.password');
+
+	Route::get('/download/billing/{id}', 'GeneralController@downloadBilling')->name('download.billing');
 });
 
 
@@ -69,6 +71,7 @@ Route::group(['prefix' => 'u', 'middleware' => ['user', 'preventBackHistory']], 
 	Route::get('/billing', 'BillingController@billing')->name('user.billing');
 	Route::post('/billing', 'BillingController@postBilling')->name('user.post.billing');
 	Route::get('/preview/project/{id}', 'GeneralController@previewProjectName')->name('preview.project.name');
+	Route::get('/preview/url/{id}', 'GeneralController@previewUrl')->name('preview.url');
 
 	// Billing Archive
 	Route::get('/billing/archived', 'BillingController@archivedBilling')->name('user.archived.billing');
@@ -84,6 +87,8 @@ Route::group(['prefix' => 'u', 'middleware' => ['user', 'preventBackHistory']], 
 
 	// cancel billing
 	Route::get('/billing/cancel/{id}/{result}', 'BillingController@cancelBilling')->name('user.billing.cancel');
+
+
 });
 
 
@@ -226,6 +231,8 @@ Route::group(['prefix' => 'vp', 'middleware' => ['vp', 'preventBackHistory']], f
 	Route::get('/sla/archived', 'VpController@archivedWro')->name('vp.archived.wro');
 
 	Route::get('/sla/archived/all', 'VpController@allArchivedWro')->name('vp.all.archived.wro');
+
+	Route::get('/sla-download/{id}', 'GeneralController@downloadWro')->name('vp.wro.pdf.download');
 
 
 	// Billing

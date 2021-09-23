@@ -53,7 +53,7 @@
       	</div>
         <div class="form-group">
           <label for="url">URL <span class="red">*</span></label>
-          <input type="text" name="url" id="url" placeholder="URL" value="" class="form-control" required="">
+          <input type="text" name="url" id="url" placeholder="URL" value="" class="form-control" disabled="">
         </div>
 
       	<div class="form-group">
@@ -84,15 +84,26 @@
   <script>
     $(document).ready(function() {
         $('#reference_number').select2();
-
+        // project name
         $('#reference_number').change(function () {
+          if($(this).val() == '') {
+            $('#project_name').val('');
+            $('#url').val('');
+          }
           $.ajax({
             url: "/u/preview/project/" + $(this).val(),
             type: "GET",
             success: function(data) {
               console.log(data);
               $('#project_name').val(data);
-              // document.getElementById("project_name").value = data;  
+            }
+          });
+          $.ajax({
+            url: "/u/preview/url/" + $(this).val(),
+            type: "GET",
+            success: function(data) {
+              console.log(data);
+              $('#url').val(data);
             }
           });
         });

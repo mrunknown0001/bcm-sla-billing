@@ -22,7 +22,11 @@ class BillingController extends Controller
     // Create Billing
     public function billing()
     {
-    	$sla = WorkOrder::select('wr_no','id')->get();
+    	$sla = WorkOrder::where('approval_sequence', 9) // Approved by VP
+            ->where('cancelled', 0)
+            ->where('disapproved', 0)
+            ->select('wr_no','id')
+            ->get();
     	// chekc sla if already created for approval or approved or cancelled
     	// sla (wro) need to be approved prior to creation of billing or not for flexibility
         $data = array(); 
@@ -49,7 +53,6 @@ class BillingController extends Controller
     		'date_of_request' => 'required',
     		'date_needed' => 'required',
     		'mobilization' => 'required',
-    		'url' => 'required'
     	]);
 
     	// check if ref num is exist in sla (wro)
@@ -98,7 +101,7 @@ class BillingController extends Controller
     	$billing->date_of_request = date('Y-m-d', strtotime($request->date_of_request));
     	$billing->date_needed = date('Y-m-d', strtotime($request->date_needed));
     	$billing->mobilization = $request->mobilization;
-    	$billing->url = $request->url;
+    	$billing->url = $ref->url;
 
 
         $billing->approval_sequence = 3;
@@ -137,7 +140,7 @@ class BillingController extends Controller
                 foreach($billing as $w) {
                     $data->push([
                         'ref' => $w->reference_number,
-                        'project_name' => $w->project_name,
+                        'status' => GC::viewWroStatus($w->approval_sequence, $w->cancelled, $w->disapproved),
                         'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
                         'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
                         'action' => GC::billingRequestorAction($w->approval_sequence, $w->id, $w->reference_number, $w->cancelled, $w->disapproved), 
@@ -145,7 +148,7 @@ class BillingController extends Controller
                 }
             }
             return DataTables::of($data)
-                    ->rawColumns(['action'])
+                    ->rawColumns(['status','action'])
                     ->make(true);
 
         }
@@ -164,7 +167,7 @@ class BillingController extends Controller
                 foreach($billing as $w) {
                     $data->push([
                         'ref' => $w->reference_number,
-                        'project_name' => $w->project_name,
+                        'status' => GC::viewWroStatus($w->approval_sequence, $w->cancelled, $w->disapproved),
                         'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
                         'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
                         'action' => GC::billingRequestorAction($w->approval_sequence, $w->id, $w->reference_number, $w->cancelled, $w->disapproved), 
@@ -172,7 +175,7 @@ class BillingController extends Controller
                 }
             }
             return DataTables::of($data)
-                    ->rawColumns(['action'])
+                    ->rawColumns(['status', 'action'])
                     ->make(true);
 
         }
