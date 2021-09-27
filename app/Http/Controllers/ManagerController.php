@@ -220,7 +220,7 @@ class ManagerController extends Controller
         $wro = Wo::findorfail($id);
 
         if($wro->bcm_manager_id != Auth::user()->id) {
-            return false;
+            // return false; # needs to be uncomment
         }
 
         $wro->archived = 1;
