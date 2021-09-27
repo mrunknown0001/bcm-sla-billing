@@ -606,14 +606,17 @@ class GeneralController extends Controller
                 return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='" . route('divhead.wro.pdf.download', ['id' => $id]) . "' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a>";
             }
             else {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> ";
             }
         }
         elseif($disapproved == 1) {
             return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
         }
+        elseif($status == 9) {
+            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='" . route('divhead.wro.pdf.download', ['id' => $id]) . "' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a>";
+        }
         else {
-            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
+            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='" . route('divhead.wro.pdf.download', ['id' => $id]) . "' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a>";
         }
     }
 
@@ -630,7 +633,7 @@ class GeneralController extends Controller
                 return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <button id='archive1' data-id='" . $id . "' data-text='Do you want to archive SLA " . $wro . "?' class='btn btn-primary btn-xs'><i class='pe-7s-portfolio'></i> Archive</button> <a href='" . route('manager.wro.pdf.download', ['id' => $id]) . "' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a>";
             }
             else {
-                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='" . route('manager.wro.pdf.download', ['id' => $id]) . "' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a>";
+                return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
             }
         }
         elseif($disapproved == 1) {
@@ -909,7 +912,7 @@ class GeneralController extends Controller
                     <button id='disapprovebilling' data-id='" . $id . "' data-text='Do you want to disapprove Billing " . $sla_number . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
                 }
                 elseif($status == 9) {
-                    return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a> >";
+                    return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a> ";
                 }
                 else {
                     return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
@@ -922,7 +925,7 @@ class GeneralController extends Controller
         }
         else {
             if($status == 9) {
-                return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a>";
+                return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='" . route('download.billing', ['id' => $id]) . "' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a>";
             }
             else {
                 return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
@@ -941,10 +944,10 @@ class GeneralController extends Controller
                 <button id='disapprove_billing_bcm_mgr' data-id='" . $id . "' data-text='Do you want to disapprove Billing " . $sla_number . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
             }
             elseif($status == 9 && $archived == 0) {
-                return "<button id='view_billing_bcm_mgr' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <button id='archivebilling' data-id='" . $id . "' data-text='Do you want to archive Billing " . $sla_number . "?' class='btn btn-primary btn-xs'><i class='pe-7s-portfolio'></i> Archive</button> <a href='' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a> >";
+                return "<button id='view_billing_bcm_mgr' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <button id='archivebilling' data-id='" . $id . "' data-text='Do you want to archive Billing " . $sla_number . "?' class='btn btn-primary btn-xs'><i class='pe-7s-portfolio'></i> Archive</button> <a href='" . route('download.billing', ['id' => $id]) . "' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a> >";
             }
             else {
-                return "<button id='view_billing_bcm_mgr' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a> >";
+                return "<button id='view_billing_bcm_mgr' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a> ";
             }
         }
         elseif($disapproved == 1) {
@@ -967,7 +970,7 @@ class GeneralController extends Controller
                 <button id='disapprove_billing_gs_div_head' data-id='" . $id . "' data-text='Do you want to disapprove Billing " . $sla_number . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
             }
             elseif($status == 9) {
-                return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a> >";
+                return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='" . route('download.billing', ['id' => $id]) . "' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a> ";
             }
             else {
                 return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
@@ -984,14 +987,14 @@ class GeneralController extends Controller
 
     public static function billingDivHeadAction($status, $id, $sla_number, $cancelled, $disapproved, $archived)
     {
-        if($cancelled == 0 && $disapproved != 1 && $archived == 0) {
+        if($cancelled == 0 && $disapproved != 1 ) {
             if($status == 6) {
                 return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>
                 <button id='approvebilling' data-id='" . $id . "' data-text='Do you want to approve Billing " . $sla_number . "?' class='btn btn-success btn-xs'><i class='pe-7s-check'></i> Approve</button>
                 <button id='disapprovebilling' data-id='" . $id . "' data-text='Do you want to disapprove Billing " . $sla_number . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
             }
             elseif($status == 9) {
-                return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a>";
+                return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='" . route('download.billing', ['id' => $id]) . "' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a>";
             }
             else {
                 return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
@@ -1016,7 +1019,7 @@ class GeneralController extends Controller
                 <button id='disapprove_billing_trsry_mgr' data-id='" . $id . "' data-text='Do you want to disapprove Billing " . $sla_number . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
             }
             elseif($status == 9) {
-                return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a> >";
+                return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='" . route('download.billing', ['id' => $id]) . "' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a> ";
             }
             else {
                 return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $sla_number . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
@@ -1041,7 +1044,7 @@ class GeneralController extends Controller
                 <button id='disapprovebilling' data-id='" . $id . "' data-text='Do you want to disapprove Billing " . $wro . "?' class='btn btn-danger btn-xs'><i class='pe-7s-close-circle'></i> Disapprove</button>";
             }
             elseif($status == 9) {
-                return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a> >";
+                return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='" . route('download.billing', ['id' => $id]) . "' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a>";
             }
             else {
                 return "<button id='viewbilling' data-id='" . $id . "' data-text='Do you want to view Billing " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";

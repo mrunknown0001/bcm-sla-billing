@@ -79,7 +79,7 @@
         }).then((result) => {
           if (result.value) {
             // view here
-            window.location.replace("/vp/work-order/view/" + id);
+            window.location.replace("/vp/sla/view/" + id);
 
           }
           else {

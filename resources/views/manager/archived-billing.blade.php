@@ -62,12 +62,12 @@
       });
     });
 
-    $(document).on('click', '#view1', function (e) {
+    $(document).on('click', '#viewbilling', function (e) {
         e.preventDefault();
         var id = $(this).data('id');
         var text = $(this).data('text');
         Swal.fire({
-          title: 'View SLA Details?',
+          title: 'View Billing Details?',
           text: text,
           type: 'question',
           showCancelButton: true,
@@ -77,7 +77,7 @@
         }).then((result) => {
           if (result.value) {
             // view here
-            window.location.replace("/manager/sla/view/" + id);
+            window.location.replace("/manager/billing/view/" + id);
 
           }
           else {

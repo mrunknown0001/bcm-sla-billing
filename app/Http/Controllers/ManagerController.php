@@ -249,22 +249,61 @@ class ManagerController extends Controller
             'action' => NULL,
         ];
 
-        $wro = Wo::where('archived', 1)
-                ->where('bcm_manager_id', Auth::user()->id)
-                    ->get();
+        $approvers = WroApproval::find(1);
 
-        if(count($wro) > 0) {
-            $data = [];
-            foreach($wro as $w) {
-                $data[] = [
-                    'wro' => $w->wr_no,
-                    'status' => GC::viewWroStatus($w->approval_sequence, $w->cancelled, $w->disapproved),
-                    'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
-                    'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
-                    'action' => GC::wroManagerAction($w->approval_sequence, $w->id, $w->wr_no, $w->cancelled, $w->disapproved, $w->archived),
-                ];
+        if($approvers->bcm_manager == Auth::user()->id) {
+            $wro = Wo::where('archived', 1)
+                        ->get();
+
+            if(count($wro) > 0) {
+                $data = [];
+                foreach($wro as $w) {
+                    $data[] = [
+                        'wro' => $w->wr_no,
+                        'status' => GC::viewWroStatus($w->approval_sequence, $w->cancelled, $w->disapproved),
+                        'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
+                        'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
+                        'action' => GC::wroBCMManagerAction($w->approval_sequence, $w->id, $w->wr_no, $w->cancelled, $w->disapproved, $w->archived),
+                    ];
+                }
             }
         }
+        elseif( $approvers->treasury_manager == Auth::user()->id) {
+            $wro = Wo::where('archived', 1)
+                        ->get();
+
+            if(count($wro) > 0) {
+                $data = [];
+                foreach($wro as $w) {
+                    $data[] = [
+                        'wro' => $w->wr_no,
+                        'status' => GC::viewWroStatus($w->approval_sequence, $w->cancelled, $w->disapproved),
+                        'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
+                        'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
+                        'action' => GC::wroTreasuryMgrAction($w->approval_sequence, $w->id, $w->wr_no, $w->cancelled, $w->disapproved, $w->archived),
+                    ];
+                }
+            }
+        }
+        else {
+            $wro = Wo::where('archived', 1)
+                ->where('farm_manager_id', Auth::user()->id)
+                ->get();
+
+            if(count($wro) > 0) {
+                $data = [];
+                foreach($wro as $w) {
+                    $data[] = [
+                        'wro' => $w->wr_no,
+                        'status' => GC::viewWroStatus($w->approval_sequence, $w->cancelled, $w->disapproved),
+                        'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
+                        'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
+                        'action' => GC::wroManagerAction($w->approval_sequence, $w->id, $w->wr_no, $w->cancelled, $w->disapproved, $w->archived),
+                    ];
+                }
+            }
+        }
+
 
         return $data;
     }
@@ -549,7 +588,7 @@ class ManagerController extends Controller
                                 'status' => GC::viewWroStatus($w->approval_sequence, $w->cancelled, $w->disapproved),
                                 'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
                                 'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
-                                'action' => 'action',
+                                'action' => GC::billingTreasuryMgrAction($w->approval_sequence, $w->id, $w->reference_number, $w->cancelled, $w->disapproved, $w->archived),
                             ]);
                         }
                     }
@@ -571,7 +610,7 @@ class ManagerController extends Controller
                             'status' => GC::viewWroStatus($w->approval_sequence, $w->cancelled, $w->disapproved),
                             'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
                             'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
-                            'action' => 'action',
+                            'action' => GC::billingManagerAction($w->approval_sequence, $w->id, $w->reference_number, $w->cancelled, $w->disapproved, $w->archived),
                         ];
                     }
                 }

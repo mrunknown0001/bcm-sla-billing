@@ -14,6 +14,8 @@ use App\Farm;
 
 use DataTables;
 
+use App\WroApproval;
+
 use App\Http\Controllers\GeneralController as GC;
 use App\Http\Controllers\MailController as MC;
 
@@ -73,6 +75,8 @@ class BillingController extends Controller
                 ->where('active', 1)
                 ->first();
 
+        $approvers = WroApproval::find(1);
+
         $farm_code = substr($request->reference_number, 4, 3);
         $farm = Farm::where('code', $farm_code)->first();
 
@@ -103,6 +107,10 @@ class BillingController extends Controller
     	$billing->mobilization = $request->mobilization;
     	$billing->url = $ref->url;
 
+        $billing->bcm_manager_id = $approvers->bcm_manager;
+        $billing->gen_serv_div_head_id = $approvers->gen_serv_div_head;
+        $billing->treasury_manager_id = $approvers->treasury_manager;
+        $billing->vp_gen_serv_id = $approvers->vp_gen_serv;
 
         $billing->approval_sequence = 3;
 

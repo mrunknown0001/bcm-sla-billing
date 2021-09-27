@@ -334,7 +334,7 @@ class DivHeadController extends Controller
                         if($w->approval_sequence >= 4) {
                             $data->push([
                                 'ref' => $w->reference_number,
-                                'project_name' => $w->project_name,
+                                'status' => GC::viewWroStatus($w->approval_sequence, $w->cancelled, $w->disapproved),
                                 'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
                                 'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
                                 'action' => GC::billingGenServDivHeadAction($w->approval_sequence, $w->id, $w->reference_number, $w->cancelled, $w->disapproved, $w->archived),
@@ -356,7 +356,7 @@ class DivHeadController extends Controller
                     if($w->approval_sequence >= 5) {
                         $data->push([
                             'ref' => $w->reference_number,
-                            'project_name' => $w->project_name,
+                                'status' => GC::viewWroStatus($w->approval_sequence, $w->cancelled, $w->disapproved),
                             'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
                             'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
                             'action' => GC::billingDivHeadAction($w->approval_sequence, $w->id, $w->reference_number, $w->cancelled, $w->disapproved, $w->archived),
@@ -367,7 +367,7 @@ class DivHeadController extends Controller
             # end o
 
             return DataTables::of($data)
-                    ->rawColumns(['action'])
+                    ->rawColumns(['status', 'action'])
                     ->make(true);
 
         }
@@ -395,10 +395,10 @@ class DivHeadController extends Controller
                         if($w->approval_sequence >= 4) {
                             $data->push([
                                 'ref' => $w->reference_number,
-                                'project_name' => $w->project_name,
+                                'status' => GC::viewWroStatus($w->approval_sequence, $w->cancelled, $w->disapproved),
                                 'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
                                 'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
-                                'action' => 'action',
+                                'action' => GC::billingGenServDivHeadAction($w->approval_sequence, $w->id, $w->reference_number, $w->cancelled, $w->disapproved, $w->archived),
                             ]);
                         }
                     }
@@ -412,15 +412,15 @@ class DivHeadController extends Controller
                         ->get();
 
             if(count($billing1) > 0) {
-                $data = [];
+                $data = collect();
                 foreach($billing1 as $w) {
                     if($w->approval_sequence >= 5) {
                         $data->push([
-                            'ref' => $w->wr_no,
-                            'project_name' => $w->project_name,
+                            'ref' => $w->reference_number,
+                            'status' => GC::viewWroStatus($w->approval_sequence, $w->cancelled, $w->disapproved),
                             'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
                             'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
-                            'action' => 'action',
+                            'action' => GC::billingDivHeadAction($w->approval_sequence, $w->id, $w->reference_number, $w->cancelled, $w->disapproved, $w->archived),
                         ]);
                     }
                 }
@@ -428,7 +428,7 @@ class DivHeadController extends Controller
             # end o
 
             return DataTables::of($data)
-                    ->rawColumns(['action'])
+                    ->rawColumns(['status', 'action'])
                     ->make(true);
 
         }

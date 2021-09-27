@@ -37,7 +37,7 @@
           <thead>
             <tr>
               <th scope="col">Ref #</th>
-              <th scope="col">Project Name</th>
+              <th scope="col">Status</th>
               <th scope="col">Date of Request</th>
               <th scope="col">Actual Date Filed</th>
               <th scope="col">Action</th>
@@ -86,7 +86,7 @@
           ajax: "{{ route('vp.all.billing') }}",
           columns: [
               {data: 'ref', name: 'ref' },
-              {data: 'project_name', name: 'project_name'},
+              {data: 'status', name: 'status'},
               {data: 'date_of_request', name: 'date_of_request'},
               {data: 'actual_date_filed', name: 'actual_date_filed'},
               {data: 'action', name: 'action', orderable: false, searchable: false},

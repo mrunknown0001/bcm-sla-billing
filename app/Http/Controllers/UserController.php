@@ -8,6 +8,7 @@ use App\RequestorApprover as Ra;
 use App\WorkOrder as Wo;
 use App\Farm;
 use App\User;
+use App\WroApproval;
 
 use Auth;
 use DB;
@@ -174,6 +175,8 @@ class UserController extends Controller
                 ->where('active', 1)
                 ->first();
 
+        $approvers = WroApproval::find(1);
+
 
         if(empty($ra)) {
             return redirect()->back()->with('error', 'Please request to setup your Approvers!');
@@ -233,14 +236,19 @@ class UserController extends Controller
         $wro->farm_manager_id = $farm_manager->id; # new
         $wro->farm_divhead_id = $farm_div_head->id; # new
 
-        $wro->manager_id = $ra->manager;
-        $wro->div_head_id = $ra->div_head;
+        // $wro->manager_id = $ra->manager;
+        // $wro->div_head_id = $ra->div_head;
+
+        $wro->bcm_manager_id = $approvers->bcm_manager;
+        $wro->gen_serv_div_head_id = $approvers->gen_serv_div_head;
+        $wro->treasury_manager_id = $approvers->treasury_manager;
+        $wro->vp_gen_serv_id = $approvers->vp_gen_serv;
 
 
         if($wro->save()) {
 
-            $approver = GC::getName($wro->manager_id); # name of manager - important
-            $approver_email = GC::getEmail($wro->manager_id); # email of receiver - important
+            $approver = GC::getName($wro->bcm_manager_id); # name of manager - important
+            $approver_email = GC::getEmail($wro->bcm_manager_id); # email of receiver - important
             $requestor = $wro->user->first_name . ' ' . $wro->user->last_name; # name of requestor - important
             $requestor_designation = GC::getUserPosition($wro->user_id);
             $wro_view_route = "manager.view.work.order";
