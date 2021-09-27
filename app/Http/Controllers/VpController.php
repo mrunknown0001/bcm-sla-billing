@@ -113,7 +113,7 @@ class VpController extends Controller
         $wro = Wo::findorfail($id);
 
 
-        if($wro->cancelled == 1 || $wro->approval_sequence != 7 || $wro->disapproved == 1) {
+        if($wro->cancelled == 1 || $wro->approval_sequence != 8 || $wro->disapproved == 1) {
             return false;
         }
 
