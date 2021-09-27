@@ -221,6 +221,7 @@ class ManagerController extends Controller
 
         if($wro->bcm_manager_id != Auth::user()->id) {
             // return false; # needs to be uncomment
+            // return abort(500);
         }
 
         $wro->archived = 1;
