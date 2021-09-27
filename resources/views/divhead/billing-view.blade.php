@@ -25,11 +25,11 @@
       <p>Status: {!! App\Http\Controllers\GeneralController::viewWroStatus($billing->approval_sequence, $billing->cancelled, $billing->disapproved) !!}</p>
       @include('includes.common.billing-approvals')
       @if($billing->cancelled != 1 && $billing->approval_sequence == 6 && $billing->disapproved != 1)
-        <button id="approve" data-id="{{ $billing->id }}" data-text="Do you want to approve Billing {{ $billing->wr_no }}?" class="btn btn-success btn-xl"><i class="pe-7s-close-circle"></i> Approve</button>
+        <button id="approve" data-id="{{ $billing->id }}" data-text="Do you want to approve Billing {{ $billing->wr_no }}?" class="btn btn-success btn-xl"><i class="pe-7s-check"></i> Approve</button>
         <button id="disapprove" data-id="{{ $billing->id }}" data-text="Do you want to disapprove Billing {{ $billing->wr_no }}?" class="btn btn-danger btn-xl"><i class="pe-7s-close-circle"></i> Disapprove</button>
       @elseif($billing->cancelled != 1 && $billing->approval_sequence == 4 && $billing->disapproved != 1)
 	      @if(App\Http\Controllers\GeneralController::checkGsDivHead(Auth::user()->id))
-	        <button id="approve_gs_div_head" data-id="{{ $billing->id }}" data-text="Do you want to approve Billing {{ $billing->reference_number }}?" class="btn btn-success btn-xl"><i class="pe-7s-close-circle"></i> Approve</button>
+	        <button id="approve_gs_div_head" data-id="{{ $billing->id }}" data-text="Do you want to approve Billing {{ $billing->reference_number }}?" class="btn btn-success btn-xl"><i class="pe-7s-check"></i> Approve</button>
 	        <button id="disapprove_gs_div_head" data-id="{{ $billing->id }}" data-text="Do you want to disapprove Billing {{ $billing->reference_number }}?" class="btn btn-danger btn-xl"><i class="pe-7s-close-circle"></i> Disapprove</button>
 	      @endif
       @else

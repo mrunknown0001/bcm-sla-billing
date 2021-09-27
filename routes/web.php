@@ -65,6 +65,7 @@ Route::group(['prefix' => 'u', 'middleware' => ['user', 'preventBackHistory']], 
 	Route::get('/sla-download/{id}', 'GeneralController@downloadWro')->name('user.wro.pdf.download');
 
 	Route::get('/sla/archived', 'UserController@archivedWRO')->name('user.archived.wro');
+	Route::get('/sla/archive/{id}', 'UserController@archiveWRO')->name('user.archive.wro');
 	Route::get('/sla/archived/all', 'UserController@allArchivedWRO')->name('user.all.archived.wro');
 
 	// Billing Create
@@ -75,6 +76,7 @@ Route::group(['prefix' => 'u', 'middleware' => ['user', 'preventBackHistory']], 
 
 	// Billing Archive
 	Route::get('/billing/archived', 'BillingController@archivedBilling')->name('user.archived.billing');
+	Route::get('/billing/archive/{id}', 'BillingController@archiveBilling')->name('user.archive.billing');
 
 	// all billing
 	Route::get('/all/billing', 'BillingController@all')->name('user.all.billing');

@@ -221,7 +221,7 @@ class ManagerController extends Controller
 
         if($wro->bcm_manager_id != Auth::user()->id) {
             // return false; # needs to be uncomment
-            // return abort(500);
+            return abort(500);
         }
 
         $wro->archived = 1;
@@ -818,5 +818,39 @@ class ManagerController extends Controller
         $wro->save();
 
         return 'ok';
+    }
+
+
+
+    public function billingDisapproval($id, $comment)
+    {
+        $wro = Billing::findorfail($id);
+
+        if($wro->farm_manager_id != Auth::user()->id) {
+            return abort(500);
+        }
+
+        if($wro->cancelled == 1 || $wro->approval_sequence != 5) {
+            return abort(500);
+        }
+
+        $wro->disapproved_by = Auth::user()->id;
+        $wro->disapproved = 1;
+        $wro->disapproved_on = now();
+        $wro->reason = $comment;
+        $wro->save();
+
+        # Send Disapproval Email Notification to Requestor
+
+        $approvals = WroApproval::find(1);
+        $requestor = GC::getName($wro->user_id);
+        $requestor_email = GC::getEmail($wro->user_id);
+        $approver = GC::getName($wro->farm_manager_id);
+        $approver_designation = 'Manager';
+        $wro_view_route = 'user.view.work.order';
+
+        MC::billingDisapproved($approver, $approver_designation, $requestor, $requestor_email, $wro_view_route, $wro->id, $wro->wr_no);
+
+        return true;
     }
 }

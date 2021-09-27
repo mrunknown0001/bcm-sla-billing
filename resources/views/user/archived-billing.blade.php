@@ -69,7 +69,7 @@
         var id = $(this).data('id');
         var text = $(this).data('text');
         Swal.fire({
-          title: 'View SLA Details?',
+          title: 'View Billing Details?',
           text: text,
           type: 'question',
           showCancelButton: true,
@@ -79,7 +79,7 @@
         }).then((result) => {
           if (result.value) {
             // view here
-            window.location.replace("/u/sla/view/" + id);
+            window.location.replace("/u/billing/view/" + id);
           }
           else {
             Swal.fire({

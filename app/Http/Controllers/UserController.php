@@ -85,7 +85,7 @@ class UserController extends Controller
                         'status' => GC::viewWroStatus($w->approval_sequence, $w->cancelled, $w->disapproved),
                         'date_of_request' => date('F j, Y', strtotime($w->date_of_request)),
                         'actual_date_filed' => date('F j, Y', strtotime($w->created_at)),
-                        'action' => GC::wroRequestorAction($w->approval_sequence, $w->id, $w->wr_no, $w->cancelled, $w->disapproved), 
+                        'action' => GC::wroRequestorAction($w->approval_sequence, $w->id, $w->wr_no, $w->cancelled, $w->disapproved, $w->archived), 
                     ]);
                 }
             }
@@ -262,6 +262,23 @@ class UserController extends Controller
         return redirect()->back()->with('error', 'Please Try Again Later.');
 
 
+    }
+
+
+    public function archiveWRO($id)
+    {
+        $wro = Wo::findorfail($id);
+
+        if($wro->user_id != Auth::user()->id) {
+            return abort(500);
+        }
+
+        $wro->archived = 1;
+        $wro->archived_on = date('Y-m-d H:i:s', strtotime(now()));
+        $wro->archived_by = Auth::user()->id;
+        $wro->save();
+
+        return true;
     }
 
 

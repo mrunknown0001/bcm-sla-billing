@@ -218,6 +218,65 @@
         });
     });
 
+    $(document).on('click', '#archive1', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        var text = $(this).data('text');
+        Swal.fire({
+          title: 'Archive SLA?',
+          text: text,
+          type: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Continue',
+        }).then((result) => {
+          if (result.value) {
+
+            $.ajax({
+              url: "/u/sla/archive/" + id ,
+              type: "GET",
+              success: function() {
+                Swal.fire({
+                  title: 'SLA Archived!',
+                  text: "",
+                  type: 'success',
+                  showCancelButton: false,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Close'
+                });
+
+                var table = $('#wro').DataTable();
+                table.ajax.reload();
+              },
+              error: function(err) {
+
+                Swal.fire({
+                  title: 'Error Occured! Tray Again Later.',
+                  text: "",
+                  type: 'error',
+                  showCancelButton: false,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Close'
+                });
+              }
+            });
+          }
+          else {
+            Swal.fire({
+              title: 'Action Cancelled',
+              text: "",
+              type: 'info',
+              showCancelButton: false,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Close'
+            });
+          }
+        });
+    });
 
 
     // Billing
@@ -279,6 +338,66 @@
               success: function() {
                 Swal.fire({
                   title: 'Billing Cancelled!',
+                  text: "",
+                  type: 'success',
+                  showCancelButton: false,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Close'
+                });
+
+                var table = $('#billing').DataTable();
+                table.ajax.reload();
+              },
+              error: function(err) {
+
+                Swal.fire({
+                  title: 'Error Occured! Tray Again Later.',
+                  text: "",
+                  type: 'error',
+                  showCancelButton: false,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Close'
+                });
+              }
+            });
+          }
+          else {
+            Swal.fire({
+              title: 'Action Cancelled',
+              text: "",
+              type: 'info',
+              showCancelButton: false,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Close'
+            });
+          }
+        });
+    });
+
+    $(document).on('click', '#archivebilling', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        var text = $(this).data('text');
+        Swal.fire({
+          title: 'Archive Billing?',
+          text: text,
+          type: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Continue',
+        }).then((result) => {
+          if (result.value) {
+
+            $.ajax({
+              url: "/u/billing/archive/" + id,
+              type: "GET",
+              success: function() {
+                Swal.fire({
+                  title: 'Billing Archived!',
                   text: "",
                   type: 'success',
                   showCancelButton: false,

@@ -632,7 +632,7 @@
                   cancelButtonColor: '#d33',
                   confirmButtonText: 'Close'
                 });
-                var table = $('#wro').DataTable();
+                var table = $('#billing').DataTable();
                 table.ajax.reload();
               },
               error: function(err) {
