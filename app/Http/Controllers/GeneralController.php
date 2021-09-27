@@ -637,7 +637,7 @@ class GeneralController extends Controller
             }
         }
         elseif($disapproved == 1) {
-            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <button id='archive1' data-id='" . $id . "' data-text='Do you want to archive SLA " . $wro . "?' class='btn btn-primary btn-xs'><i class='pe-7s-portfolio'></i> Archive</button>";
+            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
         }
         else {
             return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
