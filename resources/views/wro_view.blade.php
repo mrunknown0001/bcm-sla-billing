@@ -33,7 +33,7 @@
             <p>Project Justification:</p>
             <p><i>{{ $wro->justification }}</i></p>
 
-            <p>URL: <b>{{ $wro->url }}</b></p>
+            <p>URL: <b><a href="{{ $wro->url }}">{{ $wro->url }}</a></b></p>
 
             <br>
             <br>
