@@ -43,14 +43,19 @@
 		<p>Gen. Serv. - Div Head Disapproval Timestamp: <strong>{{ date('F j, Y h:i A', strtotime($wro->disapproved_on)) }}</strong></p>
 		<p>Reason: <i>{{ $wro->reason }}</i></p>
 		<hr>
+	@elseif($wro->farm_manager_approval == 0 || $wro->farm_manager_approval == null)
+		<p>Farm Manager: <strong>{{ App\Http\Controllers\GeneralController::getName($wro->disapproved_by) }}</strong></p>
+		<p>Farm Manager Disapproval Timestamp: <strong>{{ date('F j, Y h:i A', strtotime($wro->disapproved_on)) }}</strong></p>
+		<p>Reason: <i>{{ $wro->reason }}</i></p>
+		<hr>
+	@elseif($wro->farm_divhead_approval == 0 || $wro->farm_divhead_approval == null)
+		<p>Farm Div Head: <strong>{{ App\Http\Controllers\GeneralController::getName($wro->disapproved_by) }}</strong></p>
+		<p>Farm Div Head Disapproval Timestamp: <strong>{{ date('F j, Y h:i A', strtotime($wro->disapproved_on)) }}</strong></p>
+		<p>Reason: <i>{{ $wro->reason }}</i></p>
+		<hr>
 	@elseif($wro->treasury_manager_approval == 0)
 		<p>Treasury Manager: <strong>{{ App\Http\Controllers\GeneralController::getName($wro->disapproved_by) }}</strong></p>
 		<p>Treasury Manager Disapproval Timestamp: <strong>{{ date('F j, Y h:i A', strtotime($wro->disapproved_on)) }}</strong></p>
-		<p>Reason: <i>{{ $wro->reason }}</i></p>
-		<hr>
-	@elseif($wro->coo_approval == 0)
-		<p>COO: <strong>{{ App\Http\Controllers\GeneralController::getName($wro->disapproved_by) }}</strong></p>
-		<p>COO Disapproval Timestamp: <strong>{{ date('F j, Y h:i A', strtotime($wro->disapproved_on )) }}</strong></p>
 		<p>Reason: <i>{{ $wro->reason }}</i></p>
 		<hr>
 	@elseif($wro->vp_gen_serv_approval == 0)
