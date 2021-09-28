@@ -184,7 +184,7 @@ class ManagerController extends Controller
     {
         $wro = Wo::findorfail($id);
 
-        if($wro->manager_id != Auth::user()->id) {
+        if($wro->farm_manager_id != Auth::user()->id) {
             return false;
         }
 
