@@ -33,6 +33,7 @@
   </style>
 </head>
 <body>
+  {{ session()->put('prevUrl', url()->current())}}
   <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
     @yield("header")      
     {{-- @include("includes.layout-options") --}}

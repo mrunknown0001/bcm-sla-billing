@@ -1,7 +1,11 @@
       <p>
-        <a href="{{ url()->previous() }}" class="btn btn-primary"><i class="pe-7s-back"></i> Back</a>
+        @if(url()->current() == url()->previous())
+          <a href="{{ session()->get('prevUrl') }}" class="btn btn-primary"><i class="pe-7s-back"></i> Back</a>
+        @else
+          <a href="{{ url()->previous() }}" class="btn btn-primary"><i class="pe-7s-back"></i> Back</a>
+        @endif
       </p>
-
+      
       <p>SLA #: <b>{{ $wro->wr_no }}</b></p>
       <p>Requestor: <b>{{ $wro->user->first_name . ' ' . $wro->user->last_name }}</b></p>
       <p>Date Requested: <b>{{ date('F j, Y', strtotime($wro->date_of_request)) }}</b></p>

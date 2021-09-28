@@ -1,5 +1,9 @@
       <p>
-        <a href="{{ url()->previous() }}" class="btn btn-primary"><i class="pe-7s-back"></i> Back</a>
+        @if(url()->current() == url()->previous())
+          <a href="{{ session()->get('prevUrl') }}" class="btn btn-primary"><i class="pe-7s-back"></i> Back</a>
+        @else
+          <a href="{{ url()->previous() }}" class="btn btn-primary"><i class="pe-7s-back"></i> Back</a>
+        @endif
       </p>
 
       <p>Reference Number: <b>{{ $billing->reference_number }}</b></p>
