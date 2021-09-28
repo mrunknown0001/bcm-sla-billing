@@ -390,7 +390,7 @@ class ManagerController extends Controller
         $wro = Wo::findorfail($id);
 
         if($wro->cancelled == 1 || $wro->approval_sequence != 7 || $wro->disapproved == 1) {
-            return false;
+            return abort(500);
         }
 
         // update
@@ -422,7 +422,7 @@ class ManagerController extends Controller
         $wro = Wo::findorfail($id);
 
         if($wro->cancelled == 1 || $wro->approval_sequence != 7 || $wro->disapproved == 1) {
-            return false;
+            return abort(500);
         }
 
         $wro->disapproved_by = Auth::user()->id;
@@ -713,11 +713,11 @@ class ManagerController extends Controller
         $wro = Billing::findorfail($id);
 
         if($wro->farm_manager_id != Auth::user()->id) {
-            return abort(404);
+            return abort(500);
         }
 
         if($wro->cancelled == 1 || $wro->approval_sequence != 5) {
-            return false;
+            return abort(500);
         }
 
         $wro->approval_sequence = 6;
@@ -746,7 +746,7 @@ class ManagerController extends Controller
         $wro = Billing::findorfail($id);
 
         if($wro->cancelled == 1 || $wro->approval_sequence != 7 || $wro->disapproved == 1) {
-            return false;
+            return abort(500);
         }
 
         // update
@@ -774,12 +774,12 @@ class ManagerController extends Controller
 
 
 
-    public function billingTrsryManagerDisapproval($id)
+    public function billingTrsryManagerDisapproval($id, $comment)
     {
         $wro = Billing::findorfail($id);
 
         if($wro->cancelled == 1 || $wro->approval_sequence != 7 || $wro->disapproved == 1) {
-            return false;
+            return abort(500);
         }
 
         $wro->disapproved_by = Auth::user()->id;
@@ -809,7 +809,7 @@ class ManagerController extends Controller
         $wro = Billing::findorfail($id);
 
         if($wro->bcm_manager_id != Auth::user()->id) {
-            return 'error';
+            return abort(500);
         }
 
         $wro->archived = 1;
