@@ -138,7 +138,7 @@ class BillingController extends Controller
     // all billing
     public function all(Request $request)
     {
-        if($request->ajax()) {
+        // if($request->ajax()) {
             $billing = Billing::where('user_id', Auth::user()->id)
                         ->where('archived', 0)
                         ->get();
@@ -159,7 +159,7 @@ class BillingController extends Controller
                     ->rawColumns(['status','action'])
                     ->make(true);
 
-        }
+        // }
     }
 
 
