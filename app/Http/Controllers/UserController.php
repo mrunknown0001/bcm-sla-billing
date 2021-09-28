@@ -161,8 +161,8 @@ class UserController extends Controller
     public function postWorkOrder(Request $request)
     {
         $request->validate([
-            'date_of_request' => 'required',
-            'date_needed' => 'required',
+            'date_of_request' => 'required|date',
+            'date_needed' => 'required|date|after_or_equal:date_of_request',
             'project_name' => 'required',
             'description' => 'required',
             'justification' => 'required',
