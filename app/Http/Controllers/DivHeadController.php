@@ -167,11 +167,11 @@ class DivHeadController extends Controller
         $wro = Wo::findorfail($id);
 
         if($wro->farm_divhead_id != Auth::user()->id) {
-            return false;
+            return abort(500);
         }
 
         if($wro->cancelled == 1 || $wro->approval_sequence != 6 || $wro->disapproved == 1) {
-            return false;
+            return abort(500);
         }
 
         $wro->disapproved_by = Auth::user()->id;
@@ -181,10 +181,10 @@ class DivHeadController extends Controller
         $wro->save();
 
         # Send Disapproval Email Notification to Requestor
-         $approvals = WroApproval::find(1);
+         // $approvals = WroApproval::find(1);
         $requestor = GC::getName($wro->user_id);
         $requestor_email = GC::getEmail($wro->user_id);
-        $approver = GC::getName($approvals->farm_divhead_id);
+        $approver = GC::getName($wro->farm_divhead_id);
         $approver_designation = 'Division Head';
         $wro_view_route = 'user.view.work.order';
 
