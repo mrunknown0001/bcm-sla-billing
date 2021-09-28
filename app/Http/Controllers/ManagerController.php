@@ -200,10 +200,10 @@ class ManagerController extends Controller
 
         # Send Disapproval Email Notification to Requestor
 
-        $approvals = WroApproval::find(1);
+        // $approvals = WroApproval::find(1);
         $requestor = GC::getName($wro->user_id);
         $requestor_email = GC::getEmail($wro->user_id);
-        $approver = GC::getName($wro->manager_id);
+        $approver = GC::getName($wro->farm_manager_id);
         $approver_designation = 'Manager';
         $wro_view_route = 'user.view.work.order';
 
