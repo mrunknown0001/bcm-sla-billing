@@ -909,7 +909,7 @@ class GeneralController extends Controller
     // actions on billing per user
     public static function billingRequestorAction($status, $id, $sla_number, $cancelled, $disapproved, $archived)
     {
-        if($cancelled == 0 && $status == 3 && $disapproved == 0 && archived == 0) {
+        if($cancelled == 0 && $status == 3 && $disapproved == 0 && $archived == 0) {
             return '<button id="viewbilling" data-id="' . $id . '" data-text="Do you want to view Billing ' . $sla_number . '?"class="btn btn-info btn-xs"><i class="pe-7s-look"></i> View</button> <button id="cancelbilling" class="btn btn-danger btn-xs" data-id="' . $id . '" data-text="Do you want to cancel Billing ' . $sla_number . '?"><i class="pe-7s-close-circle"></i> Cancel</button>';
         }
         elseif ($status == 9 && $archived == 1) {
