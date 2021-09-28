@@ -185,11 +185,11 @@ class ManagerController extends Controller
         $wro = Wo::findorfail($id);
 
         if($wro->farm_manager_id != Auth::user()->id) {
-            return false;
+            return abort(500);
         }
 
         if($wro->cancelled == 1 || $wro->approval_sequence != 5) {
-            return false;
+            return abort(500);
         }
 
         $wro->disapproved_by = Auth::user()->id;
