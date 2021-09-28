@@ -101,16 +101,6 @@
             <br>
             <br>
             <br>
-            {{-- <p class="">
-              <img src="{{  public_path("uploads/signature/" . $wro->coo_id . ".png") }}" alt="" height="120px">
-              <br>
-              <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->coo_id )) !!}</b>
-              <br>
-              <i>Chief Operations Officer</i>
-            </p>
-            <br>
-            <br>
-            <br> --}}
             <p class="">
               Approved By: <br>
               <img src="{{  public_path("uploads/signature/" . $billing->vp_gen_serv_id . ".png") }}" alt="" height="120px">

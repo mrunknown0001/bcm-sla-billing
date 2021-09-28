@@ -471,7 +471,7 @@ class GeneralController extends Controller
         $wro = Wo::findorfail($id);
 
         if($wro->approval_sequence != 9) {
-            return false;
+            return abort(500);
         }
 
         view()->share('wro',$wro);
@@ -487,7 +487,7 @@ class GeneralController extends Controller
         $billing = Billing::findorfail($id);
 
         if($billing->approval_sequence != 9) {
-            return false;
+            return abort(500);
         }
 
         view()->share('billing',$billing);
@@ -625,6 +625,9 @@ class GeneralController extends Controller
         }
         elseif($status == 9) {
             return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='" . route('divhead.wro.pdf.download', ['id' => $id]) . "' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a>";
+        }
+        elseif($cancelled == 1) {
+            return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button>";
         }
         else {
             return "<button id='view1' data-id='" . $id . "' data-text='Do you want to view SLA " . $wro . "?' class='btn btn-info btn-xs'><i class='pe-7s-look'></i> View</button> <a href='" . route('divhead.wro.pdf.download', ['id' => $id]) . "' class='btn btn-primary btn-xs'><i class='pe-7s-download'></i> Download</a>";
