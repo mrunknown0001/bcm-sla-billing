@@ -24,7 +24,7 @@
         <div class="form-group">
           <label for="reference_number">Reference Number (SLA)</label>
           {{-- <input type="text"  name="reference_number" id="reference_number" placeholder="Reference Number (SLA)" class="form-control" > --}}
-          <select class="form-control " name="reference_number" id="reference_number" style="">
+          <select class="form-control " name="reference_number" id="reference_number" style="" required="">
             <option value="">Select SLA</option>
             @foreach($sla as $key => $s)
               <option value="{{ $s['wr_no'] }}">{{ $s['wr_no'] }}</option>
@@ -108,5 +108,39 @@
           });
         });
     });
+
+      $("#submit").click(function(e){
+        var request_date = new Date($('#date_of_request').val());
+        var date_needed = new Date($('#date_needed').val());
+
+        var d = new Date();
+        var today = d.getDate();
+        
+        if (request_date > today){
+          e.preventDefault();
+           Swal.fire({
+              title: 'Check Request Date',
+              text: "Request Date must not greater than today",
+              type: 'error',
+              showCancelButton: false,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Close'
+            });
+         }
+
+        if (date_needed < request_date){
+          e.preventDefault();
+           Swal.fire({
+              title: 'Check Dates',
+              text: "Check Date of Request and Date Needed",
+              type: 'error',
+              showCancelButton: false,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Close'
+            });
+         }
+      });
   </script>
 @endsection

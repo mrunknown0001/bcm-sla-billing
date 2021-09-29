@@ -68,7 +68,7 @@
         </div>
 
       	<div class="form-group">
-      		<button type="submit" class="btn btn-primary btn-lg">Submit</button>
+      		<button type="submit" id="submit" class="btn btn-primary btn-lg">Submit</button>
       	</div>
       </form>
       <br>
@@ -85,6 +85,8 @@
 @endsection
 
 @section('scripts')
+
+  <script src="{{ asset('js/sweetalert.js') }}"></script>
   <script type="text/javascript">
 
     $('#farm').on('change', function () {
@@ -96,5 +98,41 @@
         }
       });
     });
+
+
+      $("#submit").click(function(e){
+        var request_date = new Date($('#date_of_request').val());
+        var date_needed = new Date($('#date_needed').val());
+
+        var d = new Date();
+        var today = d.getDate();
+        
+        if (request_date > today){
+          e.preventDefault();
+           Swal.fire({
+              title: 'Check Request Date',
+              text: "Request Date must not greater than today",
+              type: 'error',
+              showCancelButton: false,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Close'
+            });
+         }
+
+        if (date_needed < request_date){
+          e.preventDefault();
+           Swal.fire({
+              title: 'Check Dates',
+              text: "Check Date of Request and Date Needed",
+              type: 'error',
+              showCancelButton: false,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Close'
+            });
+         }
+      });
+    
   </script>
 @endsection
