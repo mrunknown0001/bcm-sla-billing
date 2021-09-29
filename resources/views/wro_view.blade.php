@@ -51,6 +51,8 @@
             </p>
             <br>
             <br>
+            <br>
+            <br>
             <p class="">
               Checked By: <br>
               <img src="{{ public_path("uploads/signature/" . $wro->bcm_manager_id . ".png") }}" alt="" height="120px">
