@@ -105,9 +105,8 @@
         var date_needed = new Date($('#date_needed').val());
 
         var d = new Date();
-        var today = d.getDate();
-        
-        if (request_date > today){
+
+        if (request_date > d){
           e.preventDefault();
            Swal.fire({
               title: 'Check Request Date',

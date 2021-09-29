@@ -57,7 +57,7 @@
         </div>
 
       	<div class="form-group">
-      		<button type="submit" class="btn btn-primary btn-lg">Submit</button>
+      		<button type="submit" id="submit" class="btn btn-primary btn-lg">Submit</button>
       	</div>
       </form>
       <br>
@@ -114,9 +114,8 @@
         var date_needed = new Date($('#date_needed').val());
 
         var d = new Date();
-        var today = d.getDate();
-        
-        if (request_date > today){
+
+        if (request_date > d){
           e.preventDefault();
            Swal.fire({
               title: 'Check Request Date',
@@ -142,5 +141,6 @@
             });
          }
       });
+    
   </script>
 @endsection
