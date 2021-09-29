@@ -51,7 +51,6 @@
             </p>
             <br>
             <br>
-            <br>
             <p class="">
               Checked By: <br>
               <img src="{{ public_path("uploads/signature/" . $wro->bcm_manager_id . ".png") }}" alt="" height="120px">
@@ -60,7 +59,6 @@
               <br>
               <i>BCM Manager</i>
             </p>
-            <br>
             <br>
             <br>
             <p class="">
@@ -73,7 +71,6 @@
             </p>
             <br>
             <br>
-            <br>
             <p class="">
               Noted By: <br>
               <img src="{{ public_path("uploads/signature/" . $wro->farm_manager_id . ".png") }}" alt="" height="120px">
@@ -82,7 +79,6 @@
               <br>
               <i>Farm Manager</i>
             </p>
-            <br>
             <br>
             <br>
             <p class="">
@@ -95,7 +91,6 @@
             </p>
             <br>
             <br>
-            <br>
             <p class="">
               Approved By: <br>
               <img src="{{ public_path("uploads/signature/" . $wro->treasury_manager_id . ".png") }}" alt="" height="120px">
@@ -104,7 +99,6 @@
               <br>
               <i>Treasury Manager</i>
             </p>
-            <br>
             <br>
             <br>
             <p class="">
