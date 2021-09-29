@@ -182,15 +182,10 @@ class UserController extends Controller
             return redirect()->back()->with('error', 'Please request to setup your Approvers!');
         }
 
-        if($request->farm == null) {
-            $wro_no = GC::generateWroNo(Auth::user()->id);
-        }
-        else {
-            $wro_no = GC::generateWroNo2(Auth::user()->id, $request->farm);
-        }
         
         # check and get farm manager and division head for continuation of WRO Request
         $farm = Farm::findorfail($request->farm);
+        # ommit
         $farm_manager = User::where('farm_id', $request->farm)
                             ->where('user_type', 4)
                             // ->where([['dept_id', '=', 7],['dept_id', '=', 8]]) // poultry & swine
@@ -208,18 +203,27 @@ class UserController extends Controller
                                     ->orWhere('dept_id', 8);
                             })
                             ->first();
+        # ommit
 
-        if(empty($farm_manager)) {
+        if($farm->farm_manager_id == NULL) {
             return redirect()->route('user.work.order')->with('error', 'No Assigned Farm Manager on ' . $farm->name . '. Please contact IT Administrator for proper setup.');
         }
 
-        if(empty($farm_div_head)) {
+        if($farm->farm_divhead_id == NULL) {
             return redirect()->route('user.work.order')->with('error', 'No Assigned Farm Division on ' . $farm->name . '. Please contact IT Administrator for proper setup.');
+        }
+
+        if($request->farm == null) {
+            $wro_no = GC::generateWroNo(Auth::user()->id);
+        }
+        else {
+            $wro_no = GC::generateWroNo2(Auth::user()->id, $request->farm);
         }
 
         if($wro_no == '0') {
             return redirect()->back()->with('error', 'Requestor has no designated farm.');
         }
+
 
         $wro = new Wo();
         $wro->wr_no = $wro_no;
@@ -233,8 +237,8 @@ class UserController extends Controller
 
         $wro->approval_sequence = 3;
 
-        $wro->farm_manager_id = $farm_manager->id; # new
-        $wro->farm_divhead_id = $farm_div_head->id; # new
+        $wro->farm_manager_id = $farm->farm_manager_id; # new
+        $wro->farm_divhead_id = $farm->farm_divhead_id; # new
 
         // $wro->manager_id = $ra->manager;
         // $wro->div_head_id = $ra->div_head;

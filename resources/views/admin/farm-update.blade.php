@@ -30,6 +30,24 @@
       		<label for="code">Code</label>
       		<input type="text" class="form-control" id="code" name="code" value="{{ $farm->code }}" placeholder="Code" required="">
       	</div>
+        <div class="form-group">
+          <label for="farm_manager">Farm Manager</label>
+          <select name="farm_manager" id="farm_manager" class="form-control" required="">
+            <option value="">Select Farm Manager</option>
+            @foreach($users as $key => $u)
+              <option value="{{ $u->id }}" {{ $farm->farm_manager_id ? $farm->farm_manager_id == $u->id ? 'selected' : '' : '' }}>{{ $u->first_name . ' ' . $u->last_name }}</option>
+            @endforeach
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="farm_divhead">Farm Division Head</label>
+          <select name="farm_divhead" id="farm_divhead" class="form-control" required="">
+            <option value="">Select Farm Division Head</option>
+            @foreach($users as $key => $u)
+              <option value="{{ $u->id }}" {{ $farm->farm_divhead_id ? $farm->farm_divhead_id == $u->id ? 'selected' : '' : '' }}>{{ $u->first_name . ' ' . $u->last_name }}</option>
+            @endforeach
+          </select>
+        </div>
       	<div class="form-group">
       		<label for="description">Description</label>
       		<input type="text" class="form-control" id="description" name="description" value="{{ $farm->description }}" placeholder="Description">

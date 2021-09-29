@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Farm;
+use App\User;
 
 class FarmController extends Controller
 {
@@ -68,8 +69,9 @@ class FarmController extends Controller
     public function update($id)
     {
         $farm = Farm::findorfail($id);
+        $users = User::where('active', 1)->orderBy('first_name', 'asc')->get();
 
-        return view('admin.farm-update', ['farm' => $farm]);
+        return view('admin.farm-update', ['farm' => $farm, 'users' => $users]);
     }
 
 
@@ -78,7 +80,9 @@ class FarmController extends Controller
         $farm = Farm::findorfail($request->id);
 
         $request->validate([
-            'name' => 'required'
+            'name' => 'required',
+            'farm_manager' => 'required|different:farm_divhead',
+            'farm_divhead' => 'required', 
         ]);
 
         if($farm->code != $request->code) {
@@ -92,6 +96,8 @@ class FarmController extends Controller
         $farm->name = $request->name;
         $farm->code = $request->code;
         $farm->description = $request->description;
+        $farm->farm_manager_id = $request->farm_manager;
+        $farm->farm_divhead_id = $request->farm_divhead;
 
         if($farm->save()) {
             return redirect()->route('admin.farms')->with('success', 'Farm Updated!');
