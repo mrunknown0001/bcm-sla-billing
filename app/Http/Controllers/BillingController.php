@@ -51,8 +51,8 @@ class BillingController extends Controller
     public function postBilling(Request $request)
     {
     	$request->validate([
-    		'reference_number' => 'required',
-    		'date_of_request' => 'required|date',
+            'date_of_request' => 'required|date|date_format:Y-m-d|before_or_equal:' . date('Y-m-d'),
+            'date_needed' => 'required|date|date_format:Y-m-d|after_or_equal:date_of_request',
     		'date_needed' => 'required|date|after_or_equal:date_of_request',
     		'mobilization' => 'required',
     	]);
