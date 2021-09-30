@@ -34,9 +34,12 @@
 
             <p>URL: <b>{{ $billing->url }}</b></p>
 
-            <div class="page-break"></div>
+          </div>
+        </div>
+        <div class="page-break"></div>
 
-
+        <div class="row">
+          <div class="col-md-6">
             <p class="">
               Requested By: <br>
               <img src="{{ public_path("uploads/signature/" . $billing->user_id . ".png") }}" alt="" height="120px">
@@ -75,8 +78,8 @@
               <br>
               <i>Farm Manager</i>
             </p>
-            <br>
-            <br>
+          </div>
+          <div class="col-md-6">
             <p class="">
               Recommending Approval By: <br>
               <img src="{{ public_path("uploads/signature/" . $billing->farm_divhead_id . ".png") }}" alt="" height="120px">
