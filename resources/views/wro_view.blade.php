@@ -12,9 +12,9 @@
       }
 
       .column {
-        float: left;
-        width: 50%;
-        padding: 10px;
+        float: left !important;
+        width: 50% !important;
+        padding: 10px !important;
       }
 
       /* Clear floats after the columns */
