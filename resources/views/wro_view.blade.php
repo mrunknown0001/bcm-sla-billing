@@ -11,7 +11,7 @@
         page-break-after: always;
       }
 
-      .column {
+      .columna {
         float: left !important;
         width: 50% !important;
         padding: 10px !important;
@@ -19,9 +19,9 @@
 
       /* Clear floats after the columns */
       .c-row:after {
-        content: "";
-        display: table;
-        clear: both;
+        content: "" !important;
+        display: table !important;
+        clear: both !important;
       }
     </style>
 </head>
@@ -56,7 +56,7 @@
             <div class="page-break"></div>
 
             <div class="c-row">
-              <div class="column">
+              <div class="columna">
                 <p class="">
                   Requested By: <br>
                   <img src="{{ public_path("uploads/signature/" . $wro->user_id . ".png") }}" alt="" height="120px">
@@ -95,7 +95,7 @@
               </div>
             </div>
             <div class="c-row">
-              <div class="column">
+              <div class="columna">
                 <p class="">
                   Recommending Approval By: <br>
                   <img src="{{ public_path("uploads/signature/" . $wro->farm_divhead_id . ".png") }}" alt="" height="120px">
