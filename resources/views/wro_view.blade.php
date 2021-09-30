@@ -64,7 +64,6 @@
                 <i>Requestor</i>
               </p>
               <br>
-              <br>
               <p class="">
                 Verified By: <br>
                 <img src="{{ public_path("uploads/signature/" . $wro->gen_serv_div_head_id . ".png") }}" alt="" height="120px">
@@ -82,6 +81,7 @@
                 <br>
                 <i>Farm Division Head</i>
               </p>
+              <br>
               <p class="">
                 Approved By: <br>
                 <img src="{{  public_path("uploads/signature/" . $wro->vp_gen_serv_id . ".png") }}" alt="" height="120px">
@@ -101,6 +101,7 @@
                 <br>
                 <i>BCM Manager</i>
               </p>
+              <br>
               <p class="">
                 Noted By: <br>
                 <img src="{{ public_path("uploads/signature/" . $wro->farm_manager_id . ".png") }}" alt="" height="120px">
@@ -118,8 +119,6 @@
                 <br>
                 <i>Treasury Manager</i>
               </p>
-              <br>
-
             </div>
 
         </div>
