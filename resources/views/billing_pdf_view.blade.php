@@ -102,7 +102,6 @@
           <i>Farm Manager</i>
         </p>
         <br>
-        <br>
         <p class="">
           Approved By: <br>
           <img src="{{ public_path("uploads/signature/" . $billing->treasury_manager_id . ".png") }}" alt="" height="120px">
