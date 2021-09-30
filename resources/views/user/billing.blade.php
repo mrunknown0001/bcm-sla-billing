@@ -77,6 +77,8 @@
 @endsection
 
 @section('scripts')
+
+  <script src="{{ asset('js/sweetalert.js') }}"></script>
   <script src="{{ asset('js/select2.js') }}"></script>
   {{-- <script src="{{ asset('assets/login/js/popper.js') }}"></script> --}}
   {{-- <script src="{{ asset('js/bootstrap-select.js') }}"></script> --}}
