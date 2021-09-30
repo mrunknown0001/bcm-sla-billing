@@ -34,12 +34,10 @@
 
             <p>URL: <b>{{ $billing->url }}</b></p>
 
-          </div>
-        </div>
+  
         <div class="page-break"></div>
 
-        <div class="row">
-          <div class="col-md-6">
+
             <p class="">
               Requested By: <br>
               <img src="{{ public_path("uploads/signature/" . $billing->user_id . ".png") }}" alt="" height="120px">
@@ -48,7 +46,6 @@
               <br>
               <i>Requestor</i>
             </p>
-            <br>
             <br>
             <p class="">
               Checked By: <br>
@@ -59,7 +56,6 @@
               <i>BCM Manager</i>
             </p>
             <br>
-            <br>
             <p class="">
               Verified By: <br>
               <img src="{{ public_path("uploads/signature/" . $billing->gen_serv_div_head_id . ".png") }}" alt="" height="120px">
@@ -69,7 +65,6 @@
               <i>General Services - Division Head</i>
             </p>
             <br>
-            <br>
             <p class="">
               Noted By: <br>
               <img src="{{ public_path("uploads/signature/" . $billing->farm_manager_id . ".png") }}" alt="" height="120px">
@@ -78,8 +73,7 @@
               <br>
               <i>Farm Manager</i>
             </p>
-          </div>
-          <div class="col-md-6">
+            <br>
             <p class="">
               Recommending Approval By: <br>
               <img src="{{ public_path("uploads/signature/" . $billing->farm_divhead_id . ".png") }}" alt="" height="120px">
@@ -98,7 +92,6 @@
               <br>
               <i>Treasury Manager</i>
             </p>
-            <br>
             <br>
             <p class="">
               Approved By: <br>
