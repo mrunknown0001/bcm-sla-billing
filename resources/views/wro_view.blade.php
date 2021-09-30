@@ -6,6 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>SLA PDF Download</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style type="text/css">
+      .page-break {
+        page-break-after: always;
+      }
+    </style>
 </head>
 
 <body>
@@ -35,10 +40,7 @@
 
             <p>URL: <b><a href="{{ $wro->url }}">{{ $wro->url }}</a></b></p>
 
-            <br>
-            <br>
-            <br>
-            <br>
+            <div class="page-break"></div>
 
 
             <p class="">
@@ -49,8 +51,6 @@
               <br>
               <i>Requestor</i>
             </p>
-            <br>
-            <br>
             <br>
             <br>
             <p class="">
