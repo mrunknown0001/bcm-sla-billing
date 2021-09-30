@@ -10,6 +10,17 @@
       .page-break {
         page-break-after: always;
       }
+      .column-left {
+        float: left !important;
+        width: 50% !important;
+        /*padding: 10px !important;*/
+      }
+
+      .column-right {
+        float: right !important;
+        width: 50% !important;
+        /*padding: 10px !important;*/
+      }
     </style>
 </head>
 

@@ -22,13 +22,6 @@
         width: 50% !important;
         /*padding: 10px !important;*/
       }
-
-      /* Clear floats after the columns */
-      .c-row:after {
-        content: "" !important;
-        display: table !important;
-        clear: both !important;
-      }
     </style>
 </head>
 
@@ -61,75 +54,73 @@
 
             <div class="page-break"></div>
 
-            {{-- <div class=""> --}}
-              <div class="column-left">
-                <p class="">
-                  Requested By: <br>
-                  <img src="{{ public_path("uploads/signature/" . $wro->user_id . ".png") }}" alt="" height="120px">
-                  <br>
-                  <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->user_id)) !!}</b>
-                  <br>
-                  <i>Requestor</i>
-                </p>
+            <div class="column-left">
+              <p class="">
+                Requested By: <br>
+                <img src="{{ public_path("uploads/signature/" . $wro->user_id . ".png") }}" alt="" height="120px">
                 <br>
-                <p class="">
-                  Checked By: <br>
-                  <img src="{{ public_path("uploads/signature/" . $wro->bcm_manager_id . ".png") }}" alt="" height="120px">
-                  <br>
-                  <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->bcm_manager_id)) !!}</b>
-                  <br>
-                  <i>BCM Manager</i>
-                </p>
+                <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->user_id)) !!}</b>
                 <br>
-                <p class="">
-                  Verified By: <br>
-                  <img src="{{ public_path("uploads/signature/" . $wro->gen_serv_div_head_id . ".png") }}" alt="" height="120px">
-                  <br>
-                  <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->gen_serv_div_head_id)) !!}</b>
-                  <br>
-                  <i>General Services - Division Head</i>
-                </p>
+                <i>Requestor</i>
+              </p>
+              <br>
+              <br>
+              <p class="">
+                Verified By: <br>
+                <img src="{{ public_path("uploads/signature/" . $wro->gen_serv_div_head_id . ".png") }}" alt="" height="120px">
                 <br>
-                <p class="">
-                  Noted By: <br>
-                  <img src="{{ public_path("uploads/signature/" . $wro->farm_manager_id . ".png") }}" alt="" height="120px">
-                  <br>
-                  <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->farm_manager_id )) !!}</b>
-                  <br>
-                  <i>Farm Manager</i>
-                </p>
-              </div>
-            {{-- </div> --}}
-            {{-- <div class=""> --}}
-              <div class="column-right">
-                <p class="">
-                  Recommending Approval By: <br>
-                  <img src="{{ public_path("uploads/signature/" . $wro->farm_divhead_id . ".png") }}" alt="" height="120px">
-                  <br>
-                  <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->farm_divhead_id )) !!}</b>
-                  <br>
-                  <i>Farm Division Head</i>
-                </p>
+                <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->gen_serv_div_head_id)) !!}</b>
                 <br>
-                <p class="">
-                  Approved By: <br>
-                  <img src="{{ public_path("uploads/signature/" . $wro->treasury_manager_id . ".png") }}" alt="" height="120px">
-                  <br>
-                  <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->treasury_manager_id )) !!}</b>
-                  <br>
-                  <i>Treasury Manager</i>
-                </p>
+                <i>General Services - Division Head</i>
+              </p>
+              <br>
+              <p class="">
+                Recommending Approval By: <br>
+                <img src="{{ public_path("uploads/signature/" . $wro->farm_divhead_id . ".png") }}" alt="" height="120px">
                 <br>
-                <p class="">
-                  Approved By: <br>
-                  <img src="{{  public_path("uploads/signature/" . $wro->vp_gen_serv_id . ".png") }}" alt="" height="120px">
-                  <br>
-                  <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->vp_gen_serv_id  )) !!}</b>
-                  <br>
-                  <i>VP - General Services</i>
-                </p>
-              </div>
-            {{-- </div> --}}
+                <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->farm_divhead_id )) !!}</b>
+                <br>
+                <i>Farm Division Head</i>
+              </p>
+              <p class="">
+                Approved By: <br>
+                <img src="{{  public_path("uploads/signature/" . $wro->vp_gen_serv_id . ".png") }}" alt="" height="120px">
+                <br>
+                <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->vp_gen_serv_id  )) !!}</b>
+                <br>
+                <i>VP - General Services</i>
+              </p>
+            </div>
+
+            <div class="column-right">
+              <p class="">
+                Checked By: <br>
+                <img src="{{ public_path("uploads/signature/" . $wro->bcm_manager_id . ".png") }}" alt="" height="120px">
+                <br>
+                <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->bcm_manager_id)) !!}</b>
+                <br>
+                <i>BCM Manager</i>
+              </p>
+              <p class="">
+                Noted By: <br>
+                <img src="{{ public_path("uploads/signature/" . $wro->farm_manager_id . ".png") }}" alt="" height="120px">
+                <br>
+                <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->farm_manager_id )) !!}</b>
+                <br>
+                <i>Farm Manager</i>
+              </p>
+              <br>
+              <p class="">
+                Approved By: <br>
+                <img src="{{ public_path("uploads/signature/" . $wro->treasury_manager_id . ".png") }}" alt="" height="120px">
+                <br>
+                <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->treasury_manager_id )) !!}</b>
+                <br>
+                <i>Treasury Manager</i>
+              </p>
+              <br>
+
+            </div>
 
         </div>
     </div>
