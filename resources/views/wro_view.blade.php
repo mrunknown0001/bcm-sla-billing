@@ -11,10 +11,16 @@
         page-break-after: always;
       }
 
-      .columna {
+      .column-left {
         float: left !important;
         width: 50% !important;
-        padding: 10px !important;
+        /*padding: 10px !important;*/
+      }
+
+      .column-right {
+        float: right !important;
+        width: 50% !important;
+        /*padding: 10px !important;*/
       }
 
       /* Clear floats after the columns */
@@ -55,8 +61,8 @@
 
             <div class="page-break"></div>
 
-            <div class="c-row">
-              <div class="columna">
+            {{-- <div class=""> --}}
+              <div class="column-left">
                 <p class="">
                   Requested By: <br>
                   <img src="{{ public_path("uploads/signature/" . $wro->user_id . ".png") }}" alt="" height="120px">
@@ -93,9 +99,9 @@
                   <i>Farm Manager</i>
                 </p>
               </div>
-            </div>
-            <div class="c-row">
-              <div class="columna">
+            {{-- </div> --}}
+            {{-- <div class=""> --}}
+              <div class="column-right">
                 <p class="">
                   Recommending Approval By: <br>
                   <img src="{{ public_path("uploads/signature/" . $wro->farm_divhead_id . ".png") }}" alt="" height="120px">
@@ -123,7 +129,7 @@
                   <i>VP - General Services</i>
                 </p>
               </div>
-            </div>
+            {{-- </div> --}}
 
         </div>
     </div>
