@@ -47,49 +47,33 @@
       <div class="page-break"></div>
 
       <div class="column-left">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="column-left">
-              Requested By:
-              <br>
-              <img class="img img-responsive" src="{{ public_path("uploads/signature/" . $billing->user_id . ".png") }}" alt="" height="100px">
-            </div>
-            <div class="column-right">
-              Date Requested:
-              <br>
-              {{ $billing->created_at }}
-            </div>
-          </div>
-          <div class="col-md-12">
-            <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($billing->user_id)) !!}</b>
-            <br>
-            <i>Requestor</i>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-12">
-            <div class="column-left">
-              Verified By:
-              <br>
-              <img class="img img-responsive" src="{{ public_path("uploads/signature/" . $billing->gen_serv_div_head_id . ".png") }}" alt="" height="100px">
-            </div>
-            <div class="column-right">
-              Digitally Signed on:<br>
-              {{ $billing->bcm_manager_approved }}
-            </div>
-          </div>
-          <div class="col-md-12">
-            <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($billing->gen_serv_div_head_id)) !!}</b>
-            <br>
-            <i>General Services - Division Head</i>
-          </div>
-        </div>
-
+        <p class="">
+          Requested By: <br>
+          <img src="{{ public_path("uploads/signature/" . $billing->user_id . ".png") }}" alt="" height="100px">
+          <br>
+          Date Requested: {{ $billing->create_at }}
+          <br>
+          <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($billing->user_id)) !!}</b>
+          <br>
+          <i>Requestor</i>
+        </p>
+        <br>
+        <p class="">
+          Verified By: <br>
+          <img src="{{ public_path("uploads/signature/" . $billing->gen_serv_div_head_id . ".png") }}" alt="" height="100px">
+          <br>
+          Digitally Signed on: {{ $billing->gen_serv_div_head_approved }}
+          <br>
+          <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($billing->gen_serv_div_head_id)) !!}</b>
+          <br>
+          <i>General Services - Division Head</i>
+        </p>
         <br>
         <p class="">
           Recommending Approval By: <br>
           <img src="{{ public_path("uploads/signature/" . $billing->farm_divhead_id . ".png") }}" alt="" height="100px">
+          <br>
+          Digitally Signed on: {{ $billing->farm_divhead_approved }}
           <br>
           <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($billing->farm_divhead_id )) !!}</b>
           <br>
@@ -99,6 +83,8 @@
         <p class="">
           Approved By: <br>
           <img src="{{  public_path("uploads/signature/" . $billing->vp_gen_serv_id . ".png") }}" alt="" height="100px">
+          <br>
+          Digitally Signed on: {{ $billing->vp_gen_serv_approved }}
           <br>
           <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($billing->vp_gen_serv_id  )) !!}</b>
           <br>
@@ -110,6 +96,8 @@
           Checked By: <br>
           <img src="{{ public_path("uploads/signature/" . $billing->bcm_manager_id . ".png") }}" alt="" height="100px">
           <br>
+          Digitally Signed on: {{ $billing->bcm_manager_approved }}
+          <br>
           <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($billing->bcm_manager_id)) !!}</b>
           <br>
           <i>BCM Manager</i>
@@ -119,6 +107,8 @@
           Noted By: <br>
           <img src="{{ public_path("uploads/signature/" . $billing->farm_manager_id . ".png") }}" alt="" height="100px">
           <br>
+          Digitally Signed on: {{ $billing->farm_manager_approved }}
+          <br>
           <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($billing->farm_manager_id )) !!}</b>
           <br>
           <i>Farm Manager</i>
@@ -127,6 +117,8 @@
         <p class="">
           Approved By: <br>
           <img src="{{ public_path("uploads/signature/" . $billing->treasury_manager_id . ".png") }}" alt="" height="100px">
+          <br>
+          Digitally Signed on: {{ $billing->treasury_manager_approved }}
           <br>
           <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($billing->treasury_manager_id )) !!}</b>
           <br>
