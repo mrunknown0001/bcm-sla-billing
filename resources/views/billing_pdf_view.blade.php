@@ -49,13 +49,11 @@
       <div class="column-left">
         <div class="">
           Requested By:
-          <div class="row">
-            <div class="col-md-6">
-              <img class="img img-responsive" src="{{ public_path("uploads/signature/" . $billing->user_id . ".png") }}" alt="" height="100px">
-            </div>
-            <div class="col-md-6">
-              Date Requested: {{ $billing->created_at }}
-            </div>
+          <div class="column-left">
+            <img class="img img-responsive" src="{{ public_path("uploads/signature/" . $billing->user_id . ".png") }}" alt="" height="100px">
+          </div>
+          <div class="column-right">
+            Date Requested: {{ $billing->created_at }}
           </div>
           <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($billing->user_id)) !!}</b>
           <br>
@@ -64,14 +62,12 @@
         <br>
         <div class="">
           Verified By:
-          <div class="row">
-            <div class="col-md-6">
-              <img class="img img-responsive" src="{{ public_path("uploads/signature/" . $billing->gen_serv_div_head_id . ".png") }}" alt="" height="100px">
-            </div>
-            <div class="col-md-6">
-              Digitally Signed:<br>
-              Timestamp: {{ $billing->bcm_manager_approved }}
-            </div>
+          <div class="column-left">
+            <img class="img img-responsive" src="{{ public_path("uploads/signature/" . $billing->gen_serv_div_head_id . ".png") }}" alt="" height="100px">
+          </div>
+          <div class="column-right">
+            Digitally Signed:<br>
+            Timestamp: {{ $billing->bcm_manager_approved }}
           </div>
           <br>
           <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($billing->gen_serv_div_head_id)) !!}</b>
