@@ -51,7 +51,7 @@
           Requested By:
           <div class="row">
             <div class="col-md-6">
-              <img src="{{ public_path("uploads/signature/" . $billing->user_id . ".png") }}" alt="" height="100px">
+              <img class="img img-responsive" src="{{ public_path("uploads/signature/" . $billing->user_id . ".png") }}" alt="" height="100px">
             </div>
             <div class="col-md-6">
               Date Requested: {{ $billing->created_at }}
@@ -66,7 +66,7 @@
           Verified By:
           <div class="row">
             <div class="col-md-6">
-              <img src="{{ public_path("uploads/signature/" . $billing->gen_serv_div_head_id . ".png") }}" alt="" height="100px">
+              <img class="img img-responsive" src="{{ public_path("uploads/signature/" . $billing->gen_serv_div_head_id . ".png") }}" alt="" height="100px">
             </div>
             <div class="col-md-6">
               Digitally Signed:<br>
