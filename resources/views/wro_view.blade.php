@@ -69,7 +69,7 @@
               Verified By: <br>
               <img src="{{ public_path("uploads/signature/" . $wro->gen_serv_div_head_id . ".png") }}" alt="" height="100px">
               <br>
-              <small>Date Requested: {{ $wro->gen_serv_div_head_approved }}</small>
+              <small>Digitally Signed on: {{ $wro->gen_serv_div_head_approved }}</small>
               <br>
               <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->gen_serv_div_head_id)) !!}</b>
               <br>
@@ -80,7 +80,7 @@
               Recommending Approval By: <br>
               <img src="{{ public_path("uploads/signature/" . $wro->farm_divhead_id . ".png") }}" alt="" height="100px">
               <br>
-              <small>Date Requested: {{ $wro->farm_divhead_approved }}</small>
+              <small>Digitally Signed on: {{ $wro->farm_divhead_approved }}</small>
               <br>
               <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->farm_divhead_id )) !!}</b>
               <br>
@@ -91,7 +91,7 @@
               Approved By: <br>
               <img src="{{  public_path("uploads/signature/" . $wro->vp_gen_serv_id . ".png") }}" alt="" height="100px">
               <br>
-              <small>Date Requested: {{ $wro->vp_gen_serv_approved }}</small>
+              <small>Digitally Signed on: {{ $wro->vp_gen_serv_approved }}</small>
               <br>
               <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->vp_gen_serv_id  )) !!}</b>
               <br>
@@ -104,7 +104,7 @@
               Checked By: <br>
               <img src="{{ public_path("uploads/signature/" . $wro->bcm_manager_id . ".png") }}" alt="" height="100px">
               <br>
-              <small>Date Requested: {{ $wro->bcm_manager_approved }}</small>
+              <small>Digitally Signed on: {{ $wro->bcm_manager_approved }}</small>
               <br>
               <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->bcm_manager_id)) !!}</b>
               <br>
@@ -115,7 +115,7 @@
               Noted By: <br>
               <img src="{{ public_path("uploads/signature/" . $wro->farm_manager_id . ".png") }}" alt="" height="100px">
               <br>
-              <small>Date Requested: {{ $wro->farm_manager_approved }}</small>
+              <small>Digitally Signed on: {{ $wro->farm_manager_approved }}</small>
               <br>
               <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->farm_manager_id )) !!}</b>
               <br>
@@ -126,7 +126,7 @@
               Approved By: <br>
               <img src="{{ public_path("uploads/signature/" . $wro->treasury_manager_id . ".png") }}" alt="" height="100px">
               <br>
-              <small>Date Requested: {{ $wro->treasury_manager_approved }}</small>
+              <small>Digitally Signed on: {{ $wro->treasury_manager_approved }}</small>
               <br>
               <b>{!! ucfirst(App\Http\Controllers\GeneralController::getName($wro->treasury_manager_id )) !!}</b>
               <br>
