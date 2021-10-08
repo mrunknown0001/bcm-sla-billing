@@ -56,7 +56,7 @@
           <div class="column-left">
             <p class="">
               Requested By: <br>
-              <img src="{{ public_path("uploads/signature/" . $wro->user_id . ".png") }}" alt="" height="120px">
+              <img src="{{ public_path("uploads/signature/" . $wro->user_id . ".png") }}" alt="" height="100px">
               <br>
               <small>Date Requested: {{ $wro->created_at }}</small>
               <br>
@@ -67,7 +67,7 @@
             <br>
             <p class="">
               Verified By: <br>
-              <img src="{{ public_path("uploads/signature/" . $wro->gen_serv_div_head_id . ".png") }}" alt="" height="120px">
+              <img src="{{ public_path("uploads/signature/" . $wro->gen_serv_div_head_id . ".png") }}" alt="" height="100px">
               <br>
               <small>Date Requested: {{ $wro->gen_serv_div_head_approved }}</small>
               <br>
@@ -78,7 +78,7 @@
             <br>
             <p class="">
               Recommending Approval By: <br>
-              <img src="{{ public_path("uploads/signature/" . $wro->farm_divhead_id . ".png") }}" alt="" height="120px">
+              <img src="{{ public_path("uploads/signature/" . $wro->farm_divhead_id . ".png") }}" alt="" height="100px">
               <br>
               <small>Date Requested: {{ $wro->farm_divhead_approved }}</small>
               <br>
@@ -89,7 +89,7 @@
             <br>
             <p class="">
               Approved By: <br>
-              <img src="{{  public_path("uploads/signature/" . $wro->vp_gen_serv_id . ".png") }}" alt="" height="120px">
+              <img src="{{  public_path("uploads/signature/" . $wro->vp_gen_serv_id . ".png") }}" alt="" height="100px">
               <br>
               <small>Date Requested: {{ $wro->vp_gen_serv_approved }}</small>
               <br>
@@ -102,7 +102,7 @@
           <div class="column-right">
             <p class="">
               Checked By: <br>
-              <img src="{{ public_path("uploads/signature/" . $wro->bcm_manager_id . ".png") }}" alt="" height="120px">
+              <img src="{{ public_path("uploads/signature/" . $wro->bcm_manager_id . ".png") }}" alt="" height="100px">
               <br>
               <small>Date Requested: {{ $wro->bcm_manager_approved }}</small>
               <br>
@@ -113,7 +113,7 @@
             <br>
             <p class="">
               Noted By: <br>
-              <img src="{{ public_path("uploads/signature/" . $wro->farm_manager_id . ".png") }}" alt="" height="120px">
+              <img src="{{ public_path("uploads/signature/" . $wro->farm_manager_id . ".png") }}" alt="" height="100px">
               <br>
               <small>Date Requested: {{ $wro->farm_manager_approved }}</small>
               <br>
@@ -124,7 +124,7 @@
             <br>
             <p class="">
               Approved By: <br>
-              <img src="{{ public_path("uploads/signature/" . $wro->treasury_manager_id . ".png") }}" alt="" height="120px">
+              <img src="{{ public_path("uploads/signature/" . $wro->treasury_manager_id . ".png") }}" alt="" height="100px">
               <br>
               <small>Date Requested: {{ $wro->treasury_manager_approved }}</small>
               <br>
