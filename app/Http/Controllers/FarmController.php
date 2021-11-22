@@ -98,6 +98,8 @@ class FarmController extends Controller
         $farm->description = $request->description;
         $farm->farm_manager_id = $request->farm_manager;
         $farm->farm_divhead_id = $request->farm_divhead;
+        $farm->farm_manager_bypass = $request->farm_manager_bypass;
+        $farm->farm_divhead_bypass = $request->farm_divhead_bypass;
 
         if($farm->save()) {
             return redirect()->route('admin.farms')->with('success', 'Farm Updated!');

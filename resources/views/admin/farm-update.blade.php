@@ -38,6 +38,7 @@
               <option value="{{ $u->id }}" {{ $farm->farm_manager_id ? $farm->farm_manager_id == $u->id ? 'selected' : '' : '' }}>{{ $u->first_name . ' ' . $u->last_name }}</option>
             @endforeach
           </select>
+          <input type="checkbox" name="farm_manager_bypass" id="farm_manager_bypass" value="1" {{ $farm->farm_manager_bypass == 1 ? 'checked' : '' }}> <label for="farm_manager_bypass">Bypass?</label>
         </div>
         <div class="form-group">
           <label for="farm_divhead">Farm Division Head</label>
@@ -47,6 +48,7 @@
               <option value="{{ $u->id }}" {{ $farm->farm_divhead_id ? $farm->farm_divhead_id == $u->id ? 'selected' : '' : '' }}>{{ $u->first_name . ' ' . $u->last_name }}</option>
             @endforeach
           </select>
+          <input type="checkbox" name="farm_divhead_bypass" id="farm_divhead_bypass" value="1" {{ $farm->farm_divhead_bypass == 1 ? 'checked' : '' }}> <label for="farm_divhead_bypass">Bypass?</label>
         </div>
       	<div class="form-group">
       		<label for="description">Description</label>
