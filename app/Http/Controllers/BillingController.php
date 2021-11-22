@@ -80,6 +80,7 @@ class BillingController extends Controller
         $farm_code = substr($request->reference_number, 4, 3);
         $farm = Farm::where('code', $farm_code)->first();
 
+        # not in use
         $farm_manager = User::where('farm_id', $farm->id)
                             ->where('user_type', 4)
                             // ->where([['dept_id', '=', 7],['dept_id', '=', 8]]) // poultry & swine
@@ -88,7 +89,7 @@ class BillingController extends Controller
                                     ->orWhere('dept_id', 8);
                             })
                             ->first();
-
+        # not in use
         $farm_div_head = User::where('farm_id', $farm->id)
                             ->where('user_type', 3)
                             // ->where([['dept_id', '=', 7],['dept_id', '=', 8]]) // poultry & swine
@@ -114,8 +115,21 @@ class BillingController extends Controller
 
         $billing->approval_sequence = 3;
 
-        $billing->farm_manager_id = $farm_manager->id; # new
-        $billing->farm_divhead_id = $farm_div_head->id; # new
+        // $billing->farm_manager_id = $farm->farm_manager_id; # new
+        // $billing->farm_divhead_id = $farm->farm_divhead_id; # new
+        if($farm->farm_manager_id == null || $farm->farm_manager_bypass == 1) {
+            $billing->farm_manager_id = 0;
+        }
+        else {
+            $billing->farm_manager_id = $farm->farm_manager_id; # new
+        }
+
+        if($farm->farm_divhead_id == null || $farm->farm_divhead_bypass == 1) {
+            $billing->farm_divhead_id = 0;
+        }
+        else {
+            $billing->farm_divhead_id = $farm->farm_divhead_id; # new
+        }
 
     	if($billing->save()) {
     		return redirect()->route('user.billing')->with('success', 'Billing Successfully Created!');

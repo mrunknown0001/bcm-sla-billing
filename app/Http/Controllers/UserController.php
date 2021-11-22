@@ -237,8 +237,19 @@ class UserController extends Controller
 
         $wro->approval_sequence = 3;
 
-        $wro->farm_manager_id = $farm->farm_manager_id; # new
-        $wro->farm_divhead_id = $farm->farm_divhead_id; # new
+        if($farm->farm_manager_id == null || $farm->farm_manager_bypass == 1) {
+            $wro->farm_manager_id = 0;
+        }
+        else {
+            $wro->farm_manager_id = $farm->farm_manager_id; # new
+        }
+
+        if($farm->farm_divhead_id == null || $farm->farm_divhead_bypass == 1) {
+            $wro->farm_divhead_id = 0;
+        }
+        else {
+            $wro->farm_divhead_id = $farm->farm_divhead_id; # new
+        }
 
         // $wro->manager_id = $ra->manager;
         // $wro->div_head_id = $ra->div_head;
