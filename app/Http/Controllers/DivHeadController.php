@@ -250,7 +250,15 @@ class DivHeadController extends Controller
         }
 
 
-        $wro->approval_sequence = 5;
+        if($wro->farm_manager_id == 0 && $wro->farm_divhead_id != 0) {
+            $wro->approval_sequence = 6;
+        }
+        if($wro->farm_manager_id != 0 && $wro->farm_divhead_id != 0) {
+            $wro->approval_sequence = 5;
+        }
+        if($wro->farm_manager_id == 0 && $wro->farm_divhead_id == 0) {
+            $wro->approval_sequence = 7;
+        }
         $wro->gen_serv_div_head_id = Auth::user()->id;
         $wro->gen_serv_div_head_approval = 1;
         $wro->gen_serv_div_head_approved = date('Y-m-d H:i:s', strtotime(now()));
@@ -262,15 +270,56 @@ class DivHeadController extends Controller
         $approvals =  WroApproval::find(1);
 
 
-        $next_approver = GC::getName($wro->farm_manager_id); 
-        $next_approver_email = GC::getEmail($wro->farm_manager_id); 
-        $prev_approver = GC::getName($approvals->gen_serv_div_head);
-        $prev_approver_designation = 'General Services - Division Head';
-        $wro_view_route = 'manager.view.work.order';
-        $wro_id = $wro->id;
-        $wro_no = $wro->wr_no;
-        # Send email to next Approver (Farm Manager)
-        MC::wrNextApproval($next_approver, $next_approver_email, $prev_approver, $prev_approver_designation, $wro_view_route, $wro_id, $wro_no);
+        // $next_approver = GC::getName($wro->farm_manager_id); 
+        // $next_approver_email = GC::getEmail($wro->farm_manager_id); 
+        // $prev_approver = GC::getName($approvals->gen_serv_div_head);
+        // $prev_approver_designation = 'General Services - Division Head';
+        // $wro_view_route = 'manager.view.work.order';
+        // $wro_id = $wro->id;
+        // $wro_no = $wro->wr_no;
+        // # Send email to next Approver (Farm Manager)
+        // MC::wrNextApproval($next_approver, $next_approver_email, $prev_approver, $prev_approver_designation, $wro_view_route, $wro_id, $wro_no);
+
+
+        # regular process with no bypass
+        if($wro->farm_manager_id != 0 && $wro->farm_divhead_id != 0) {
+            $next_approver = GC::getName($wro->farm_manager_id); 
+            $next_approver_email = GC::getEmail($wro->farm_manager_id); 
+            $prev_approver = GC::getName($approvals->gen_serv_div_head);
+            $prev_approver_designation = 'General Services - Division Head';
+            $wro_view_route = 'manager.view.work.order';
+            $wro_id = $wro->id;
+            $wro_no = $wro->wr_no;
+            # Send email to next Approver (Farm Manager)
+            MC::wrNextApproval($next_approver, $next_approver_email, $prev_approver, $prev_approver_designation, $wro_view_route, $wro_id, $wro_no);
+        }
+
+        # add bypass for farm manager only
+        if($wro->farm_manager_id == 0 && $wro->farm_divhead_id != 0) {
+            $next_approver = GC::getName($wro->farm_divhead_id);
+            $next_approver_email = GC::getEmail($wro->farm_divhead_id);
+            $prev_approver = GC::getName($approvals->gen_serv_div_head);
+            $prev_approver_designation = 'General Services - Division Head';
+            $wro_view_route = 'divhead.view.work.order';
+            $wro_id = $wro->id;
+            $wro_no = $wro->wr_no;
+
+            MC::wrNextApproval($next_approver, $next_approver_email, $prev_approver, $prev_approver_designation, $wro_view_route, $wro_id, $wro_no);
+        }
+
+        # add bypass for farm manager and farm div head
+        if($wro->farm_manager_id == 0 && $wro->farm_divhead_id == 0) {
+            $next_approver = GC::getName($approvals->treasury_manager);
+            $next_approver_email = GC::getEmail($approvals->treasury_manager);
+            $prev_approver = GC::getName($approvals->gen_serv_div_head);
+            $prev_approver_designation = 'General Services - Division Head';
+            $wro_view_route = 'manager.view.work.order';
+            $wro_id = $wro->id;
+            $wro_no = $wro->wr_no;
+
+            MC::wrNextApproval($next_approver, $next_approver_email, $prev_approver, $prev_approver_designation, $wro_view_route, $wro_id, $wro_no);
+        }
+
         return true;
     }
 
@@ -466,7 +515,15 @@ class DivHeadController extends Controller
         }
 
 
-        $wro->approval_sequence = 5;
+        if($wro->farm_manager_id == 0 && $wro->farm_divhead_id != 0) {
+            $wro->approval_sequence = 6;
+        }
+        if($wro->farm_manager_id != 0 && $wro->farm_divhead_id != 0) {
+            $wro->approval_sequence = 5;
+        }
+        if($wro->farm_manager_id == 0 && $wro->farm_divhead_id == 0) {
+            $wro->approval_sequence = 7;
+        }
         $wro->gen_serv_div_head_id = Auth::user()->id;
         $wro->gen_serv_div_head_approval = 1;
         $wro->gen_serv_div_head_approved = date('Y-m-d H:i:s', strtotime(now()));
@@ -478,15 +535,55 @@ class DivHeadController extends Controller
         $approvals =  WroApproval::find(1);
 
 
-        $next_approver = GC::getName($wro->farm_manager_id); 
-        $next_approver_email = GC::getEmail($wro->farm_manager_id); 
-        $prev_approver = GC::getName($approvals->gen_serv_div_head);
-        $prev_approver_designation = 'General Services - Division Head';
-        $wro_view_route = 'manager.view.work.order';
-        $wro_id = $wro->id;
-        $wro_no = $wro->reference_number;
-        # Send email to next Approver (Farm Manager)
-        MC::billingNextApproval($next_approver, $next_approver_email, $prev_approver, $prev_approver_designation, $wro_view_route, $wro_id, $wro_no);
+        // $next_approver = GC::getName($wro->farm_manager_id); 
+        // $next_approver_email = GC::getEmail($wro->farm_manager_id); 
+        // $prev_approver = GC::getName($approvals->gen_serv_div_head);
+        // $prev_approver_designation = 'General Services - Division Head';
+        // $wro_view_route = 'manager.view.work.order';
+        // $wro_id = $wro->id;
+        // $wro_no = $wro->reference_number;
+        // # Send email to next Approver (Farm Manager)
+        // MC::billingNextApproval($next_approver, $next_approver_email, $prev_approver, $prev_approver_designation, $wro_view_route, $wro_id, $wro_no);
+
+        # regular process with no bypass
+        if($wro->farm_manager_id != 0 && $wro->farm_divhead_id != 0) {
+            $next_approver = GC::getName($wro->farm_manager_id); 
+            $next_approver_email = GC::getEmail($wro->farm_manager_id); 
+            $prev_approver = GC::getName($approvals->gen_serv_div_head);
+            $prev_approver_designation = 'General Services - Division Head';
+            $wro_view_route = 'manager.view.work.order';
+            $wro_id = $wro->id;
+            $wro_no = $wro->wr_no;
+            # Send email to next Approver (Farm Manager)
+            MC::billingNextApproval($next_approver, $next_approver_email, $prev_approver, $prev_approver_designation, $wro_view_route, $wro_id, $wro_no);
+        }
+
+        # add bypass for farm manager only
+        if($wro->farm_manager_id == 0 && $wro->farm_divhead_id != 0) {
+            $next_approver = GC::getName($wro->farm_divhead_id);
+            $next_approver_email = GC::getEmail($wro->farm_divhead_id);
+            $prev_approver = GC::getName($approvals->gen_serv_div_head);
+            $prev_approver_designation = 'General Services - Division Head';
+            $wro_view_route = 'divhead.view.work.order';
+            $wro_id = $wro->id;
+            $wro_no = $wro->wr_no;
+
+            MC::billingNextApproval($next_approver, $next_approver_email, $prev_approver, $prev_approver_designation, $wro_view_route, $wro_id, $wro_no);
+        }
+
+        # add bypass for farm manager and farm div head
+        if($wro->farm_manager_id == 0 && $wro->farm_divhead_id == 0) {
+            $next_approver = GC::getName($approvals->treasury_manager);
+            $next_approver_email = GC::getEmail($approvals->treasury_manager);
+            $prev_approver = GC::getName($approvals->gen_serv_div_head);
+            $prev_approver_designation = 'General Services - Division Head';
+            $wro_view_route = 'manager.view.work.order';
+            $wro_id = $wro->id;
+            $wro_no = $wro->wr_no;
+
+            MC::billingNextApproval($next_approver, $next_approver_email, $prev_approver, $prev_approver_designation, $wro_view_route, $wro_id, $wro_no);
+        }
+
         return true;
     }
 

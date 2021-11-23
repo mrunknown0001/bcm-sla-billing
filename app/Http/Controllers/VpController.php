@@ -96,10 +96,18 @@ class VpController extends Controller
             GC::getEmail($wro->bcm_manager_id),
             GC::getEmail($wro->gen_serv_div_head_id),
             GC::getEmail($wro->treasury_manager_id),
-            GC::getEmail($wro->farm_manager_id),
-            GC::getEmail($wro->farm_divhead_id),
             // GC::getEmail($wro->coo_id),
         ];
+        if($wro->farm_manager_id != 0) {
+            $receivers[] = [
+                GC::getEmail($wro->farm_manager_id),
+            ];
+        }
+        if($wro->farm_divhead_id != 0) {
+            $receivers[] = [
+                GC::getEmail($wro->farm_divhead_id),
+            ];
+        }
         // $receivers = ['m.trinidad@bfcgroup.org', 'maet.bgc@gmail.com'];
         $wro_no = $wro->wr_no;
         MC::wroApproved($approver, $approver_designation, $receivers, $wro_no);
@@ -280,10 +288,18 @@ class VpController extends Controller
             GC::getEmail($wro->bcm_manager_id),
             GC::getEmail($wro->gen_serv_div_head_id),
             GC::getEmail($wro->treasury_manager_id),
-            GC::getEmail($wro->farm_manager_id),
-            GC::getEmail($wro->farm_divhead_id),
             // GC::getEmail($wro->coo_id),
         ];
+        if($wro->farm_manager_id != 0) {
+            $receivers[] = [
+                GC::getEmail($wro->farm_manager_id),
+            ];
+        }
+        if($wro->farm_divhead_id != 0) {
+            $receivers[] = [
+                GC::getEmail($wro->farm_divhead_id),
+            ];
+        }
         // $receivers = ['m.trinidad@bfcgroup.org', 'maet.bgc@gmail.com'];
         $wro_no = $wro->reference_number;
         MC::billingApproved($approver, $approver_designation, $receivers, $wro_no);

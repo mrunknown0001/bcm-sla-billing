@@ -69,6 +69,7 @@
           <i>General Services - Division Head</i>
         </p>
         <br>
+        @if($billing->farm_divhead_id != 0)
         <p class="">
           Recommending Approval By: <br>
           <img src="{{ public_path("uploads/signature/" . $billing->farm_divhead_id . ".png") }}" alt="" height="100px">
@@ -80,6 +81,7 @@
           <i>Farm Division Head</i>
         </p>
         <br>
+        @endif
         <p class="">
           Approved By: <br>
           <img src="{{  public_path("uploads/signature/" . $billing->vp_gen_serv_id . ".png") }}" alt="" height="100px">
@@ -103,6 +105,7 @@
           <i>BCM Manager</i>
         </p>
         <br>
+        @if($billing->farm_manager_id != 0)
         <p class="">
           Noted By: <br>
           <img src="{{ public_path("uploads/signature/" . $billing->farm_manager_id . ".png") }}" alt="" height="100px">
@@ -114,6 +117,7 @@
           <i>Farm Manager</i>
         </p>
         <br>
+        @endif
         <p class="">
           Approved By: <br>
           <img src="{{ public_path("uploads/signature/" . $billing->treasury_manager_id . ".png") }}" alt="" height="100px">

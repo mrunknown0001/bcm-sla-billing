@@ -7,29 +7,29 @@
 		<p>Verified By: <strong>{{ App\Http\Controllers\GeneralController::getName($wro->gen_serv_div_head_id) }}</strong></p>
 		<p>Gen. Services Div Head Approval Timestamp: <strong>{{ date('F j, Y h:i A', strtotime($wro->gen_serv_div_head_approved)) }}</strong></p>
 		<hr>
-		@if($wro->approval_sequence >= 5 && $wro->farm_manager_approval == 1)
-			<p>Noted By: <strong>{{ App\Http\Controllers\GeneralController::getName($wro->farm_manager_id) }}</strong></p>
-			<p>Farm Manager Approval Timestamp: <strong>{{ date('F j, Y h:i A', strtotime($wro->farm_manager_approved)) }}</strong></p>
+	@endif
+	@if($wro->approval_sequence >= 5 && $wro->farm_manager_approval == 1)
+		<p>Noted By: <strong>{{ App\Http\Controllers\GeneralController::getName($wro->farm_manager_id) }}</strong></p>
+		<p>Farm Manager Approval Timestamp: <strong>{{ date('F j, Y h:i A', strtotime($wro->farm_manager_approved)) }}</strong></p>
+		<hr>
+	@endif
+	@if($wro->approval_sequence >= 6 && $wro->farm_divhead_approval == 1)
+		<p>Recommending Approval By: <strong>{{ App\Http\Controllers\GeneralController::getName($wro->farm_divhead_id) }}</strong></p>
+		<p>Farm Div Head Approval Timestamp: <strong>{{ date('F j, Y h:i A', strtotime($wro->farm_divhead_approved)) }}</strong></p>
+		<hr>
+
+	@endif
+		@if($wro->approval_sequence >= 7 && $wro->treasury_manager_approval == 1)
+			<p>Approved By: <strong>{{ App\Http\Controllers\GeneralController::getName($wro->treasury_manager_id) }}</strong></p>
+			<p>Treasury Manager Approval Timestamp: <strong>{{ date('F j, Y h:i A', strtotime($wro->treasury_manager_approved)) }}</strong></p>
 			<hr>
-			@if($wro->approval_sequence >= 6 && $wro->farm_divhead_approval == 1)
-				<p>Recommending Approval By: <strong>{{ App\Http\Controllers\GeneralController::getName($wro->farm_divhead_id) }}</strong></p>
-				<p>Farm Div Head Approval Timestamp: <strong>{{ date('F j, Y h:i A', strtotime($wro->farm_divhead_approved)) }}</strong></p>
+
+			@if($wro->approval_sequence >= 8 && $wro->vp_gen_serv_approval == 1)
+				<p>Approved By: <strong>{{ App\Http\Controllers\GeneralController::getName($wro->vp_gen_serv_id) }}</strong></p>
+				<p>VP on Gen Services Approval Timestamp: <strong>{{ date('F j, Y h:i A', strtotime($wro->vp_gen_serv_approved)) }}</strong></p>
 				<hr>
-
-				@if($wro->approval_sequence >= 7 && $wro->treasury_manager_approval == 1)
-					<p>Approved By: <strong>{{ App\Http\Controllers\GeneralController::getName($wro->treasury_manager_id) }}</strong></p>
-					<p>Treasury Manager Approval Timestamp: <strong>{{ date('F j, Y h:i A', strtotime($wro->treasury_manager_approved)) }}</strong></p>
-					<hr>
-
-					@if($wro->approval_sequence >= 8 && $wro->vp_gen_serv_approval == 1)
-						<p>Approved By: <strong>{{ App\Http\Controllers\GeneralController::getName($wro->vp_gen_serv_id) }}</strong></p>
-						<p>VP on Gen Services Approval Timestamp: <strong>{{ date('F j, Y h:i A', strtotime($wro->vp_gen_serv_approved)) }}</strong></p>
-						<hr>
-					@endif
-				@endif
 			@endif
 		@endif
-	@endif
 @endif
 
 @if($wro->disapproved ==1)
