@@ -80,6 +80,10 @@ class BillingController extends Controller
         $farm_code = substr($request->reference_number, 4, 3);
         $farm = Farm::where('code', $farm_code)->first();
 
+        if(empty($farm)) {
+            return redirect()->route('user.billing')->with('error', 'Error in Retrieving Farm using Farm Code! String: ' . $farm_code);
+        }
+
         # not in use
         $farm_manager = User::where('farm_id', $farm->id)
                             ->where('user_type', 4)
