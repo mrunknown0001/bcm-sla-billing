@@ -253,7 +253,7 @@ class DivHeadController extends Controller
         if($wro->farm_manager_id == 0 && $wro->farm_divhead_id != 0) {
             $wro->approval_sequence = 6;
         }
-        if($wro->farm_manager_id != 0 && $wro->farm_divhead_id != 0) {
+        if($wro->farm_manager_id != 0 && $wro->farm_divhead_id == 0) {
             $wro->approval_sequence = 5;
         }
         if($wro->farm_manager_id == 0 && $wro->farm_divhead_id == 0) {
