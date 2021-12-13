@@ -238,7 +238,8 @@
            { className: "dt-center", targets: [ 0, 1, 2, 3] }
         ],
         ajax: { 
-          url: "{{ route('reports.all.jo') }}",
+          //url: "{{ route('reports.all.jo') }}",user.all.billing
+          url: "{{ route('user.all.billing') }}",
           dataSrc: ""
         },
         columns: [
