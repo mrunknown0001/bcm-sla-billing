@@ -8,7 +8,8 @@ use DB;
 use Auth;
 use Closure;
 
-use App\JobOrder as Jo;
+// use App\JobOrder as Jo;
+use App\Billing as Jo;
 use App\WorkOrder as Wo;
 use App\Farm;
 
