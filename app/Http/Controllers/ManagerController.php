@@ -160,7 +160,12 @@ class ManagerController extends Controller
             return false;
         }
 
-        $wro->approval_sequence = 6;
+        if($wro->farm_divhead_id == 0) {
+            $wro->approval_sequence = 7;
+        }
+        elseif($wro->farm_manager_id == 1) {
+            $wro->approval_sequence = 6;
+        }
         $wro->farm_manager_approval = 1;
         $wro->farm_manager_approved = date('Y-m-d H:i:s', strtotime(now()));
         $wro->save();
